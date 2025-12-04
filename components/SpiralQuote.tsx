@@ -1,0 +1,95 @@
+"use client";
+
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { NutIcon } from "@/components/assets/Decorations";
+
+interface QuoteData {
+  quote: string;
+  author: string;
+  linkText: string;
+  linkUrl: string;
+}
+
+interface Labels {
+  spiralQuoteSection: {
+    buttonText: string;
+  };
+  navigation: {
+    aboutUrl: string;
+  };
+}
+
+interface SpiralQuoteProps {
+  initialQuote: QuoteData;
+  labels: Labels;
+}
+
+export default function SpiralQuote({ initialQuote, labels }: SpiralQuoteProps) {
+  return (
+    <section className="py-24 bg-[var(--color-ivory)] overflow-hidden relative">
+      <div className="container mx-auto px-4 md:px-6 lg:px-10 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Spiral Animation */}
+          <div className="relative flex justify-center items-center h-[500px]">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              className="absolute w-[400px] h-[400px] border border-[var(--color-gold)]/20 rounded-full"
+            />
+            <motion.div
+              animate={{ rotate: -360 }}
+              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+              className="absolute w-[300px] h-[300px] border border-[var(--color-gold)]/30 rounded-full"
+            />
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+              className="absolute w-[200px] h-[200px] border border-[var(--color-gold)]/40 rounded-full"
+            />
+
+            <Link href={labels.navigation.aboutUrl} className="relative z-20 group cursor-pointer">
+              <div className="w-48 h-48 rounded-full bg-[var(--color-deep-brown)] flex items-center justify-center relative overflow-hidden transition-transform duration-500 group-hover:scale-105">
+                <NutIcon className="w-24 h-24 text-[var(--color-gold)] opacity-20 absolute" />
+                <p className="text-white text-center px-4 font-heading text-xl relative z-10 group-hover:scale-110 transition-transform">
+                  {labels.spiralQuoteSection.buttonText}
+                </p>
+              </div>
+              <div className="absolute inset-0 rounded-full border-2 border-[var(--color-gold)] scale-110 opacity-0 group-hover:opacity-100 group-hover:scale-125 transition-all duration-500" />
+            </Link>
+          </div>
+
+          {/* Quote */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="text-center lg:text-left"
+          >
+            <span className="text-6xl text-[var(--color-gold)] font-serif leading-none">
+              &quot;
+            </span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--color-deep-brown)] font-heading leading-tight mb-6 -mt-4">
+              {initialQuote.quote}
+            </h2>
+            <p className="text-lg text-[var(--color-slate)] italic mb-8">— {initialQuote.author}</p>
+            <Link
+              href={initialQuote.linkUrl}
+              className="inline-flex items-center gap-2 text-[var(--color-deep-brown)] font-semibold border-b-2 border-[var(--color-gold)] pb-1 hover:text-[var(--color-gold)] transition-colors"
+            >
+              {initialQuote.linkText}
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
+            </Link>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}

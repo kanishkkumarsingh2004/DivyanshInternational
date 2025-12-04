@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+:root {
+  /* Design Tokens - Nuts/Nature Theme */
+  --color-bg: #fffcf7;
+  /* Ivory */
+  --color-text: #2c241b;
+  /* Dark Walnut */
+
+  /* Primary Colors */
+  --color-deep-brown: #3e2f23;
+  /* Espresso/Walnut */
+  --color-leaf-green: #4a5d23;
+  /* Olive/Leaf */
+  --color-gold: #c9a66b;
+  /* Almond Gold */
+  --color-gold-dark: #b3893a;
+
+  /* Secondary/Backgrounds */
+  --color-beige: #f6f2ea;
+  /* Cream */
+  --color-sand: #e8e0d5;
+  /* Shell */
+  --color-ivory: #fffcf7;
+
+  /* Accents */
+  --color-terracotta: #c06c50;
+  /* Dried Fruit */
+  --color-muted: #6b7280;
+  --color-graphite: #111827;
+  --color-slate: #4a5568;
+
+  /* Gradients */
+  --gradient-hero: linear-gradient(140deg, #1a120b 0%, #3e2f23 100%);
+  --gradient-section: linear-gradient(180deg, #fffcf7 0%, #f6f2ea 100%);
+
+  /* Spacing Scale */
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-16: 16px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-48: 48px;
+  --spacing-64: 64px;
+
+  /* Border Radius */
+  --radius-lg: 1rem;
+
+  /* Default Fonts */
+  --font-heading-dynamic: var(--font-manrope);
+  --font-body-dynamic: var(--font-inter);
+}
+
+@theme inline {
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-text);
+
+  --color-deep-brown: var(--color-deep-brown);
+  --color-leaf-green: var(--color-leaf-green);
+  --color-gold: var(--color-gold);
+  --color-gold-dark: var(--color-gold-dark);
+
+  --color-beige: var(--color-beige);
+  --color-sand: var(--color-sand);
+  --color-ivory: var(--color-ivory);
+  --color-terracotta: var(--color-terracotta);
+
+  --color-muted: var(--color-muted);
+  --color-graphite: var(--color-graphite);
+  --color-slate: var(--color-slate);
+
+  --gradient-hero: var(--gradient-hero);
+  --gradient-section: var(--gradient-section);
+
+  --font-heading: var(--font-heading-dynamic);
+  --font-body: var(--font-body-dynamic);
+
+  --radius-lg: var(--radius-lg);
+}
+
+body {
+  background: var(--color-ivory);
+  color: var(--color-text);
+  font-family:
+    var(--font-body),
+    system-ui,
+    -apple-system,
+    sans-serif;
+  min-height: 100vh;
+  line-height: 1.65;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Linear transitions for all elements */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: linear;
+  transition-duration: 200ms;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family:
+    var(--font-heading),
+    system-ui,
+    -apple-system,
+    sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.section-shell {
+  border-radius: 32px;
+  background: #fff;
+  box-shadow: 0 40px 90px rgba(15, 23, 42, 0.08);
+  transition: all 0.3s linear;
+}
+
+.section-shell:hover {
+  box-shadow: 0 50px 100px rgba(15, 23, 42, 0.12);
+  transform: translateY(-2px);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
