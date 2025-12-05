@@ -8,16 +8,18 @@ import type { SanityImageSource } from "@sanity/image-url";
 import { motion } from "framer-motion";
 import { LeafIcon, NutIcon } from "@/components/assets/Decorations";
 
+import { LocaleString, LocaleText } from "@/lib/i18n";
+
 interface Product {
   _id: string;
-  title: string;
+  title: LocaleString;
   category: string;
   slug?: { current?: string };
-  heroHeading?: string;
-  introParagraphs?: string[];
-  listSections?: { title: string; items: string[] }[];
-  ctaLine?: string;
-  description?: string;
+  heroHeading?: LocaleString;
+  introParagraphs?: LocaleText[];
+  listSections?: { title: LocaleString; items: LocaleString[] }[];
+  ctaLine?: LocaleString;
+  description?: LocaleText;
   heroImage?: SanityImageSource;
 }
 

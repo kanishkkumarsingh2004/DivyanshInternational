@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -49,7 +50,8 @@ export default function MobileMenu({
           >
             <div className="p-6">
               {/* Close Button */}
-              <div className="flex justify-end mb-4">
+              <div className="flex justify-between items-center mb-4">
+                <LanguageSwitcher />
                 <button
                   onClick={onClose}
                   className="text-[var(--color-deep-brown)] hover:text-[var(--color-gold)] focus:outline-2 focus:outline-[var(--color-gold)] focus:rounded p-2"

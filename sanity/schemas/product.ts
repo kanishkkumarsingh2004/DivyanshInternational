@@ -8,7 +8,7 @@ export default defineType({
     defineField({
       name: "title",
       title: "Title",
-      type: "string",
+      type: "localeString",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -95,13 +95,13 @@ export default defineType({
     defineField({
       name: "heroHeading",
       title: "Hero Heading",
-      type: "string",
+      type: "localeString",
     }),
     defineField({
       name: "introParagraphs",
       title: "Intro Paragraphs",
       type: "array",
-      of: [{ type: "text" }],
+      of: [{ type: "localeText" }],
     }),
     defineField({
       name: "listSections",
@@ -111,8 +111,8 @@ export default defineType({
         {
           type: "object",
           fields: [
-            defineField({ name: "title", title: "Title", type: "string" }),
-            defineField({ name: "items", title: "Items", type: "array", of: [{ type: "string" }] }),
+            defineField({ name: "title", title: "Title", type: "localeString" }),
+            defineField({ name: "items", title: "Items", type: "array", of: [{ type: "localeString" }] }),
           ],
         },
       ],
@@ -120,12 +120,12 @@ export default defineType({
     defineField({
       name: "ctaLine",
       title: "CTA Line",
-      type: "string",
+      type: "localeString",
     }),
     defineField({
       name: "description",
       title: "Description",
-      type: "text",
+      type: "localeText",
     }),
     defineField({
       name: "order",

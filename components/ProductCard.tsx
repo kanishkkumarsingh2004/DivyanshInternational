@@ -5,16 +5,18 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { urlFor } from "@/lib/sanity/client";
 import type { SanityImageSource } from "@sanity/image-url";
+import { useLanguage } from "@/context/LanguageContext";
+import { getLocalized, LocaleString, LocaleText } from "@/lib/i18n";
 
 interface Product {
   _id: string;
-  title: string;
+  title: LocaleString;
   category: string;
-  description?: string;
+  description?: LocaleText;
   slug?: { current?: string };
-  heroHeading?: string;
-  introParagraphs?: string[];
-  listSections?: { title: string; items: string[] }[];
+  heroHeading?: LocaleString;
+  introParagraphs?: LocaleText[];
+  listSections?: { title: LocaleString; items: LocaleString[] }[];
   heroImage?: SanityImageSource;
 }
 
@@ -41,8 +43,11 @@ export default function ProductCard({
   onAddToEnquiry,
   labels,
 }: ProductCardProps) {
+  const { language } = useLanguage();
   const productSlug = product.slug?.current || product.category;
-  const intro = product.introParagraphs?.[0] || product.description || "";
+  const productTitle = getLocalized(product.title, language);
+  const heroHeading = getLocalized(product.heroHeading, language);
+  const intro = getLocalized(product.introParagraphs?.[0], language) || getLocalized(product.description, language) || "";
   const quickItems = product.listSections?.[0]?.items.slice(0, 2) || [];
 
   return (
@@ -58,7 +63,7 @@ export default function ProductCard({
           {product.heroImage ? (
             <Image
               src={urlFor(product.heroImage).width(500).height(500).url()}
-              alt={product.title}
+              alt={productTitle}
               fill
               className="object-cover"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -73,7 +78,7 @@ export default function ProductCard({
           {product.category}
         </span>
         <h3 className="text-xl font-bold text-[var(--color-deep-brown)] mb-3">
-          {product.heroHeading || product.title}
+          {heroHeading || productTitle}
         </h3>
         <p className="text-[var(--color-muted)] text-sm mb-4 leading-relaxed line-clamp-4">
           {intro}
@@ -81,12 +86,12 @@ export default function ProductCard({
         {quickItems.length > 0 && (
           <ul className="space-y-2 text-sm text-[var(--color-slate)]">
             {quickItems.map((item) => (
-              <li key={item} className="flex gap-2">
+              <li key={getLocalized(item, language)} className="flex gap-2">
                 <span
                   aria-hidden="true"
                   className="h-1.5 w-1.5 rounded-full bg-[var(--color-gold)] mt-2"
                 />
-                <span>{item}</span>
+                <span>{getLocalized(item, language)}</span>
               </li>
             ))}
           </ul>
@@ -96,14 +101,14 @@ export default function ProductCard({
         <button
           onClick={onViewSpecs}
           className="flex-1 border border-[#e8dcc8] text-[var(--color-deep-brown)] hover:bg-[var(--color-beige)] px-4 py-3 rounded-full font-medium transition-colors focus:outline-2 focus:outline-[var(--color-gold)] focus:outline-offset-2"
-          aria-label={`View specs for ${product.title}`}
+          aria-label={`View specs for ${productTitle}`}
         >
           {labels.common.viewSpecs}
         </button>
         <button
           onClick={onAddToEnquiry}
           className="flex-1 bg-[var(--color-gold)] hover:bg-[var(--color-gold-dark)] text-white px-4 py-3 rounded-full font-semibold transition-colors focus:outline-2 focus:outline-[var(--color-gold-dark)] focus:outline-offset-2"
-          aria-label={`Add ${product.title} to enquiry`}
+          aria-label={`Add ${productTitle} to enquiry`}
         >
           {labels.common.addToEnquiry}
         </button>

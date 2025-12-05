@@ -6,8 +6,9 @@ import Link from "next/link";
 import Image from "next/image";
 import MobileMenu from "./MobileMenu";
 import ProductsDropdown from "./ProductsDropdown";
+import LanguageSwitcher from "./LanguageSwitcher";
 
-import { urlFor } from "@/lib/sanity/client";
+
 import type { SanityImageSource } from "@sanity/image-url";
 
 interface HeaderData {
@@ -57,9 +58,8 @@ export default function Header({ initialHeader, products, siteSettings }: Header
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-30 transition-all duration-300 ${
-          isScrolled ? "bg-white shadow-md py-3" : "bg-white/95 backdrop-blur-sm py-4"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-30 transition-all duration-300 ${isScrolled ? "bg-white shadow-md py-3" : "bg-white/95 backdrop-blur-sm py-4"
+          }`}
       >
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="flex items-center justify-between">
@@ -70,16 +70,14 @@ export default function Header({ initialHeader, products, siteSettings }: Header
                 className="flex items-center space-x-3 focus:outline-2 focus:outline-[var(--color-gold)] focus:rounded"
                 aria-label={header.homeAriaLabel}
               >
-                {header.logo && (
-                  <Image
-                    src={urlFor(header.logo).width(112).height(112).url()}
-                    alt={header.logoAlt || ""}
-                    width={56}
-                    height={56}
-                    className="rounded-full border border-[var(--color-beige)] object-cover"
-                    priority
-                  />
-                )}
+                <Image
+                  src="/divyansh-logo.jpg"
+                  alt={header.logoAlt || "Divyansh International Logo"}
+                  width={56}
+                  height={56}
+                  className="rounded-full border border-[var(--color-beige)] object-cover mix-blend-multiply"
+                  priority
+                />
                 <span className="md:hidden text-[var(--color-deep-brown)] font-semibold text-lg">
                   Divyansh International
                 </span>
@@ -117,6 +115,9 @@ export default function Header({ initialHeader, products, siteSettings }: Header
               >
                 {header.tradeButtonText}
               </Link>
+              <div className="pl-2 border-l border-[var(--color-sand)]">
+                <LanguageSwitcher />
+              </div>
             </nav>
 
             {/* Mobile Menu Button */}

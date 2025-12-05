@@ -65,7 +65,12 @@ export default async function WebsiteLayout({
 
   return (
     <>
-      <StructuredData organization={siteSettings?.organization} />
+      <StructuredData
+        organization={{
+          ...siteSettings?.organization,
+          logoUrl: `${siteSettings?.seo?.siteUrl || ""}/divyansh-logo.jpg`,
+        }}
+      />
       <GA4 />
       <SkipLink labels={siteSettings?.accessibility} />
       <ThemeToggle labels={siteSettings?.themeToggle} />

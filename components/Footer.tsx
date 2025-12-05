@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import type { SanityImageSource } from "@sanity/image-url";
+import { useLanguage } from "@/context/LanguageContext";
+import { getLocalized, LocaleString } from "@/lib/i18n";
 
 interface FooterData {
   quickLinks: { label: string; url: string }[];
@@ -42,10 +44,11 @@ interface FooterProps {
   initialFooter?: FooterData | null;
   labels?: FooterLabels;
   accessibility?: AccessibilityLabels;
-  products?: { title: string; slug: { current: string } }[];
+  products?: { title: LocaleString; slug: { current: string } }[];
 }
 
 export default function Footer({ initialFooter, labels, accessibility, products }: FooterProps) {
+  const { language } = useLanguage();
   const footer = initialFooter || {
     quickLinks: [],
     certificationBadges: [],
@@ -61,7 +64,7 @@ export default function Footer({ initialFooter, labels, accessibility, products 
 
   const dynamicProductLinks =
     products?.map((p) => ({
-      label: p.title,
+      label: getLocalized(p.title, language),
       href: `/products/${p.slug.current}`,
     })) || [];
 

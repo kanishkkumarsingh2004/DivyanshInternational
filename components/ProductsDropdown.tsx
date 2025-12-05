@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
+import { getLocalized, LocaleString } from "@/lib/i18n";
 
 interface Labels {
   navigation: {
@@ -12,13 +14,14 @@ interface Labels {
 }
 
 interface ProductsDropdownProps {
-  products: { title: string; slug: { current: string } }[];
+  products: { title: LocaleString; slug: { current: string } }[];
   labels: Labels;
 }
 
 export default function ProductsDropdown({ products, labels }: ProductsDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { language } = useLanguage();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -67,7 +70,7 @@ export default function ProductsDropdown({ products, labels }: ProductsDropdownP
                 className="block px-4 py-3 text-[var(--color-text)] hover:bg-[var(--color-beige)] hover:text-[var(--color-deep-brown)] transition-colors focus:outline-2 focus:outline-[var(--color-gold)] focus:rounded mx-2"
                 onClick={() => setIsOpen(false)}
               >
-                {product.title}
+                {getLocalized(product.title, language)}
               </Link>
             ))}
           </motion.div>

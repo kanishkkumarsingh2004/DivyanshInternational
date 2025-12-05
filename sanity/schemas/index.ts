@@ -27,6 +27,9 @@ import homePage from "./homePage";
 import productsPage from "./productsPage";
 import privacyPolicy from "./privacyPolicy";
 
+import localeString from "./localeString";
+import localeText from "./localeText";
+
 export const schemaTypes = [
   productsPage,
   product,
@@ -52,4 +55,6 @@ export const schemaTypes = [
   testimonialsSection,
   homePage,
   privacyPolicy,
+  localeString,
+  localeText,
 ];

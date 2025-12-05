@@ -50,6 +50,27 @@ async function safeCreateOrReplace(
   }
 }
 
+// Helper Function to Create Localized Strings
+// For now, we'll seed with English content and leave other languages empty
+// You can manually add translations in Sanity Studio later
+function createLocaleString(enText: string) {
+  return {
+    en: enText,
+    ar: "", // Arabic - to be added in Sanity Studio
+    hi: "", // Hindi - to be added in Sanity Studio
+    fr: "", // French - to be added in Sanity Studio
+  };
+}
+
+function createLocaleText(enText: string) {
+  return {
+    en: enText,
+    ar: "", // Arabic - to be added in Sanity Studio
+    hi: "", // Hindi - to be added in Sanity Studio
+    fr: "", // French - to be added in Sanity Studio
+  };
+}
+
 // --- DATA ---
 
 const products = [
@@ -1492,14 +1513,18 @@ async function seed() {
       const doc = {
         _type: "product",
         _id: `product-${product.slug.current}`,
-        title: product.title,
+        title: createLocaleString(product.title),
         slug: { _type: "slug", current: product.slug.current },
         category: product.category,
-        heroHeading: product.heroHeading,
-        introParagraphs: product.introParagraphs,
-        listSections: product.listSections,
-        ctaLine: product.ctaLine,
-        description: product.description,
+        heroHeading: createLocaleString(product.heroHeading),
+        introParagraphs: product.introParagraphs.map((p) => createLocaleText(p)),
+        listSections: product.listSections.map((section) => ({
+          _key: section._key,
+          title: createLocaleString(section.title),
+          items: section.items.map((item) => createLocaleString(item)),
+        })),
+        ctaLine: createLocaleString(product.ctaLine),
+        description: createLocaleText(product.description),
       };
       await safeCreateOrReplace(doc);
       console.log(`   ✓ ${product.title}`);

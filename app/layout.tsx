@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Manrope, Playfair_Display, Lato } from "next/font/google";
 import "./globals.css";
 import SmoothScrolling from "@/components/SmoothScrolling";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -45,7 +46,9 @@ export default function RootLayout({
       className={`${inter.variable} ${manrope.variable} ${playfair.variable} ${lato.variable}`}
     >
       <body className="antialiased">
-        <SmoothScrolling>{children}</SmoothScrolling>
+        <LanguageProvider>
+          <SmoothScrolling>{children}</SmoothScrolling>
+        </LanguageProvider>
       </body>
     </html>
   );

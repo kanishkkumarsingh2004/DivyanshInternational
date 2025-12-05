@@ -6,16 +6,26 @@ import { trackEvent } from "@/components/analytics/GA4";
 import Script from "next/script";
 import { generateProductSchema } from "@/lib/seo/schema";
 
+import Image from "next/image";
+import { urlFor } from "@/lib/sanity/client";
+import type { SanityImageSource } from "@sanity/image-url";
+import { useLanguage } from "@/context/LanguageContext";
+import { getLocalized, LocaleString, LocaleText } from "@/lib/i18n";
+
 interface Product {
   _id: string;
-  title: string;
+  title: LocaleString;
   category: string;
-  description?: string;
+  description?: LocaleText;
   slug?: { current?: string };
-  heroHeading?: string;
-  introParagraphs?: string[];
-  listSections?: { title: string; items: string[] }[];
-  ctaLine?: string;
+  heroHeading?: LocaleString;
+  introParagraphs?: LocaleText[];
+  listSections?: { title: LocaleString; items: LocaleString[] }[];
+  ctaLine?: LocaleString;
+  heroImage?: SanityImageSource;
+  gallery?: SanityImageSource[];
+  microVideo?: string;
+  specSheetPDF?: string;
 }
 
 interface Labels {
@@ -58,6 +68,7 @@ export default function ProductModal({
   labels,
 }: ProductModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
+  const { language } = useLanguage();
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -84,14 +95,19 @@ export default function ProductModal({
 
   if (!product) return null;
 
+  const productTitle = getLocalized(product.title, language);
+  const productDescription = getLocalized(product.description, language);
+  const heroHeading = getLocalized(product.heroHeading, language);
+  const ctaLine = getLocalized(product.ctaLine, language);
+
   const handleRequestSample = () => {
-    trackEvent(labels.analytics.eventSampleRequest, { product: product.title });
-    window.location.href = `/contact?${labels.routing.queryParamType}=${labels.apiConfig.enquiryTypeTrade}&${labels.routing.queryParamProduct}=${encodeURIComponent(product.title)}`;
+    trackEvent(labels.analytics.eventSampleRequest, { product: productTitle });
+    window.location.href = `/contact?${labels.routing.queryParamType}=${labels.apiConfig.enquiryTypeTrade}&${labels.routing.queryParamProduct}=${encodeURIComponent(productTitle)}`;
   };
 
   const handleAddToEnquiry = () => {
     trackEvent(labels.analytics.eventAddToEnquiryGA, {
-      product: product.title,
+      product: productTitle,
       location: labels.analytics.locationModal,
     });
     onAddToEnquiry();
@@ -99,8 +115,8 @@ export default function ProductModal({
 
   const productSchema = generateProductSchema(
     {
-      title: product.title,
-      description: product.description,
+      title: productTitle,
+      description: productDescription,
       slug: product.slug,
     },
     labels.seo.siteUrl
@@ -144,7 +160,7 @@ export default function ProductModal({
                   id="product-modal-title"
                   className="text-2xl font-bold text-[var(--color-deep-brown)]"
                 >
-                  {product.title}
+                  {productTitle}
                 </h2>
                 <button
                   onClick={onClose}
@@ -163,23 +179,61 @@ export default function ProductModal({
               </div>
 
               <div className="p-6 space-y-6">
-                <div className="rounded-2xl border border-dashed border-[var(--color-deep-brown)] bg-[var(--color-beige)] min-h-[220px] flex items-center justify-center text-center text-xs uppercase tracking-[0.3em] text-[var(--color-muted)]">
-                  {labels.productModal.placeholder}
+
+                {/* Media Section */}
+                <div className="rounded-2xl overflow-hidden bg-[var(--color-beige)] aspect-video relative group">
+                  {product.microVideo ? (
+                    <video
+                      src={product.microVideo}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full object-cover"
+                    />
+                  ) : product.heroImage ? (
+                    <Image
+                      src={urlFor(product.heroImage).url()}
+                      alt={productTitle}
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-center text-xs uppercase tracking-[0.3em] text-[var(--color-muted)] border border-dashed border-[var(--color-deep-brown)]">
+                      {labels.productModal.placeholder}
+                    </div>
+                  )}
                 </div>
-                {product.heroHeading && (
+
+                {/* Gallery */}
+                {product.gallery && product.gallery.length > 0 && (
+                  <div className="grid grid-cols-4 gap-2">
+                    {product.gallery.map((image, index) => (
+                      <div key={index} className="relative aspect-square rounded-lg overflow-hidden bg-[var(--color-beige)]">
+                        <Image
+                          src={urlFor(image).url()}
+                          alt={`${productTitle} gallery ${index + 1}`}
+                          fill
+                          className="object-cover hover:scale-110 transition-transform duration-500"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {heroHeading && (
                   <p className="text-[var(--color-deep-brown)] font-semibold">
-                    {product.heroHeading}
+                    {heroHeading}
                   </p>
                 )}
                 {product.introParagraphs?.length ? (
                   <div className="space-y-3 text-[var(--color-text)]">
                     {product.introParagraphs.slice(0, 2).map((paragraph) => (
-                      <p key={paragraph}>{paragraph}</p>
+                      <p key={getLocalized(paragraph, language)}>{getLocalized(paragraph, language)}</p>
                     ))}
                   </div>
                 ) : (
-                  product.description && (
-                    <p className="text-[var(--color-text)]">{product.description}</p>
+                  productDescription && (
+                    <p className="text-[var(--color-text)]">{productDescription}</p>
                   )
                 )}
 
@@ -187,20 +241,20 @@ export default function ProductModal({
                   <div className="grid gap-4">
                     {product.listSections.slice(0, 3).map((section) => (
                       <div
-                        key={section.title}
+                        key={getLocalized(section.title, language)}
                         className="border border-[#efe3d2] rounded-xl p-4 bg-[var(--color-beige)]/50"
                       >
                         <h3 className="font-semibold text-[var(--color-deep-brown)] mb-2">
-                          {section.title}
+                          {getLocalized(section.title, language)}
                         </h3>
                         <ul className="space-y-1 text-[var(--color-text)] text-sm">
                           {section.items.slice(0, 4).map((item) => (
-                            <li key={item} className="flex gap-2">
+                            <li key={getLocalized(item, language)} className="flex gap-2">
                               <span
                                 aria-hidden="true"
                                 className="mt-2 h-1 w-1 rounded-full bg-[var(--color-gold)]"
                               />
-                              <span>{item}</span>
+                              <span>{getLocalized(item, language)}</span>
                             </li>
                           ))}
                         </ul>
@@ -209,9 +263,9 @@ export default function ProductModal({
                   </div>
                 )}
 
-                {product.ctaLine && (
+                {ctaLine && (
                   <p className="text-sm font-semibold text-[var(--color-deep-brown)]">
-                    {product.ctaLine}
+                    {ctaLine}
                   </p>
                 )}
 
