@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import { addEnquiryItem, getEnquiryItems } from "@/lib/utils/enquiry";
 import EnquiryPanel from "@/components/EnquiryPanel";
 import { trackEvent } from "@/components/analytics/GA4";
+import { useLanguage } from "@/context/LanguageContext";
+import { getLocalized } from "@/lib/i18n";
 
 interface EnquiryBuilderProps {
   labels?: {
@@ -22,6 +24,7 @@ interface EnquiryBuilderProps {
 export default function EnquiryBuilder({ labels }: EnquiryBuilderProps) {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [itemCount, setItemCount] = useState(0);
+  const { language } = useLanguage();
 
   useEffect(() => {
     const updateCount = () => {
@@ -36,13 +39,14 @@ export default function EnquiryBuilder({ labels }: EnquiryBuilderProps) {
     const handleAddToEnquiry = (event: Event) => {
       const customEvent = event as CustomEvent;
       const product = customEvent.detail;
+      const productTitle = getLocalized(product.title, language);
       addEnquiryItem({
         productId: product._id || product.id,
-        productTitle: product.title,
+        productTitle: productTitle,
         MOQ: product.MOQ,
       });
       window.dispatchEvent(new Event("enquiryUpdated"));
-      trackEvent("add_to_enquiry", { product: product.title, location: "builder" });
+      trackEvent("add_to_enquiry", { product: productTitle, location: "builder" });
     };
 
     const handleOpenPanel = () => {
@@ -56,7 +60,7 @@ export default function EnquiryBuilder({ labels }: EnquiryBuilderProps) {
       window.removeEventListener("addToEnquiry", handleAddToEnquiry);
       window.removeEventListener("openEnquiryPanel", handleOpenPanel);
     };
-  }, []);
+  }, [language]);
 
   const handleExportPDF = async () => {
     const items = getEnquiryItems();

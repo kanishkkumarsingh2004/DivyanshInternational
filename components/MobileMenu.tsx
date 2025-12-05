@@ -3,11 +3,13 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { useLanguage } from "@/context/LanguageContext";
+import { getLocalized, LocaleString } from "@/lib/i18n";
 
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
-  products?: { title: string; slug: { current: string } }[];
+  products?: { title: LocaleString; slug: { current: string } }[];
   menuItems?: { label: string; url: string }[];
   productsLabel?: string;
   closeMenuAriaLabel?: string;
@@ -21,6 +23,7 @@ export default function MobileMenu({
   productsLabel,
   closeMenuAriaLabel,
 }: MobileMenuProps) {
+  const { language } = useLanguage();
   const items = menuItems || [];
   const productLinks = products || [];
 
@@ -97,7 +100,7 @@ export default function MobileMenu({
                             className="block px-4 py-2 text-[var(--color-text)] hover:bg-[var(--color-beige)] rounded-lg transition-colors focus:outline-2 focus:outline-[var(--color-gold)] focus:rounded"
                             onClick={onClose}
                           >
-                            {product.title}
+                            {getLocalized(product.title, language)}
                           </Link>
                         </li>
                       );

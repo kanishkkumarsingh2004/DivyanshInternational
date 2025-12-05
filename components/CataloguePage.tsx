@@ -4,12 +4,14 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { urlForImage } from "@/lib/sanity/image";
 import type { SanityImageSource } from "@sanity/image-url";
+import { useLanguage } from "@/context/LanguageContext";
+import { getLocalized, LocaleString, LocaleText } from "@/lib/i18n";
 
 interface Product {
   _id: string;
-  title: string;
+  title: LocaleString;
   category: string;
-  description?: string;
+  description?: LocaleText;
   heroImage?: SanityImageSource;
   slug?: { current?: string };
 }
@@ -33,6 +35,7 @@ export default function CataloguePage({
   onToggleSelection,
   direction,
 }: CataloguePageProps) {
+  const { language } = useLanguage();
   const isCover = product._id === "cover";
 
   return (
@@ -98,7 +101,7 @@ export default function CataloguePage({
                   <div className="relative w-full h-64 md:h-80">
                     <Image
                       src={urlForImage(product.heroImage).width(600).height(600).url()}
-                      alt={product.title}
+                      alt={getLocalized(product.title, language)}
                       fill
                       className="object-contain drop-shadow-2xl"
                     />
@@ -113,12 +116,12 @@ export default function CataloguePage({
                     {product.category}
                   </p>
                   <h2 className="text-2xl md:text-3xl font-bold text-[var(--color-deep-brown)] font-heading">
-                    {product.title}
+                    {getLocalized(product.title, language)}
                   </h2>
                 </div>
                 {product.description && (
                   <p className="text-[var(--color-slate)] leading-relaxed line-clamp-4">
-                    {product.description}
+                    {getLocalized(product.description, language)}
                   </p>
                 )}
               </div>

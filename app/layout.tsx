@@ -33,6 +33,10 @@ const lato = Lato({
 export const metadata: Metadata = {
   title: "Divyansh International",
   description: "Premium Quality Dry Fruits & Spices",
+  icons: {
+    icon: "/divyansh-logo.jpg",
+    apple: "/divyansh-logo.jpg",
+  },
 };
 
 export default function RootLayout({

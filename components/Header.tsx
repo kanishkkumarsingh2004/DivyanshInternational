@@ -7,7 +7,7 @@ import Image from "next/image";
 import MobileMenu from "./MobileMenu";
 import ProductsDropdown from "./ProductsDropdown";
 import LanguageSwitcher from "./LanguageSwitcher";
-
+import { LocaleString } from "@/lib/i18n";
 
 import type { SanityImageSource } from "@sanity/image-url";
 
@@ -26,7 +26,7 @@ interface HeaderData {
 
 interface HeaderProps {
   initialHeader?: HeaderData | null;
-  products?: { title: string; slug: { current: string } }[];
+  products?: { title: LocaleString; slug: { current: string } }[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   siteSettings?: any;
 }

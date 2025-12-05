@@ -8,12 +8,14 @@ import { urlForImage } from "@/lib/sanity/image";
 import CatalogueControls from "./CatalogueControls";
 import MobileProductList from "./MobileProductList";
 import type { SanityImageSource } from "@sanity/image-url";
+import { useLanguage } from "@/context/LanguageContext";
+import { getLocalized, LocaleString, LocaleText } from "@/lib/i18n";
 
 interface Product {
   _id: string;
-  title: string;
+  title: LocaleString;
   category: string;
-  description?: string;
+  description?: LocaleText;
   heroImage?: SanityImageSource;
   slug?: { current?: string };
 }
@@ -23,6 +25,7 @@ interface ProductCatalogueBookProps {
 }
 
 export default function ProductCatalogueBook({ products }: ProductCatalogueBookProps) {
+  const { language } = useLanguage();
   const [selectedProducts, setSelectedProducts] = useState<Set<string>>(new Set());
 
   const allPages = products;
@@ -97,7 +100,7 @@ export default function ProductCatalogueBook({ products }: ProductCatalogueBookP
             <div className="relative w-full h-64">
               <Image
                 src={urlForImage(product.heroImage).width(500).height(500).url()}
-                alt={product.title}
+                alt={getLocalized(product.title, language)}
                 fill
                 sizes="(max-width: 768px) 100vw, 500px"
                 className="object-contain drop-shadow-lg"
@@ -112,11 +115,11 @@ export default function ProductCatalogueBook({ products }: ProductCatalogueBookP
             {product.category}
           </p>
           <h2 className="text-xl md:text-2xl font-bold text-[var(--color-deep-brown)] font-heading leading-tight">
-            {product.title}
+            {getLocalized(product.title, language)}
           </h2>
           {product.description && (
             <p className="text-xs text-gray-600 leading-relaxed line-clamp-3">
-              {product.description}
+              {getLocalized(product.description, language)}
             </p>
           )}
         </div>

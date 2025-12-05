@@ -4,12 +4,14 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import jsPDF from "jspdf";
 import type { SanityImageSource } from "@sanity/image-url";
+import { useLanguage } from "@/context/LanguageContext";
+import { getLocalized, LocaleString, LocaleText } from "@/lib/i18n";
 
 interface Product {
     _id: string;
-    title: string;
+    title: LocaleString;
     category: string;
-    description?: string;
+    description?: LocaleText;
     heroImage?: SanityImageSource;
 }
 
@@ -24,6 +26,7 @@ export default function CatalogueControls({
     allProducts,
     onClearSelection,
 }: CatalogueControlsProps) {
+    const { language } = useLanguage();
     const [isEnquiryModalOpen, setIsEnquiryModalOpen] = useState(false);
     const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
 
@@ -64,7 +67,7 @@ export default function CatalogueControls({
                 // Product title
                 doc.setFontSize(16);
                 doc.setTextColor(62, 47, 35);
-                doc.text(product.title, 20, yPosition);
+                doc.text(getLocalized(product.title, language), 20, yPosition);
                 yPosition += 8;
 
                 // Category
@@ -77,7 +80,8 @@ export default function CatalogueControls({
                 if (product.description) {
                     doc.setFontSize(10);
                     doc.setTextColor(74, 85, 104); // Slate
-                    const splitDescription = doc.splitTextToSize(product.description, 170);
+                    const descriptionText = getLocalized(product.description, language);
+                    const splitDescription = doc.splitTextToSize(descriptionText, 170);
                     doc.text(splitDescription, 20, yPosition);
                     yPosition += splitDescription.length * 5 + 5;
                 }
@@ -143,9 +147,9 @@ export default function CatalogueControls({
                                     : `${selectedCount} product${selectedCount > 1 ? "s" : ""} selected`}
                             </span>
                         </div>
-                        
+
                         {/* Mobile Clear Button */}
-                         {selectedCount > 0 && (
+                        {selectedCount > 0 && (
                             <button
                                 onClick={onClearSelection}
                                 className="md:hidden text-sm text-[var(--color-muted)] hover:text-[var(--color-deep-brown)]"
@@ -215,6 +219,7 @@ function EnquiryModal({
     selectedProducts: Product[];
     onClose: () => void;
 }) {
+    const { language } = useLanguage();
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -228,7 +233,7 @@ function EnquiryModal({
         setIsSubmitting(true);
 
         try {
-            const productList = selectedProducts.map((p) => p.title).join(", ");
+            const productList = selectedProducts.map((p) => getLocalized(p.title, language)).join(", ");
 
             const response = await fetch("/api/contact", {
                 method: "POST",
@@ -285,7 +290,7 @@ function EnquiryModal({
                                 key={product._id}
                                 className="px-3 py-1 bg-[var(--color-beige)] text-[var(--color-deep-brown)] text-xs rounded-full"
                             >
-                                {product.title}
+                                {getLocalized(product.title, language)}
                             </span>
                         ))}
                     </div>

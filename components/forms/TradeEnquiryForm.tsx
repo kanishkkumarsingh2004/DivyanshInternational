@@ -7,9 +7,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createTradeEnquirySchema, type TradeEnquiryInput } from "@/lib/validation/schemas";
 import { getEnquiryItems } from "@/lib/utils/enquiry";
 import { trackEvent } from "@/components/analytics/GA4";
+import { useLanguage } from "@/context/LanguageContext";
+import { getLocalized, LocaleString } from "@/lib/i18n";
 
 interface TradeEnquiryFormProps {
-  productList?: { _id: string; title: string }[];
+  productList?: { _id: string; title: LocaleString }[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formLabels?: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -28,12 +30,16 @@ export default function TradeEnquiryForm({
   initialProduct,
   initialAction,
 }: TradeEnquiryFormProps) {
+  const { language } = useLanguage();
   const searchParams = useSearchParams();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(null);
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
 
-  const products = useMemo(() => productList?.map((p) => p.title) || [], [productList]);
+  const products = useMemo(
+    () => productList?.map((p) => ({ _id: p._id, title: getLocalized(p.title, language) })) || [],
+    [productList, language]
+  );
   const labels = formLabels || {};
   const analyticsConfig = analytics || {};
 
@@ -58,7 +64,7 @@ export default function TradeEnquiryForm({
   }, [searchParams, setValue]);
 
   useEffect(() => {
-    if (initialProduct && products.includes(initialProduct)) {
+    if (initialProduct && products.some((p) => p.title === initialProduct)) {
       setSelectedProducts((prev) => {
         if (prev.includes(initialProduct)) return prev;
         return [...prev, initialProduct];
@@ -160,10 +166,10 @@ export default function TradeEnquiryForm({
     }
   };
 
-  const toggleProduct = (product: string) => {
-    const updated = selectedProducts.includes(product)
-      ? selectedProducts.filter((p) => p !== product)
-      : [...selectedProducts, product];
+  const toggleProduct = (productTitle: string) => {
+    const updated = selectedProducts.includes(productTitle)
+      ? selectedProducts.filter((p) => p !== productTitle)
+      : [...selectedProducts, productTitle];
     setSelectedProducts(updated);
     setValue("productInterest", updated);
   };
@@ -322,16 +328,16 @@ export default function TradeEnquiryForm({
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {products.map((product) => (
             <label
-              key={product}
+              key={product._id}
               className="flex items-center space-x-2 cursor-pointer p-3 border border-gray-300 rounded-lg hover:bg-[var(--color-beige)] transition-colors"
             >
               <input
                 type="checkbox"
-                checked={selectedProducts.includes(product)}
-                onChange={() => toggleProduct(product)}
+                checked={selectedProducts.includes(product.title)}
+                onChange={() => toggleProduct(product.title)}
                 className="w-4 h-4 text-[var(--color-gold)] focus:ring-[var(--color-gold)] border-gray-300 rounded"
               />
-              <span className="text-sm text-[var(--color-text)]">{product}</span>
+              <span className="text-sm text-[var(--color-text)]">{product.title}</span>
             </label>
           ))}
         </div>

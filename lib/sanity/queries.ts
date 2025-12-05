@@ -91,7 +91,8 @@ export const timelineQuery = groq`
     _id,
     year,
     title,
-    description
+    description,
+    image
   }
 `;
 
