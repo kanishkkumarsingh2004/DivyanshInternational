@@ -22,7 +22,7 @@ export default async function ProductsPage() {
   const { products, pageData, siteSettings } = await getData();
 
   return (
-    <div className="pt-24 min-h-screen bg-[var(--color-bg)]">
+    <div className="pt-24 min-h-screen bg-[var(--color-bg)] relative overflow-hidden">
       <ProductShowcase
         initialProducts={products}
         headerData={pageData}

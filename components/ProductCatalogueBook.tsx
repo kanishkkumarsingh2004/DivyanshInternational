@@ -7,6 +7,13 @@ import { usePageFlip } from "@/hooks/usePageFlip";
 import { urlForImage } from "@/lib/sanity/image";
 import CatalogueControls from "./CatalogueControls";
 import MobileProductList from "./MobileProductList";
+import {
+  AlmondIcon,
+  NutIcon,
+  CashewIcon,
+  WalnutIcon,
+  PeanutIcon,
+} from "./assets/Decorations";
 import type { SanityImageSource } from "@sanity/image-url";
 import { useLanguage } from "@/context/LanguageContext";
 import { getLocalized, LocaleString, LocaleText } from "@/lib/i18n";
@@ -154,8 +161,121 @@ export default function ProductCatalogueBook({ products }: ProductCatalogueBookP
   }, [selectedProducts]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 pt-32 pb-12 px-4">
-      <div className="container mx-auto max-w-7xl">
+    <div className="min-h-screen bg-gradient-to-br from-[var(--color-ivory)] via-[var(--color-cashew-cream)] to-[var(--color-beige)] pt-32 pb-12 px-4 relative overflow-hidden">
+      {/* Decorative Background Elements */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Almonds */}
+        <motion.div
+          className="absolute top-20 left-10 text-[var(--color-gold)] opacity-10"
+          animate={{ 
+            rotate: [0, 10, -10, 0],
+            y: [0, -10, 0]
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <AlmondIcon className="w-24 h-24 md:w-32 md:h-32" />
+        </motion.div>
+        <motion.div
+          className="absolute top-40 right-20 text-[var(--color-gold-dark)] opacity-10"
+          animate={{ 
+            rotate: [0, -15, 15, 0],
+            y: [0, 10, 0]
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        >
+          <AlmondIcon className="w-20 h-20 md:w-28 md:h-28" />
+        </motion.div>
+        <motion.div
+          className="absolute bottom-32 left-1/4 text-[var(--color-gold)] opacity-10"
+          animate={{ 
+            rotate: [0, 20, -20, 0],
+            x: [0, -15, 0]
+          }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        >
+          <AlmondIcon className="w-28 h-28 md:w-36 md:h-36" />
+        </motion.div>
+
+        {/* Nuts */}
+        <motion.div
+          className="absolute top-60 left-1/3 text-[var(--color-deep-brown)] opacity-8"
+          animate={{ 
+            rotate: [0, 360],
+            scale: [1, 1.1, 1]
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+        >
+          <NutIcon className="w-16 h-16 md:w-24 md:h-24" />
+        </motion.div>
+        <motion.div
+          className="absolute bottom-40 right-1/4 text-[var(--color-deep-brown)] opacity-8"
+          animate={{ 
+            rotate: [0, -360],
+            scale: [1, 1.15, 1]
+          }}
+          transition={{ duration: 18, repeat: Infinity, ease: "linear", delay: 3 }}
+        >
+          <NutIcon className="w-20 h-20 md:w-28 md:h-28" />
+        </motion.div>
+
+        {/* Cashews */}
+        <motion.div
+          className="absolute top-1/3 right-10 text-[var(--color-gold-dark)] opacity-10"
+          animate={{ 
+            rotate: [0, 15, -15, 0],
+            x: [0, 10, 0]
+          }}
+          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+        >
+          <CashewIcon className="w-20 h-20 md:w-28 md:h-28" />
+        </motion.div>
+        <motion.div
+          className="absolute bottom-20 left-20 text-[var(--color-gold)] opacity-10"
+          animate={{ 
+            rotate: [0, -12, 12, 0],
+            y: [0, -8, 0]
+          }}
+          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 2.5 }}
+        >
+          <CashewIcon className="w-24 h-24 md:w-32 md:h-32" />
+        </motion.div>
+
+        {/* Walnuts */}
+        <motion.div
+          className="absolute top-1/2 left-1/2 opacity-8"
+          animate={{ 
+            rotate: [0, 10, -10, 0],
+            scale: [1, 1.05, 1]
+          }}
+          transition={{ duration: 13, repeat: Infinity, ease: "easeInOut", delay: 4 }}
+        >
+          <WalnutIcon className="w-18 h-18 md:w-24 md:h-24" />
+        </motion.div>
+        <motion.div
+          className="absolute top-3/4 right-1/3 opacity-10"
+          animate={{ 
+            rotate: [0, -8, 8, 0],
+            y: [0, 10, 0]
+          }}
+          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 5 }}
+        >
+          <WalnutIcon className="w-20 h-20 md:w-26 md:h-26" />
+        </motion.div>
+
+        {/* Peanuts */}
+        <motion.div
+          className="absolute top-1/4 left-1/3 opacity-8"
+          animate={{ 
+            rotate: [0, 12, -12, 0],
+            x: [0, -8, 0]
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 3.5 }}
+        >
+          <PeanutIcon className="w-16 h-16 md:w-22 md:h-22" />
+        </motion.div>
+      </div>
+
+      <div className="container mx-auto max-w-7xl relative z-10">
         <motion.div
           className="text-center mb-8"
           initial={{ opacity: 0, y: -20 }}

@@ -58,8 +58,11 @@ export default function Header({ initialHeader, products, siteSettings }: Header
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-30 transition-all duration-300 ${isScrolled ? "bg-white shadow-md py-3" : "bg-white/95 backdrop-blur-sm py-4"
-          }`}
+        className={`fixed top-0 left-0 right-0 z-30 transition-all duration-300 ${
+          isScrolled 
+            ? "bg-white shadow-lg py-3 border-b border-[var(--color-sand)]" 
+            : "bg-gradient-to-b from-white to-[var(--color-ivory)] backdrop-blur-md py-4 shadow-sm"
+        }`}
       >
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="flex items-center justify-between">
@@ -117,7 +120,7 @@ export default function Header({ initialHeader, products, siteSettings }: Header
               )}
               <Link
                 href="/contact?type=trade"
-                className="bg-[var(--color-gold)] hover:bg-[var(--color-gold-dark)] text-white px-6 py-2 rounded-lg font-medium transition-colors focus:outline-2 focus:outline-[var(--color-gold-dark)] focus:outline-offset-2"
+                className="bg-gradient-to-r from-[var(--color-almond-gold)] to-[var(--color-gold-dark)] hover:shadow-lg text-white px-6 py-2.5 rounded-full font-semibold transition-all duration-300 hover:scale-105 focus:outline-2 focus:outline-[var(--color-gold-dark)] focus:outline-offset-2"
               >
                 {header.tradeButtonText}
               </Link>

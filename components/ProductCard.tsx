@@ -55,9 +55,12 @@ export default function ProductCard({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      whileHover={{ y: -5 }}
-      className="section-shell border border-[#eee3d2] flex flex-col h-full bg-white"
+      whileHover={{ y: -8, scale: 1.02 }}
+      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+      className="group relative flex flex-col h-full bg-gradient-to-br from-white via-[var(--color-ivory)] to-[var(--color-cashew-cream)] rounded-3xl border-2 border-[var(--color-gold-light)] shadow-lg hover:shadow-2xl hover:border-[var(--color-almond-gold)] transition-all duration-300 overflow-hidden"
     >
+      {/* Premium shine effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
       <Link href={`/products/${productSlug}`} className="block flex-1 p-6 space-y-4">
         <div className="relative aspect-square w-full rounded-2xl border border-dashed border-[var(--color-deep-brown)] bg-[var(--color-beige)] flex items-center justify-center text-center overflow-hidden">
           {product.heroImage ? (
@@ -100,14 +103,14 @@ export default function ProductCard({
       <div className="px-6 pb-6 mt-auto flex flex-col sm:flex-row gap-2">
         <button
           onClick={onViewSpecs}
-          className="flex-1 border border-[#e8dcc8] text-[var(--color-deep-brown)] hover:bg-[var(--color-beige)] px-4 py-3 rounded-full font-medium transition-colors focus:outline-2 focus:outline-[var(--color-gold)] focus:outline-offset-2"
+          className="flex-1 border-2 border-[var(--color-almond-gold)] text-[var(--color-deep-brown)] hover:bg-[var(--color-cashew-cream)] hover:border-[var(--color-gold-dark)] px-4 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 focus:outline-2 focus:outline-[var(--color-gold)] focus:outline-offset-2"
           aria-label={`View specs for ${productTitle}`}
         >
           {labels.common.viewSpecs}
         </button>
         <button
           onClick={onAddToEnquiry}
-          className="flex-1 bg-[var(--color-gold)] hover:bg-[var(--color-gold-dark)] text-white px-4 py-3 rounded-full font-semibold transition-colors focus:outline-2 focus:outline-[var(--color-gold-dark)] focus:outline-offset-2"
+          className="flex-1 bg-gradient-to-r from-[var(--color-almond-gold)] to-[var(--color-gold-dark)] hover:shadow-lg text-white px-4 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 focus:outline-2 focus:outline-[var(--color-gold-dark)] focus:outline-offset-2"
           aria-label={`Add ${productTitle} to enquiry`}
         >
           {labels.common.addToEnquiry}

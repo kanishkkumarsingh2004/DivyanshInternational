@@ -84,7 +84,6 @@ export default async function WebsiteLayout({
         accessibility={siteSettings?.accessibility}
         products={productsData}
       />
-      <FloatingEnquiryBar labels={siteSettings?.enquiry?.floatingBar} />
       <EnquiryBuilder labels={siteSettings?.enquiry} />
       <FloatingActionButton
         whatsappNumber={siteSettings?.whatsapp?.phoneNumber}
