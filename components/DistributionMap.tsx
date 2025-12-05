@@ -1,83 +1,115 @@
 "use client";
 
-import { useState } from "react";
-
-import { type DistributionRegion } from "@/lib/data/distribution";
+import { useEffect, useRef, useState } from "react";
 
 interface DistributionMapProps {
-  regions?: DistributionRegion[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  regions?: any[];
   heading?: string;
 }
 
-export default function DistributionMap({ regions, heading }: DistributionMapProps) {
-  const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
-  const mapRegions = regions || [];
+const LOCATIONS = [
+  { name: "Delhi NCR", lat: 28.6139, lng: 77.2090 },
+  { name: "Punjab", lat: 31.1471, lng: 75.3412 },
+  { name: "Haryana", lat: 29.0588, lng: 76.0856 },
+];
+
+const CENTER = { lat: 30.0, lng: 76.5 }; // Approx center of Northern India
+
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    google: any;
+  }
+}
+
+export default function DistributionMap({ heading }: DistributionMapProps) {
+  const mapRef = useRef<HTMLDivElement>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+
+    if (!apiKey) {
+      setError("Google Maps API Key is missing. Please add NEXT_PUBLIC_GOOGLE_MAPS_API_KEY to .env.local");
+      return;
+    }
+
+    const loadMap = () => {
+      if (!mapRef.current) return;
+
+      if (typeof window.google === "undefined") {
+        const script = document.createElement("script");
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
+        script.async = true;
+        script.defer = true;
+        script.onload = initMap;
+        script.onerror = () => setError("Failed to load Google Maps script.");
+        document.head.appendChild(script);
+      } else {
+        initMap();
+      }
+    };
+
+    const initMap = () => {
+      if (!mapRef.current) return;
+
+      try {
+        const map = new window.google.maps.Map(mapRef.current, {
+          center: CENTER,
+          zoom: 6,
+          styles: [
+            {
+              featureType: "all",
+              elementType: "geometry.fill",
+              stylers: [{ color: "#fcf8f2" }], // Beige background
+            },
+            {
+              featureType: "water",
+              elementType: "geometry.fill",
+              stylers: [{ color: "#c9a66b" }, { lightness: 40 }], // Gold-ish water
+            },
+          ],
+        });
+
+        LOCATIONS.forEach((loc) => {
+          new window.google.maps.Marker({
+            position: { lat: loc.lat, lng: loc.lng },
+            map,
+            title: loc.name,
+            label: {
+              text: loc.name,
+              color: "#3e2f23", // Deep brown
+              fontWeight: "bold",
+              fontSize: "14px",
+            },
+          });
+        });
+      } catch (err) {
+        console.error("Error initializing map:", err);
+        setError("Error initializing map.");
+      }
+    };
+
+    loadMap();
+  }, []);
 
   return (
-    <div className="relative w-full h-96 bg-[var(--color-beige)] rounded-lg overflow-hidden">
-      {/* Placeholder Map SVG */}
-      <svg viewBox="0 0 100 100" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-        {/* Simple map outline */}
-        <path
-          d="M 20 20 L 80 20 L 80 80 L 20 80 Z"
-          fill="white"
-          stroke="var(--color-deep-brown)"
-          strokeWidth="0.5"
-        />
+    <div className="relative w-full h-96 bg-[var(--color-beige)] rounded-lg overflow-hidden shadow-md">
+      {heading && (
+        <div className="absolute top-4 left-4 z-10 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg shadow-sm">
+          <h4 className="font-bold text-[var(--color-deep-brown)]">{heading}</h4>
+        </div>
+      )}
 
-        {/* Distribution Points */}
-        {mapRegions.map((region, index) => (
-          <g key={region._id || `region-${index}`}>
-            <circle
-              cx={region.x}
-              cy={region.y}
-              r="3"
-              fill="var(--color-gold)"
-              stroke="var(--color-deep-brown)"
-              strokeWidth="0.5"
-              onMouseEnter={() => setHoveredRegion(region._id)}
-              onMouseLeave={() => setHoveredRegion(null)}
-              className="cursor-pointer transition-all hover:r-4"
-            />
-            {hoveredRegion === region._id && (
-              <>
-                <rect
-                  x={region.x - 10}
-                  y={region.y - 8}
-                  width="20"
-                  height="6"
-                  fill="var(--color-deep-brown)"
-                  opacity="0.9"
-                  rx="1"
-                />
-                <text
-                  x={region.x}
-                  y={region.y - 3}
-                  textAnchor="middle"
-                  fill="white"
-                  fontSize="2"
-                  fontWeight="bold"
-                >
-                  {region.name}
-                </text>
-              </>
-            )}
-          </g>
-        ))}
-      </svg>
-
-      {/* Legend */}
-      <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm p-4 rounded-lg shadow-md">
-        <h4 className="font-semibold text-[var(--color-deep-brown)] mb-2">{heading}</h4>
-        <ul className="space-y-1 text-sm text-[var(--color-text)]">
-          {mapRegions.map((region, index) => (
-            <li key={region._id || `legend-${index}`} className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-[var(--color-gold)] rounded-full" />
-              <span>{region.name}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {error ? (
+        <div className="w-full h-full flex items-center justify-center text-[var(--color-muted)] p-4 text-center">
+          <p>{error}</p>
+        </div>
+      ) : (
+        <div ref={mapRef} className="w-full h-full" />
+      )}
     </div>
   );
 }
+
