@@ -128,15 +128,21 @@ export default function HeroSlider({
                     muted
                     loop
                     playsInline
-                  />
+                    preload="auto"
+                    onError={(e) => console.error('Video error:', e)}
+                    onLoadedData={() => console.log('Video loaded:', slide.videoUrl)}
+                  >
+                    <source src={slide.videoUrl} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
                 </motion.div>
               )
           )}
         </AnimatePresence>
-        {/* Light warm overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-ivory)]/95 via-[var(--color-cashew-cream)]/90 to-[var(--color-beige)]/85" />
+        {/* Light warm overlay - reduced opacity to show video */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-ivory)]/40 via-[var(--color-cashew-cream)]/35 to-[var(--color-beige)]/30" />
         {/* Subtle texture */}
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM4YjdkNmIiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDE0YzAtMy4zMTQgMi42ODYtNiA2LTZzNiAyLjY4NiA2IDYtMi42ODYgNi02IDYtNi0yLjY4Ni02LTZ6TTEyIDM4YzAtMy4zMTQgMi42ODYtNiA2LTZzNiAyLjY4NiA2IDYtMi42ODYgNi02IDYtNi0yLjY4Ni02LTZ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-40"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM4YjdkNmIiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDE0YzAtMy4zMTQgMi42ODYtNiA2LTZzNiAyLjY4NiA2IDYtMi42ODYgNi02IDYtNi0yLjY4Ni02LTZ6TTEyIDM4YzAtMy4zMTQgMi42ODYtNiA2LTZzNiAyLjY4NiA2IDYtMi42ODYgNi02IDYtNi0yLjY4Ni02LTZ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
       </div>
 
       {/* Floating Dry Fruits Decorations */}
@@ -247,17 +253,17 @@ export default function HeroSlider({
                 </p>
               </div>
 
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight font-heading text-[var(--color-deep-brown)] drop-shadow-sm">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight font-heading text-[var(--color-deep-brown)] drop-shadow-[0_2px_8px_rgba(255,255,255,0.9)]">
                 {slides[activeSlide].headline}
               </h1>
 
-              <p className="text-sm text-[var(--color-almond-gold)] mb-6 font-bold tracking-wide uppercase border-l-4 border-[var(--color-almond-gold)] pl-4 bg-white/60 backdrop-blur-sm py-2 inline-block rounded-r-lg shadow-sm">
+              <p className="text-sm text-[var(--color-almond-gold)] mb-6 font-bold tracking-wide uppercase border-l-4 border-[var(--color-almond-gold)] pl-4 bg-white/80 backdrop-blur-md py-2 inline-block rounded-r-lg shadow-lg">
                 {slides[activeSlide].badge}
               </p>
 
               <div className="space-y-4 text-lg text-[var(--color-text-light)] max-w-2xl mb-10 leading-relaxed">
                 {slides[activeSlide].paragraphs.map((paragraph, index) => (
-                  <p key={`${slides[activeSlide]._id}-paragraph-${index}`} className="drop-shadow-sm">{paragraph}</p>
+                  <p key={`${slides[activeSlide]._id}-paragraph-${index}`} className="drop-shadow-[0_1px_4px_rgba(255,255,255,0.8)] bg-white/50 backdrop-blur-sm px-3 py-1 rounded-lg">{paragraph}</p>
                 ))}
               </div>
 

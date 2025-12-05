@@ -320,6 +320,7 @@ const heroSlides = [
     primaryCta: { label: "Explore Our Collection", target: "products" },
     secondaryCta: { label: "Contact Trade Desk", target: "contact" },
     videoUrl: "https://cdn.coverr.co/videos/coverr-hand-scooping-almonds-5583/1080p.mp4",
+    posterUrl: "https://images.unsplash.com/photo-1508747703725-719777637510?w=1920&q=80", // Almonds poster
   },
 ];
 
@@ -663,6 +664,8 @@ const testimonialsSectionData = {
     eyebrow: "Behind the Scenes",
     title: "Drone Diaries: Our Facility",
     placeholderText: "Aerial view of our processing facility",
+    videoUrl: "", // Add your facility drone video URL here
+    // image: { _type: "image", asset: { _ref: "image-..." } }, // Or upload an image in Sanity Studio
     highlights: [
       "ISO 22000 certified processing unit",
       "10,000+ sq ft temperature-controlled storage",

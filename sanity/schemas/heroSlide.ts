@@ -46,14 +46,25 @@ export default defineType({
       ],
     }),
     defineField({
+      name: "video",
+      title: "Video File",
+      type: "file",
+      description: "Upload video file directly (recommended)",
+      options: {
+        accept: "video/*",
+      },
+    }),
+    defineField({
       name: "videoUrl",
-      title: "Video URL",
+      title: "Video URL (fallback)",
       type: "url",
+      description: "External video URL (used if no video file is uploaded)",
     }),
     defineField({
       name: "posterImage",
       title: "Poster Image",
       type: "image",
+      description: "Thumbnail shown before video loads",
       options: { hotspot: true },
     }),
     defineField({

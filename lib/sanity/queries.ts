@@ -267,7 +267,7 @@ export const heroSlidesQuery = groq`
     paragraphs,
     primaryCta,
     secondaryCta,
-    videoUrl,
+    "videoUrl": coalesce(video.asset->url, videoUrl),
     posterImage,
     stats
   }
@@ -319,7 +319,15 @@ export const testimonialsSectionQuery = groq`
     _id,
     eyebrow,
     title,
-    droneSection
+    droneSection {
+      eyebrow,
+      title,
+      placeholderText,
+      videoUrl,
+      image,
+      highlights,
+      note
+    }
   }
 `;
 

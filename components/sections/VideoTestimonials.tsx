@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-
+import Image from "next/image";
+import { urlForImage } from "@/lib/sanity/image";
 import type { SanityImageSource } from "@sanity/image-url";
 
 type Testimonial = {
@@ -23,6 +24,8 @@ interface TestimonialsSectionSettings {
     placeholderText?: string;
     highlights?: string[];
     note?: string;
+    videoUrl?: string;
+    image?: SanityImageSource;
   };
 }
 
@@ -43,7 +46,7 @@ export default function VideoTestimonialsSection({
   const droneHighlightsList = sectionSettings?.droneSection?.highlights || [];
 
   return (
-    <section id={routing?.testimonialsSectionId} className="py-20 bg-[var(--color-sand)]">
+    <section id={routing?.testimonialsSectionId} className="py-20 bg-gradient-to-b from-[var(--color-beige)] to-[var(--color-sand)] relative overflow-hidden">
       <div className="container mx-auto px-4 md:px-6 lg:px-10">
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           <motion.div
@@ -76,7 +79,7 @@ export default function VideoTestimonialsSection({
               {testimonials.map((testimonial) => (
                 <motion.blockquote
                   key={testimonial._id}
-                  className="bg-white border border-[#efe3d2] rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow"
+                  className="bg-gradient-to-br from-white to-[var(--color-ivory)] border-2 border-[var(--color-sand)] rounded-2xl p-6 shadow-lg hover:shadow-xl hover:border-[var(--color-gold-light)] transition-all duration-300"
                   variants={{
                     hidden: { opacity: 0, y: 20 },
                     show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
@@ -95,7 +98,7 @@ export default function VideoTestimonialsSection({
           </motion.div>
 
           <motion.div
-            className="section-shell border border-[#eadfce] p-8 bg-white space-y-6"
+            className="bg-gradient-to-br from-white to-[var(--color-ivory)] border-2 border-[var(--color-gold-light)] p-8 rounded-3xl shadow-xl space-y-6"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -107,8 +110,30 @@ export default function VideoTestimonialsSection({
             <h3 className="text-2xl font-semibold text-[var(--color-graphite)] mb-4">
               {sectionSettings?.droneSection?.title}
             </h3>
-            <div className="rounded-2xl border border-dashed border-[var(--color-deep-brown)] bg-[var(--color-beige)] min-h-[220px] flex items-center justify-center text-center text-xs uppercase tracking-[0.3em] text-[var(--color-muted)] px-6">
-              {sectionSettings?.droneSection?.placeholderText}
+            <div className="rounded-2xl overflow-hidden border-2 border-[var(--color-gold-light)] bg-[var(--color-beige)] min-h-[220px] relative">
+              {sectionSettings?.droneSection?.videoUrl ? (
+                <video
+                  className="w-full h-full object-cover"
+                  src={sectionSettings.droneSection.videoUrl}
+                  controls
+                  poster={sectionSettings?.droneSection?.image ? urlForImage(sectionSettings.droneSection.image).url() : undefined}
+                >
+                  Your browser does not support the video tag.
+                </video>
+              ) : sectionSettings?.droneSection?.image ? (
+                <div className="relative w-full h-[300px]">
+                  <Image
+                    src={urlForImage(sectionSettings.droneSection.image).url()}
+                    alt={sectionSettings?.droneSection?.title || "Facility"}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              ) : (
+                <div className="flex items-center justify-center text-center text-xs uppercase tracking-[0.3em] text-[var(--color-muted)] px-6 min-h-[220px]">
+                  {sectionSettings?.droneSection?.placeholderText}
+                </div>
+              )}
             </div>
             <ul className="space-y-4 text-[var(--color-slate)]">
               {droneHighlightsList.map((point) => (

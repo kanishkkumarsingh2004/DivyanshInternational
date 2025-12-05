@@ -69,21 +69,21 @@ export default function Footer({ initialFooter, labels, accessibility, products 
     })) || [];
 
   return (
-    <footer className="bg-gradient-to-br from-[var(--color-deep-brown)] via-[var(--color-raisin-purple)] to-[var(--color-deep-brown)] text-white py-16 relative overflow-hidden">
+    <footer className="bg-gradient-to-br from-[var(--color-deep-brown)] via-[var(--color-raisin-purple)] to-[var(--color-deep-brown)] py-16 relative overflow-hidden" style={{ color: '#ffffff' }}>
       {/* Decorative overlay */}
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDE0YzAtMy4zMTQgMi42ODYtNiA2LTZzNiAyLjY4NiA2IDYtMi42ODYgNi02IDYtNi0yLjY4Ni02LTZ6TTEyIDM4YzAtMy4zMTQgMi42ODYtNiA2LTZzNiAyLjY4NiA2IDYtMi42ODYgNi02IDYtNi0yLjY4Ni02LTZ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-50"></div>
       <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Company Info */}
           <div>
-            <h3 className="text-xl font-bold mb-4">{labels?.companyTitle}</h3>
-            <p className="text-white/80 text-sm mb-4">{labels?.companyDescription}</p>
+            <h3 className="text-xl font-bold mb-4" style={{ color: '#ffffff' }}>{labels?.companyTitle}</h3>
+            <p className="text-sm mb-4 leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>{labels?.companyDescription}</p>
             <div className="flex gap-4">
               {/* Social Media Links */}
               {footer.socialLinks.facebook && footer.socialLinks.facebook !== "#" && (
                 <a
                   href={footer.socialLinks.facebook}
-                  className="text-white/80 hover:text-[var(--color-gold)] transition-colors focus:outline-2 focus:outline-[var(--color-gold)] focus:rounded p-2"
+                  className="text-white hover:text-[var(--color-almond-gold)] transition-colors focus:outline-2 focus:outline-[var(--color-gold)] focus:rounded p-2"
                   aria-label={accessibility?.socialFacebookAria}
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -94,7 +94,8 @@ export default function Footer({ initialFooter, labels, accessibility, products 
               {footer.socialLinks.twitter && footer.socialLinks.twitter !== "#" && (
                 <a
                   href={footer.socialLinks.twitter}
-                  className="text-white/80 hover:text-[var(--color-gold)] transition-colors focus:outline-2 focus:outline-[var(--color-gold)] focus:rounded p-2"
+                  className="hover:text-[var(--color-almond-gold)] transition-colors focus:outline-2 focus:outline-[var(--color-gold)] focus:rounded p-2"
+                  style={{ color: '#ffffff' }}
                   aria-label={accessibility?.socialTwitterAria}
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -105,7 +106,8 @@ export default function Footer({ initialFooter, labels, accessibility, products 
               {footer.socialLinks.linkedin && footer.socialLinks.linkedin !== "#" && (
                 <a
                   href={footer.socialLinks.linkedin}
-                  className="text-white/80 hover:text-[var(--color-gold)] transition-colors focus:outline-2 focus:outline-[var(--color-gold)] focus:rounded p-2"
+                  className="hover:text-[var(--color-almond-gold)] transition-colors focus:outline-2 focus:outline-[var(--color-gold)] focus:rounded p-2"
+                  style={{ color: '#ffffff' }}
                   aria-label={accessibility?.socialLinkedinAria}
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -118,13 +120,14 @@ export default function Footer({ initialFooter, labels, accessibility, products 
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">{labels?.quickLinksTitle}</h4>
+            <h4 className="text-lg font-semibold mb-4" style={{ color: '#ffffff' }}>{labels?.quickLinksTitle}</h4>
             <ul className="space-y-2">
               {footer.quickLinks.map((link, index) => (
                 <li key={index}>
                   <Link
                     href={link.url}
-                    className="text-white/80 hover:text-[var(--color-gold)] transition-colors text-sm"
+                    className="hover:text-[var(--color-almond-gold)] transition-colors text-sm block"
+                    style={{ color: 'rgba(255, 255, 255, 0.95)' }}
                   >
                     {link.label}
                   </Link>
@@ -135,13 +138,14 @@ export default function Footer({ initialFooter, labels, accessibility, products 
 
           {/* Product Categories */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">{labels?.productsTitle}</h4>
+            <h4 className="text-lg font-semibold mb-4" style={{ color: '#ffffff' }}>{labels?.productsTitle}</h4>
             <ul className="space-y-2">
               {dynamicProductLinks.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-white/80 hover:text-[var(--color-gold)] transition-colors text-sm"
+                    className="hover:text-[var(--color-almond-gold)] transition-colors text-sm block"
+                    style={{ color: 'rgba(255, 255, 255, 0.95)' }}
                   >
                     {link.label}
                   </Link>
@@ -152,31 +156,32 @@ export default function Footer({ initialFooter, labels, accessibility, products 
 
           {/* Certifications & Info */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">{labels?.certificationsTitle}</h4>
+            <h4 className="text-lg font-semibold mb-4" style={{ color: '#ffffff' }}>{labels?.certificationsTitle}</h4>
             <div className="space-y-4">
               {/* Certification Badges Placeholder */}
               <div className="flex gap-2 flex-wrap">
-                <div className="bg-white/10 px-3 py-2 rounded text-xs">{labels?.isoLabel}</div>
-                <div className="bg-white/10 px-3 py-2 rounded text-xs">{labels?.fssaiLabel}</div>
+                <div className="bg-white/20 px-3 py-2 rounded text-xs font-medium" style={{ color: '#ffffff' }}>{labels?.isoLabel}</div>
+                <div className="bg-white/20 px-3 py-2 rounded text-xs font-medium" style={{ color: '#ffffff' }}>{labels?.fssaiLabel}</div>
               </div>
             </div>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white/20 pt-8 mt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/80">
-            <p>{labels?.copyrightText}</p>
-            <p className="text-center md:text-right">{labels?.servingText}</p>
+        <div className="border-t border-white/30 pt-8 mt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
+            <p className="font-medium" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>{labels?.copyrightText}</p>
+            <p className="text-center md:text-right" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>{labels?.servingText}</p>
             <div className="text-xs">
               <Link
                 href="/privacy-policy"
-                className="hover:text-[var(--color-gold)] transition-colors focus:outline-2 focus:outline-[var(--color-gold)] focus:rounded px-2 py-1"
+                className="hover:text-[var(--color-almond-gold)] transition-colors focus:outline-2 focus:outline-[var(--color-gold)] focus:rounded px-2 py-1"
+                style={{ color: 'rgba(255, 255, 255, 0.95)' }}
               >
                 {labels?.privacyPolicyText}
               </Link>
-              <span className="mx-2">|</span>
-              <span>{labels?.privacyNote}</span>
+              <span className="mx-2" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>|</span>
+              <span style={{ color: 'rgba(255, 255, 255, 0.95)' }}>{labels?.privacyNote}</span>
             </div>
           </div>
         </div>
