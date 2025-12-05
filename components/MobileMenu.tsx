@@ -36,6 +36,7 @@ export default function MobileMenu({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
             onClick={onClose}
             className="fixed inset-0 bg-black/50 z-40"
             aria-hidden="true"
@@ -43,10 +44,15 @@ export default function MobileMenu({
 
           {/* Mobile Menu */}
           <motion.nav
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "tween", duration: 0.3 }}
+            initial={{ x: "100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: "100%", opacity: 0 }}
+            transition={{ 
+              type: "spring", 
+              stiffness: 300, 
+              damping: 30,
+              opacity: { duration: 0.2 }
+            }}
             className="fixed top-0 right-0 bottom-0 w-[280px] bg-white z-50 shadow-2xl overflow-y-auto"
             role="dialog"
             aria-modal="true"
@@ -72,8 +78,28 @@ export default function MobileMenu({
               </div>
 
               <ul className="mt-8 space-y-2">
-                {items.map((item) => (
-                  <li key={item.url}>
+                {/* Catalogue Link */}
+                <motion.li
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1, duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+                >
+                  <Link
+                    href="/catalogue"
+                    className="block w-full text-left px-4 py-2 text-[var(--color-deep-brown)] hover:bg-[var(--color-beige)] rounded-lg transition-colors focus:outline-2 focus:outline-[var(--color-gold)] focus:rounded"
+                    onClick={onClose}
+                  >
+                    Catalogue
+                  </Link>
+                </motion.li>
+                
+                {items.map((item, index) => (
+                  <motion.li 
+                    key={item.url}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.15 + index * 0.05, duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  >
                     <Link
                       href={item.url}
                       className="block w-full text-left px-4 py-2 text-[var(--color-deep-brown)] hover:bg-[var(--color-beige)] rounded-lg transition-colors focus:outline-2 focus:outline-[var(--color-gold)] focus:rounded"
@@ -81,20 +107,34 @@ export default function MobileMenu({
                     >
                       {item.label}
                     </Link>
-                  </li>
+                  </motion.li>
                 ))}
 
                 {/* Products Section */}
-                <li className="pt-4 border-t border-gray-200 mt-4">
+                <motion.li 
+                  className="pt-4 border-t border-gray-200 mt-4"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.25 + items.length * 0.05, duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                >
                   <div className="px-4 py-2 font-semibold text-[var(--color-deep-brown)] mb-2">
                     {productsLabel}
                   </div>
                   <ul className="space-y-1">
-                    {productLinks.map((product) => {
+                    {productLinks.map((product, index) => {
                       const slug =
                         typeof product.slug === "string" ? product.slug : product.slug.current;
                       return (
-                        <li key={slug}>
+                        <motion.li 
+                          key={slug}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ 
+                            delay: 0.3 + items.length * 0.05 + index * 0.04, 
+                            duration: 0.3, 
+                            ease: [0.25, 0.46, 0.45, 0.94] 
+                          }}
+                        >
                           <Link
                             href={`/products/${slug}`}
                             className="block px-4 py-2 text-[var(--color-text)] hover:bg-[var(--color-beige)] rounded-lg transition-colors focus:outline-2 focus:outline-[var(--color-gold)] focus:rounded"
@@ -102,11 +142,11 @@ export default function MobileMenu({
                           >
                             {getLocalized(product.title, language)}
                           </Link>
-                        </li>
+                        </motion.li>
                       );
                     })}
                   </ul>
-                </li>
+                </motion.li>
               </ul>
             </div>
           </motion.nav>

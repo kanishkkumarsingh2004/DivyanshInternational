@@ -90,6 +90,12 @@ export default function Header({ initialHeader, products, siteSettings }: Header
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-6" aria-label={header.navAriaLabel}>
               <ProductsDropdown products={products || []} labels={siteSettings} />
+              <Link
+                href="/catalogue"
+                className="text-[var(--color-text)] hover:text-[var(--color-gold)] transition-colors focus:outline-2 focus:outline-[var(--color-gold)] focus:rounded px-2 py-1"
+              >
+                Catalogue
+              </Link>
               {header.navLinks?.map((link, index) => (
                 <Link
                   key={index}

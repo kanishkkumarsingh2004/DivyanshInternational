@@ -45,7 +45,7 @@ export default function ThemeToggle({ labels }: ThemeToggleProps) {
   if (!isClient) return null;
 
   return (
-    <div className="fixed bottom-24 right-4 z-50 flex flex-col items-end gap-2">
+    <div className="fixed top-24 right-4 z-50 flex flex-col items-end gap-2">
       <AnimatePresence>
         {isOpen && (
           <motion.div

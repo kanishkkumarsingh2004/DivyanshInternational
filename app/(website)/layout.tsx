@@ -7,6 +7,7 @@ import SkipLink from "@/components/SkipLink";
 import GA4 from "@/components/analytics/GA4";
 import ThemeToggle from "@/components/ThemeToggle";
 import StructuredData from "@/components/seo/StructuredData";
+import ToastContainer from "@/components/Toast";
 import { client } from "@/lib/sanity/client";
 import {
   footerQuery,
@@ -74,6 +75,7 @@ export default async function WebsiteLayout({
       <GA4 />
       <SkipLink labels={siteSettings?.accessibility} />
       <ThemeToggle labels={siteSettings?.themeToggle} />
+      <ToastContainer />
       <Header initialHeader={headerData} products={productsData} siteSettings={siteSettings} />
       <main id="main-content">{children}</main>
       <Footer

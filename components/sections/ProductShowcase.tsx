@@ -54,7 +54,6 @@ export default function ProductShowcase({
       const event = new CustomEvent(eventName, { detail: product });
       window.dispatchEvent(event);
     }
-    handleViewSpecs(product);
   };
 
   return (
