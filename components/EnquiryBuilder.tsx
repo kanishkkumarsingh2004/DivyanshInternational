@@ -122,7 +122,7 @@ export default function EnquiryBuilder({ labels }: EnquiryBuilderProps) {
           setIsPanelOpen(true);
           trackEvent("enquiry_panel_opened");
         }}
-        className="fixed bottom-40 right-6 sm:bottom-8 sm:right-8 z-40 bg-[var(--color-gold)] hover:bg-[var(--color-gold-dark)] text-white rounded-full px-6 py-4 shadow-[0_25px_60px_rgba(0,0,0,0.35)] flex items-center gap-3 focus:outline-2 focus:outline-white focus:outline-offset-2"
+        className="fixed bottom-20 right-4 md:bottom-24 md:right-6 z-40 bg-[var(--color-gold)] hover:bg-[var(--color-gold-dark)] text-white rounded-full px-6 py-4 shadow-[0_25px_60px_rgba(0,0,0,0.35)] flex items-center gap-3 focus:outline-2 focus:outline-white focus:outline-offset-2"
         aria-label={labels?.openBuilderAria}
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

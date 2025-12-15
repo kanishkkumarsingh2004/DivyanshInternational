@@ -53,6 +53,20 @@ interface HeroSliderProps {
   routing?: any;
 }
 
+// Helper function to validate video URLs
+const isValidVideoUrl = (url: string): boolean => {
+  try {
+    const urlObj = new URL(url);
+    const validExtensions = ['.mp4', '.webm', '.ogg', '.mov'];
+    const hasValidExtension = validExtensions.some(ext => 
+      urlObj.pathname.toLowerCase().includes(ext)
+    );
+    return (urlObj.protocol === 'http:' || urlObj.protocol === 'https:') && hasValidExtension;
+  } catch {
+    return false;
+  }
+};
+
 export default function HeroSlider({
   initialSlides,
   stats,
@@ -62,6 +76,9 @@ export default function HeroSlider({
 }: HeroSliderProps) {
   const slides = initialSlides || [];
   const [activeSlide, setActiveSlide] = useState(0);
+  const [videoErrors, setVideoErrors] = useState<Set<string>>(new Set());
+  const [retryAttempts, setRetryAttempts] = useState<Map<string, number>>(new Map());
+  const [loadingTimeouts, setLoadingTimeouts] = useState<Map<string, NodeJS.Timeout>>(new Map());
   const autoPlayInterval = heroConfig?.autoPlayInterval ?? 8000;
 
   const prefersReducedMotion = useMemo(() => {
@@ -76,6 +93,13 @@ export default function HeroSlider({
     }, autoPlayInterval);
     return () => clearInterval(interval);
   }, [prefersReducedMotion, slides.length, autoPlayInterval]);
+
+  // Cleanup timeouts on unmount
+  useEffect(() => {
+    return () => {
+      loadingTimeouts.forEach(timeout => clearTimeout(timeout));
+    };
+  }, [loadingTimeouts]);
 
   const goToSlide = (index: number) => {
     if (slides.length === 0) return;
@@ -118,23 +142,109 @@ export default function HeroSlider({
                   exit={{ opacity: 0 }}
                   transition={{ duration: 1 }}
                 >
-                  <video
-                    className="w-full h-full object-cover"
-                    src={slide.videoUrl}
-                    poster={
-                      slide.posterImage ? urlForImage(slide.posterImage).url() : slide.posterUrl
-                    }
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="auto"
-                    onError={(e) => console.error('Video error:', e)}
-                    onLoadedData={() => console.log('Video loaded:', slide.videoUrl)}
-                  >
-                    <source src={slide.videoUrl} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
+                  {!videoErrors.has(slide._id) && slide.videoUrl && isValidVideoUrl(slide.videoUrl) ? (
+                    <video
+                      className="w-full h-full object-cover"
+                      src={slide.videoUrl}
+                      poster={
+                        slide.posterImage ? urlForImage(slide.posterImage).url() : slide.posterUrl
+                      }
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                      crossOrigin="anonymous"
+                      onError={(e) => {
+                        const currentAttempts = retryAttempts.get(slide._id) || 0;
+                        const errorCode = e.currentTarget.error?.code;
+                        const errorMessage = e.currentTarget.error?.message;
+                        
+                        // Log error only once to avoid spam
+                        if (currentAttempts === 0) {
+                          console.warn(`Video failed to load: ${slide.videoUrl}`, {
+                            errorCode,
+                            errorMessage,
+                            fallbackAvailable: !!(slide.posterImage || slide.posterUrl)
+                          });
+                        }
+                        
+                        // Don't retry for certain error types (invalid URL, CORS, etc.)
+                        const shouldRetry = currentAttempts < 1 && 
+                          errorCode !== 4 && // MEDIA_ELEMENT_ERROR: Media loading aborted
+                          errorCode !== 2;   // MEDIA_ELEMENT_ERROR: Network error
+                        
+                        if (shouldRetry) {
+                          setRetryAttempts(prev => new Map(prev).set(slide._id, currentAttempts + 1));
+                          setTimeout(() => {
+                            try {
+                              e.currentTarget.load();
+                            } catch (retryError) {
+                              console.warn('Video retry failed:', retryError);
+                              setVideoErrors(prev => new Set(prev).add(slide._id));
+                            }
+                          }, 2000);
+                        } else {
+                          // Show fallback immediately
+                          setVideoErrors(prev => new Set(prev).add(slide._id));
+                        }
+                      }}
+                      onLoadStart={() => {
+                        // Set a timeout for video loading
+                        const timeout = setTimeout(() => {
+                          console.warn(`Video loading timeout for: ${slide.videoUrl}`);
+                          setVideoErrors(prev => new Set(prev).add(slide._id));
+                        }, 10000); // 10 second timeout
+                        
+                        setLoadingTimeouts(prev => new Map(prev).set(slide._id, timeout));
+                      }}
+                      onLoadedData={() => {
+                        // Clear timeout on successful load
+                        const timeout = loadingTimeouts.get(slide._id);
+                        if (timeout) {
+                          clearTimeout(timeout);
+                          setLoadingTimeouts(prev => {
+                            const newMap = new Map(prev);
+                            newMap.delete(slide._id);
+                            return newMap;
+                          });
+                        }
+                        console.log('Video loaded successfully:', slide.videoUrl);
+                      }}
+                      onCanPlay={() => {
+                        // Video is ready to play
+                        const timeout = loadingTimeouts.get(slide._id);
+                        if (timeout) {
+                          clearTimeout(timeout);
+                        }
+                      }}
+                    >
+                      <source src={slide.videoUrl} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  ) : (
+                    // Fallback to poster image when video fails
+                    <div 
+                      className="w-full h-full bg-cover bg-center bg-no-repeat bg-gradient-to-br from-[var(--color-ivory)] to-[var(--color-beige)]"
+                      style={{
+                        backgroundImage: (slide.posterImage || slide.posterUrl) ? `url(${
+                          slide.posterImage ? urlForImage(slide.posterImage).url() : slide.posterUrl
+                        })` : undefined
+                      }}
+                    >
+                      {/* Only show indicator if no poster image is available */}
+                      {!(slide.posterImage || slide.posterUrl) && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[var(--color-ivory)] to-[var(--color-beige)]">
+                          <div className="text-center text-[var(--color-slate)]">
+                            <svg className="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                            <p className="text-sm">Media loading...</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </motion.div>
               )
           )}

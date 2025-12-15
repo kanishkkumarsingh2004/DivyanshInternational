@@ -346,3 +346,20 @@ body::before {
     min-height: calc(100vw - 2rem) !important;
   }
 }
+
+/* WhatsApp Button Safe Area Support */
+@supports (bottom: env(safe-area-inset-bottom)) {
+  .whatsapp-button-safe {
+    bottom: max(1rem, calc(1rem + env(safe-area-inset-bottom))) !important;
+    right: max(1rem, calc(1rem + env(safe-area-inset-right))) !important;
+  }
+}
+
+@media (min-width: 768px) {
+  @supports (bottom: env(safe-area-inset-bottom)) {
+    .whatsapp-button-safe {
+      bottom: max(1.5rem, calc(1.5rem + env(safe-area-inset-bottom))) !important;
+      right: max(1.5rem, calc(1.5rem + env(safe-area-inset-right))) !important;
+    }
+  }
+}

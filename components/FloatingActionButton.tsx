@@ -22,7 +22,7 @@ export default function FloatingActionButton({
             href={whatsappUrl} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="fixed bottom-24 right-6 z-30"
+            className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[9999] whatsapp-button-safe"
         >
             <motion.button
                 className="w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#128C7E] shadow-2xl flex items-center justify-center transition-colors"
