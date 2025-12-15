@@ -25,7 +25,8 @@ export function usePageFlip(totalPages: number) {
       const newPage = currentPage + 1;
       setCurrentPage(newPage);
       updateURL(newPage);
-      setTimeout(() => setIsFlipping(false), 1200);
+      // Match animation duration (800ms) with a small buffer - Swiss Online style
+      setTimeout(() => setIsFlipping(false), 850);
     }
   }, [currentPage, totalPages, isFlipping, updateURL]);
 
@@ -36,7 +37,8 @@ export function usePageFlip(totalPages: number) {
       const newPage = currentPage - 1;
       setCurrentPage(newPage);
       updateURL(newPage);
-      setTimeout(() => setIsFlipping(false), 1200);
+      // Match animation duration (800ms) with a small buffer - Swiss Online style
+      setTimeout(() => setIsFlipping(false), 850);
     }
   }, [currentPage, isFlipping, updateURL]);
 
@@ -46,7 +48,8 @@ export function usePageFlip(totalPages: number) {
       setDirection(page > currentPage ? "forward" : "backward");
       setCurrentPage(page);
       updateURL(page);
-      setTimeout(() => setIsFlipping(false), 1200);
+      // Match animation duration (800ms) with a small buffer - Swiss Online style
+      setTimeout(() => setIsFlipping(false), 850);
     }
   }, [currentPage, totalPages, isFlipping, updateURL]);
 

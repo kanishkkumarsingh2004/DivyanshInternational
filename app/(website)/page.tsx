@@ -160,18 +160,19 @@ export default async function Home() {
           sectionSettings={homePage?.capabilitiesSection}
         />
       </AnimationWrapper>
-      <AnimationWrapper delay={0.3}>
-        <ProductShowcase
-          initialProducts={products}
-          siteSettings={siteSettings}
-          headerData={homePage?.productShowcaseSection}
-        />
-      </AnimationWrapper>
+      
       <AnimationWrapper delay={0.4}>
         <ProcessSection
           initialProcessSteps={processSteps}
           sectionSettings={homePage?.processSection}
           routing={siteSettings?.routing}
+        />
+      </AnimationWrapper>
+      <AnimationWrapper delay={0.3}>
+        <ProductShowcase
+          initialProducts={products}
+          siteSettings={siteSettings}
+          headerData={homePage?.productShowcaseSection}
         />
       </AnimationWrapper>
       <AnimationWrapper delay={0.5}>

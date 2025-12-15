@@ -168,6 +168,24 @@ export default function EnquiryPanel({
                     ))}
                   </div>
 
+                  {/* Response Time Information */}
+                  <div className="bg-gradient-to-br from-[var(--color-ivory)] to-[var(--color-cashew-cream)] p-4 rounded-2xl border border-[var(--color-sand)] mb-4">
+                    <h4 className="text-sm font-bold text-[var(--color-deep-brown)] mb-3 flex items-center gap-2">
+                      <span className="w-2 h-2 bg-[var(--color-almond-gold)] rounded-full animate-pulse"></span>
+                      Response Times
+                    </h4>
+                    <div className="space-y-2 text-xs">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[var(--color-almond-gold)] font-semibold">📧 Email:</span>
+                        <span className="text-[var(--color-slate)]">24-48 hours response</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[var(--color-almond-gold)] font-semibold">📱 WhatsApp:</span>
+                        <span className="text-[var(--color-slate)]">12 hours response</span>
+                      </div>
+                    </div>
+                  </div>
+
                   <div className="space-y-3">
                     <button
                       onClick={handleExport}

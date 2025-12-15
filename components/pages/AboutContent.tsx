@@ -325,6 +325,103 @@ export default function AboutContent({
           </div>
         </div>
 
+        {/* Client Success Philosophy */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16 bg-gradient-to-br from-[var(--color-almond-gold)]/10 to-[var(--color-gold-light)]/5 p-12 rounded-3xl border-2 border-[var(--color-almond-gold)]/20 relative overflow-hidden"
+        >
+          <div className="relative z-10">
+            <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-deep-brown)] mb-6 font-heading">
+              We Are All Nuts in Here! 🥜
+            </h2>
+            <div className="max-w-4xl mx-auto space-y-6 text-lg text-[var(--color-slate)] leading-relaxed">
+              <p className="text-xl font-semibold text-[var(--color-almond-gold)]">
+                We feel happier when our clients succeed...
+              </p>
+              <p>
+                We love to share their joy ensuring that in this ecosystem - we are all thriving.
+                Clients & suppliers - our partners... we believe in building relationships that go beyond transactions.
+              </p>
+              <p className="italic">
+                Similar to how different nuts complement each other in a premium mix, 
+                we create an ecosystem where everyone flourishes together.
+              </p>
+            </div>
+          </div>
+          <motion.div
+            animate={{ rotate: [0, 360] }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            className="absolute top-4 right-4 opacity-20"
+          >
+            <NutIcon className="w-24 h-24 text-[var(--color-almond-gold)]" />
+          </motion.div>
+          <motion.div
+            animate={{ rotate: [0, -360] }}
+            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+            className="absolute bottom-4 left-4 opacity-20"
+          >
+            <AlmondIcon className="w-20 h-20 text-[var(--color-gold-dark)]" />
+          </motion.div>
+        </motion.div>
+
+        {/* Our Brands */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-16 bg-gradient-to-br from-white to-[var(--color-cashew-cream)] p-10 rounded-3xl border-2 border-[var(--color-gold-light)] shadow-xl"
+        >
+          <h2 className="text-3xl font-bold text-[var(--color-deep-brown)] mb-8 text-center font-heading">
+            Our Premium Brands
+          </h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="text-center p-6 bg-gradient-to-br from-[var(--color-ivory)] to-white rounded-2xl border border-[var(--color-sand)]">
+              <h3 className="text-2xl font-bold text-[var(--color-almond-gold)] mb-3">B2B Excellence</h3>
+              <div className="space-y-2">
+                <p className="text-lg font-semibold text-[var(--color-deep-brown)]">Sethi Gold</p>
+                <p className="text-lg font-semibold text-[var(--color-deep-brown)]">Sethi Mewa</p>
+              </div>
+              <p className="text-sm text-[var(--color-slate)] mt-3">Premium wholesale solutions</p>
+            </div>
+            <div className="text-center p-6 bg-gradient-to-br from-[var(--color-ivory)] to-white rounded-2xl border border-[var(--color-sand)]">
+              <h3 className="text-2xl font-bold text-[var(--color-almond-gold)] mb-3">Direct to Consumer</h3>
+              <p className="text-lg font-semibold text-[var(--color-deep-brown)]">The BetterNut.co</p>
+              <p className="text-sm text-[var(--color-slate)] mt-3">Premium retail experience</p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Product Range */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-16 text-center"
+        >
+          <h2 className="text-3xl font-bold text-[var(--color-deep-brown)] mb-8 font-heading">
+            Premium Product Range
+          </h2>
+          <div className="flex flex-wrap justify-center gap-4 mb-6">
+            {['Almonds', 'Walnuts', 'Pistachios', 'Makhana', 'Desiccated Coconut Powder'].map((product, index) => (
+              <motion.span
+                key={product}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="px-6 py-3 bg-gradient-to-r from-[var(--color-almond-gold)] to-[var(--color-gold-dark)] text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              >
+                {product}
+              </motion.span>
+            ))}
+          </div>
+          <p className="text-[var(--color-slate)] max-w-2xl mx-auto">
+            Available in various packaging options, quantities, and varieties to meet your specific requirements.
+          </p>
+        </motion.div>
+
         {/* Who We Are & Mission/Vision Grid */}
         <div className="grid md:grid-cols-2 gap-8 mb-24">
           <motion.div

@@ -73,20 +73,25 @@ export default function Header({ initialHeader, products, siteSettings }: Header
                 className="flex items-center space-x-3 focus:outline-2 focus:outline-[var(--color-gold)] focus:rounded"
                 aria-label={header.homeAriaLabel}
               >
-                <Image
-                  src="/divyansh-logo.jpg"
-                  alt={header.logoAlt || "Divyansh International Logo"}
-                  width={56}
-                  height={56}
-                  className="rounded-full border border-[var(--color-beige)] object-cover mix-blend-multiply"
-                  priority
-                />
-                <span className="md:hidden text-[var(--color-deep-brown)] font-semibold text-lg">
-                  Divyansh International
-                </span>
-                <span className="hidden md:block text-[var(--color-deep-brown)] font-semibold text-lg">
-                  {siteSettings?.footer?.companyTitle}
-                </span>
+                <div className="relative">
+                  <Image
+                    src="/divyansh-logo.jpg"
+                    alt={header.logoAlt || "Divyansh International Logo"}
+                    width={64}
+                    height={64}
+                    className="rounded-full border-2 border-[var(--color-almond-gold)] object-cover shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                    priority
+                  />
+                  <div className="absolute -inset-1 bg-gradient-to-r from-[var(--color-almond-gold)] to-[var(--color-gold-dark)] rounded-full opacity-20 blur-sm"></div>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[var(--color-deep-brown)] font-bold text-xl tracking-wide">
+                    Divyansh International
+                  </span>
+                  <span className="text-[var(--color-almond-gold)] text-xs font-semibold uppercase tracking-wider">
+                    Premium Dry Fruits
+                  </span>
+                </div>
               </Link>
             </div>
 

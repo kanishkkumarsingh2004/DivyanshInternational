@@ -351,3 +351,11 @@ export const privacyPolicyQuery = groq`
     }
   }
 `;
+
+export const catalogSettingsQuery = groq`
+  *[_type == "catalogSettings"][0] {
+    _id,
+    backCoverImage,
+    backCoverImageAlt
+  }
+`;

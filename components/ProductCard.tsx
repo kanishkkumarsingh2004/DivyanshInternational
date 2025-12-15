@@ -18,6 +18,9 @@ interface Product {
   introParagraphs?: LocaleText[];
   listSections?: { title: LocaleString; items: LocaleString[] }[];
   heroImage?: SanityImageSource;
+  MOQ?: string;
+  grades?: string[];
+  packFormats?: string[];
 }
 
 interface Labels {
@@ -83,9 +86,80 @@ export default function ProductCard({
         <h3 className="text-xl font-bold text-[var(--color-deep-brown)] mb-3">
           {heroHeading || productTitle}
         </h3>
-        <p className="text-[var(--color-muted)] text-sm mb-4 leading-relaxed line-clamp-4">
+        <p className="text-[var(--color-muted)] text-sm mb-4 leading-relaxed line-clamp-3">
           {intro}
         </p>
+        
+        {/* Product Details: Variety, Packaging, Quantity */}
+        <div className="space-y-3 bg-gradient-to-br from-[var(--color-ivory)] to-white p-4 rounded-2xl border border-[var(--color-sand)] mb-4">
+          <h4 className="text-xs font-bold text-[var(--color-deep-brown)] uppercase tracking-wider mb-2">
+            Product Specifications
+          </h4>
+          
+          {/* Extract variety info from listSections */}
+          {product.listSections?.find(section => 
+            getLocalized(section.title, language).toLowerCase().includes('varieties') ||
+            getLocalized(section.title, language).toLowerCase().includes('variety')
+          ) && (
+            <div className="flex items-start gap-2">
+              <span className="text-[var(--color-almond-gold)] font-semibold text-xs uppercase tracking-wider min-w-[50px]">
+                Variety:
+              </span>
+              <span className="text-[var(--color-slate)] text-xs font-medium">
+                {product.listSections
+                  .find(section => 
+                    getLocalized(section.title, language).toLowerCase().includes('varieties') ||
+                    getLocalized(section.title, language).toLowerCase().includes('variety')
+                  )?.items.slice(0, 2)
+                  .map(item => getLocalized(item, language).split('(')[0].trim())
+                  .join(", ")}
+                {product.listSections
+                  .find(section => 
+                    getLocalized(section.title, language).toLowerCase().includes('varieties') ||
+                    getLocalized(section.title, language).toLowerCase().includes('variety')
+                  )?.items.length > 2 ? "..." : ""}
+              </span>
+            </div>
+          )}
+          
+          {/* Extract packaging info from listSections */}
+          {product.listSections?.find(section => 
+            getLocalized(section.title, language).toLowerCase().includes('packaging') ||
+            getLocalized(section.title, language).toLowerCase().includes('format')
+          ) && (
+            <div className="flex items-start gap-2">
+              <span className="text-[var(--color-almond-gold)] font-semibold text-xs uppercase tracking-wider min-w-[50px]">
+                Pack:
+              </span>
+              <span className="text-[var(--color-slate)] text-xs font-medium">
+                {product.listSections
+                  .find(section => 
+                    getLocalized(section.title, language).toLowerCase().includes('packaging') ||
+                    getLocalized(section.title, language).toLowerCase().includes('format')
+                  )?.items.slice(0, 2)
+                  .map(item => getLocalized(item, language))
+                  .join(", ")}
+                {product.listSections
+                  .find(section => 
+                    getLocalized(section.title, language).toLowerCase().includes('packaging') ||
+                    getLocalized(section.title, language).toLowerCase().includes('format')
+                  )?.items.length > 2 ? "..." : ""}
+              </span>
+            </div>
+          )}
+
+          {product.MOQ && (
+            <div className="flex items-start gap-2">
+              <span className="text-[var(--color-almond-gold)] font-semibold text-xs uppercase tracking-wider min-w-[50px]">
+                MOQ:
+              </span>
+              <span className="text-[var(--color-slate)] text-xs font-medium">
+                {product.MOQ}
+              </span>
+            </div>
+          )}
+        </div>
+        
         {quickItems.length > 0 && (
           <ul className="space-y-2 text-sm text-[var(--color-slate)]">
             {quickItems.map((item) => (

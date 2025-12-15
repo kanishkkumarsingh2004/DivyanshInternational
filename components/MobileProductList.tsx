@@ -12,6 +12,9 @@ interface Product {
   category: string;
   description?: LocaleText;
   heroImage?: SanityImageSource;
+  MOQ?: string;
+  packFormats?: string[];
+  grades?: string[];
 }
 
 interface MobileProductListProps {
@@ -71,6 +74,42 @@ export default function MobileProductList({
                   {productDescription}
                 </p>
               )}
+
+              {/* Product Details: Variety, Packaging, Quantity */}
+              <div className="pt-4 grid grid-cols-1 gap-2 border-t border-gray-100 mt-4">
+                {product.grades && product.grades.length > 0 && (
+                  <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-2">
+                    <span className="text-xs uppercase tracking-wider text-[var(--color-gold-dark)] font-semibold min-w-20">
+                      Variety:
+                    </span>
+                    <span className="text-sm text-gray-700">
+                      {product.grades.join(", ")}
+                    </span>
+                  </div>
+                )}
+
+                {product.packFormats && product.packFormats.length > 0 && (
+                  <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-2">
+                    <span className="text-xs uppercase tracking-wider text-[var(--color-gold-dark)] font-semibold min-w-20">
+                      Packaging:
+                    </span>
+                    <span className="text-sm text-gray-700">
+                      {product.packFormats.join(", ")}
+                    </span>
+                  </div>
+                )}
+
+                {product.MOQ && (
+                  <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-2">
+                    <span className="text-xs uppercase tracking-wider text-[var(--color-gold-dark)] font-semibold min-w-20">
+                      Quantity:
+                    </span>
+                    <span className="text-sm text-gray-700">
+                      {product.MOQ}
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         );
