@@ -76,14 +76,24 @@ export default function HeroSlider({
 }: HeroSliderProps) {
   const slides = initialSlides || [];
   const [activeSlide, setActiveSlide] = useState(0);
-  const [videoErrors, setVideoErrors] = useState<Set<string>>(new Set());
-  const [retryAttempts, setRetryAttempts] = useState<Map<string, number>>(new Map());
-  const [loadingTimeouts, setLoadingTimeouts] = useState<Map<string, NodeJS.Timeout>>(new Map());
+  const [videoErrors, setVideoErrors] = useState<Set<string>>(() => new Set());
+  const [retryAttempts, setRetryAttempts] = useState<Map<string, number>>(() => new Map());
+  const [loadingTimeouts, setLoadingTimeouts] = useState<Map<string, NodeJS.Timeout>>(() => new Map());
   const autoPlayInterval = heroConfig?.autoPlayInterval ?? 8000;
 
-  const prefersReducedMotion = useMemo(() => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    // Check for reduced motion preference after hydration
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReducedMotion(mediaQuery.matches);
+    
+    const handleChange = (e: MediaQueryListEvent) => {
+      setPrefersReducedMotion(e.matches);
+    };
+    
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
 
   useEffect(() => {

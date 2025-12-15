@@ -350,16 +350,51 @@ body::before {
 /* WhatsApp Button Safe Area Support */
 @supports (bottom: env(safe-area-inset-bottom)) {
   .whatsapp-button-safe {
-    bottom: max(1rem, calc(1rem + env(safe-area-inset-bottom))) !important;
-    right: max(1rem, calc(1rem + env(safe-area-inset-right))) !important;
+    bottom: max(1.5rem, calc(1.5rem + env(safe-area-inset-bottom))) !important;
+    right: max(1.5rem, calc(1.5rem + env(safe-area-inset-right))) !important;
   }
 }
 
 @media (min-width: 768px) {
   @supports (bottom: env(safe-area-inset-bottom)) {
     .whatsapp-button-safe {
-      bottom: max(1.5rem, calc(1.5rem + env(safe-area-inset-bottom))) !important;
-      right: max(1.5rem, calc(1.5rem + env(safe-area-inset-right))) !important;
+      bottom: max(2rem, calc(2rem + env(safe-area-inset-bottom))) !important;
+      right: max(2rem, calc(2rem + env(safe-area-inset-right))) !important;
     }
+  }
+}
+
+/* Mobile-specific WhatsApp button improvements */
+@media (max-width: 767px) {
+  .whatsapp-button-safe {
+    /* Ensure button doesn't interfere with mobile browser UI */
+    bottom: max(1.5rem, calc(1.5rem + env(safe-area-inset-bottom, 0px))) !important;
+    right: max(1.5rem, calc(1.5rem + env(safe-area-inset-right, 0px))) !important;
+    
+    /* Add some breathing room from screen edges */
+    margin-bottom: env(keyboard-inset-height, 0px);
+  }
+  
+  /* Ensure proper touch target size on mobile */
+  .whatsapp-button-safe button {
+    min-width: 48px;
+    min-height: 48px;
+  }
+}
+/* Extra small screens (iPhone SE, etc.) */
+@media (max-width: 375px) and (max-height: 667px) {
+  .whatsapp-button-safe {
+    bottom: 1rem !important;
+    right: 1rem !important;
+  }
+  
+  .whatsapp-button-safe button {
+    width: 44px !important;
+    height: 44px !important;
+  }
+  
+  .whatsapp-button-safe svg {
+    width: 20px !important;
+    height: 20px !important;
   }
 }

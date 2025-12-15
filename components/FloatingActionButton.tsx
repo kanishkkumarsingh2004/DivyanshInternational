@@ -22,16 +22,16 @@ export default function FloatingActionButton({
             href={whatsappUrl} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[9999] whatsapp-button-safe"
+            className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[9999] whatsapp-button-safe"
         >
             <motion.button
-                className="w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#128C7E] shadow-2xl flex items-center justify-center transition-colors"
+                className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#25D366] hover:bg-[#128C7E] shadow-2xl flex items-center justify-center transition-colors"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 aria-label="Contact us on WhatsApp"
             >
                 <svg
-                    className="w-8 h-8 text-white"
+                    className="w-6 h-6 md:w-8 md:h-8 text-white"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                 >
