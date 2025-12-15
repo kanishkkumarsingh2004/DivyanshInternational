@@ -1,11 +1,9 @@
 import { defineType, defineField } from "sanity";
-import { BookIcon } from "@sanity/icons";
 
 export default defineType({
   name: "catalogSettings",
   title: "Catalog Settings",
   type: "document",
-  icon: BookIcon,
   fields: [
     defineField({
       name: "backCoverImage",
