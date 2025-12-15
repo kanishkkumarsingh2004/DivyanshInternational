@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { AlmondIcon, CashewIcon, WalnutIcon, PeanutIcon } from "@/components/assets/Decorations";
+import AnimatedTitle from "@/components/AnimatedTitle";
 
 interface CTAData {
   walkthrough?: {
@@ -71,13 +72,32 @@ export default function CTASection({ initialCTA, routing }: CTASectionProps) {
       </div>
       <div className="container mx-auto px-4 md:px-6 lg:px-10 grid lg:grid-cols-2 gap-8 relative z-10">
         <div className="bg-gradient-to-br from-white to-[var(--color-cashew-cream)] p-8 rounded-3xl border-2 border-[var(--color-gold-light)] shadow-xl hover:shadow-2xl transition-all duration-300">
-          <p className="uppercase tracking-[0.4em] text-xs text-[var(--color-muted)] mb-4">
+          <motion.p 
+            className="uppercase tracking-[0.4em] text-xs text-[var(--color-muted)] mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
             {cta.walkthrough?.subtitle}
-          </p>
-          <h3 className="text-2xl font-semibold text-[var(--color-graphite)] mb-4">
+          </motion.p>
+          <AnimatedTitle 
+            direction="left" 
+            delay={0.2}
+            as="h3"
+            className="text-2xl font-semibold text-[var(--color-graphite)] mb-4"
+          >
             {cta.walkthrough?.title}
-          </h3>
-          <p className="text-[var(--color-slate)] mb-6">{cta.walkthrough?.description}</p>
+          </AnimatedTitle>
+          <motion.p 
+            className="text-[var(--color-slate)] mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            {cta.walkthrough?.description}
+          </motion.p>
           <button
             onClick={() => {
               window.location.href = "/contact";
@@ -89,13 +109,32 @@ export default function CTASection({ initialCTA, routing }: CTASectionProps) {
         </div>
 
         <div className="bg-gradient-to-br from-white to-[var(--color-cashew-cream)] p-8 rounded-3xl border-2 border-[var(--color-gold-light)] shadow-xl hover:shadow-2xl transition-all duration-300">
-          <p className="uppercase tracking-[0.4em] text-xs text-[var(--color-muted)] mb-4">
+          <motion.p 
+            className="uppercase tracking-[0.4em] text-xs text-[var(--color-muted)] mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
             {cta.pricing?.subtitle}
-          </p>
-          <h3 className="text-2xl font-semibold text-[var(--color-graphite)] mb-4">
+          </motion.p>
+          <AnimatedTitle 
+            direction="right" 
+            delay={0.2}
+            as="h3"
+            className="text-2xl font-semibold text-[var(--color-graphite)] mb-4"
+          >
             {cta.pricing?.title}
-          </h3>
-          <p className="text-[var(--color-slate)] mb-6">{cta.pricing?.description}</p>
+          </AnimatedTitle>
+          <motion.p 
+            className="text-[var(--color-slate)] mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            {cta.pricing?.description}
+          </motion.p>
           <form
             className="flex flex-col gap-4"
             onSubmit={(event) => {

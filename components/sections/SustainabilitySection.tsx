@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { AlmondIcon, CashewIcon, WalnutIcon, PeanutIcon } from "@/components/assets/Decorations";
+import AnimatedTitle from "@/components/AnimatedTitle";
 
 interface SustainabilityPillar {
   title: string;
@@ -68,20 +69,33 @@ export default function SustainabilitySection({
       </div>
       <div className="container mx-auto px-4 md:px-6 lg:px-10 relative z-10">
         <div className="bg-gradient-to-br from-white to-[var(--color-cashew-cream)] p-8 md:p-12 grid lg:grid-cols-2 gap-10 items-center rounded-3xl border-2 border-[var(--color-gold-light)] shadow-xl">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <p className="uppercase tracking-[0.4em] text-xs text-[var(--color-muted)] mb-4">
+          <div>
+            <motion.p 
+              className="uppercase tracking-[0.4em] text-xs text-[var(--color-muted)] mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
               {sectionSettings?.eyebrow}
-            </p>
-            <h2 className="text-3xl font-semibold text-[var(--color-graphite)] mb-4">
+            </motion.p>
+            <AnimatedTitle 
+              direction="right" 
+              delay={0.2}
+              className="text-3xl font-semibold text-[var(--color-graphite)] mb-4"
+            >
               {sectionSettings?.title}
-            </h2>
-            <p className="text-lg text-[var(--color-slate)]">{sectionSettings?.description}</p>
-          </motion.div>
+            </AnimatedTitle>
+            <motion.p 
+              className="text-lg text-[var(--color-slate)]"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              {sectionSettings?.description}
+            </motion.p>
+          </div>
           <motion.div
             className="grid gap-6"
             initial="hidden"

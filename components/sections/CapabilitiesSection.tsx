@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { AlmondIcon, CashewIcon, WalnutIcon, PeanutIcon, NutIcon } from "@/components/assets/Decorations";
+import AnimatedTitle from "@/components/AnimatedTitle";
 import { urlForImage } from "@/lib/sanity/image";
 import type { SanityImageSource } from "@sanity/image-url";
 
@@ -93,13 +94,31 @@ export default function CapabilitiesSection({
         <div className="max-w-3xl mb-12">
           {sectionSettings && (
             <>
-              <p className="uppercase tracking-[0.4em] text-xs text-[var(--color-muted)] mb-4">
+              <motion.p 
+                className="uppercase tracking-[0.4em] text-xs text-[var(--color-muted)] mb-4"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+              >
                 {sectionSettings.eyebrow}
-              </p>
-              <h2 className="text-3xl md:text-4xl font-semibold text-[var(--color-graphite)] mb-4">
+              </motion.p>
+              <AnimatedTitle 
+                direction="right" 
+                delay={0.2}
+                className="text-3xl md:text-4xl font-semibold text-[var(--color-graphite)] mb-4"
+              >
                 {sectionSettings.title}
-              </h2>
-              <p className="text-lg text-[var(--color-slate)]">{sectionSettings.description}</p>
+              </AnimatedTitle>
+              <motion.p 
+                className="text-lg text-[var(--color-slate)]"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+              >
+                {sectionSettings.description}
+              </motion.p>
             </>
           )}
         </div>
@@ -148,12 +167,23 @@ export default function CapabilitiesSection({
             transition={{ duration: 0.8 }}
           >
             <div className="text-center mb-10">
-              <h3 className="text-2xl font-bold text-[var(--color-deep-brown)] mb-4 font-heading">
+              <AnimatedTitle 
+                direction="left" 
+                delay={0.1}
+                as="h3"
+                className="text-2xl font-bold text-[var(--color-deep-brown)] mb-4 font-heading"
+              >
                 {sectionSettings?.certificationsTitle}
-              </h3>
-              <p className="text-[var(--color-slate)] max-w-2xl mx-auto">
+              </AnimatedTitle>
+              <motion.p 
+                className="text-[var(--color-slate)] max-w-2xl mx-auto"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
                 {sectionSettings?.certificationsDescription}
-              </p>
+              </motion.p>
             </div>
 
             <motion.div

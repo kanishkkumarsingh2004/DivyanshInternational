@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { urlForImage } from "@/lib/sanity/image";
+import AnimatedTitle from "@/components/AnimatedTitle";
 import type { SanityImageSource } from "@sanity/image-url";
 
 type Testimonial = {
@@ -49,18 +50,23 @@ export default function VideoTestimonialsSection({
     <section id={routing?.testimonialsSectionId} className="py-20 bg-gradient-to-b from-[var(--color-beige)] to-[var(--color-sand)] relative overflow-hidden">
       <div className="container mx-auto px-4 md:px-6 lg:px-10">
         <div className="grid lg:grid-cols-2 gap-12 items-start">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <p className="uppercase tracking-[0.4em] text-xs text-[var(--color-muted)] mb-4">
+          <div>
+            <motion.p 
+              className="uppercase tracking-[0.4em] text-xs text-[var(--color-muted)] mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
               {sectionSettings?.eyebrow}
-            </p>
-            <h2 className="text-3xl md:text-4xl font-semibold text-[var(--color-graphite)] mb-6">
+            </motion.p>
+            <AnimatedTitle 
+              direction="left" 
+              delay={0.2}
+              className="text-3xl md:text-4xl font-semibold text-[var(--color-graphite)] mb-6"
+            >
               {sectionSettings?.title}
-            </h2>
+            </AnimatedTitle>
             <motion.div
               className="space-y-6"
               initial="hidden"
@@ -95,7 +101,7 @@ export default function VideoTestimonialsSection({
                 </motion.blockquote>
               ))}
             </motion.div>
-          </motion.div>
+          </div>
 
           <motion.div
             className="bg-gradient-to-br from-white to-[var(--color-ivory)] border-2 border-[var(--color-gold-light)] p-8 rounded-3xl shadow-xl space-y-6"
@@ -104,12 +110,23 @@ export default function VideoTestimonialsSection({
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <p className="uppercase tracking-[0.4em] text-xs text-[var(--color-muted)] mb-4">
+            <motion.p 
+              className="uppercase tracking-[0.4em] text-xs text-[var(--color-muted)] mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
               {sectionSettings?.droneSection?.eyebrow}
-            </p>
-            <h3 className="text-2xl font-semibold text-[var(--color-graphite)] mb-4">
+            </motion.p>
+            <AnimatedTitle 
+              direction="right" 
+              delay={0.4}
+              as="h3"
+              className="text-2xl font-semibold text-[var(--color-graphite)] mb-4"
+            >
               {sectionSettings?.droneSection?.title}
-            </h3>
+            </AnimatedTitle>
             <div className="rounded-2xl overflow-hidden border-2 border-[var(--color-gold-light)] bg-[var(--color-beige)] min-h-[220px] relative">
               {sectionSettings?.droneSection?.videoUrl ? (
                 <video

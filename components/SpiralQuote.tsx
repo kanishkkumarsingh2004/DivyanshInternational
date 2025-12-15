@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { NutIcon } from "@/components/assets/Decorations";
+import AnimatedTitle from "@/components/AnimatedTitle";
 
 interface QuoteData {
   quote: string;
@@ -60,34 +61,54 @@ export default function SpiralQuote({ initialQuote, labels }: SpiralQuoteProps) 
           </div>
 
           {/* Quote */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="text-center lg:text-left"
-          >
-            <span className="text-6xl text-[var(--color-gold)] font-serif leading-none">
-              &quot;
-            </span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--color-deep-brown)] font-heading leading-tight mb-6 -mt-4">
-              {initialQuote.quote}
-            </h2>
-            <p className="text-lg text-[var(--color-slate)] italic mb-8">— {initialQuote.author}</p>
-            <Link
-              href={initialQuote.linkUrl}
-              className="inline-flex items-center gap-2 text-[var(--color-deep-brown)] font-semibold border-b-2 border-[var(--color-gold)] pb-1 hover:text-[var(--color-gold)] transition-colors"
+          <div className="text-center lg:text-left">
+            <motion.span 
+              className="text-6xl text-[var(--color-gold)] font-serif leading-none"
+              initial={{ opacity: 0, scale: 0.5 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
             >
-              {initialQuote.linkText}
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-            </Link>
-          </motion.div>
+              &quot;
+            </motion.span>
+            <AnimatedTitle 
+              direction="right" 
+              delay={0.2}
+              className="text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--color-deep-brown)] font-heading leading-tight mb-6 -mt-4"
+            >
+              {initialQuote.quote}
+            </AnimatedTitle>
+            <motion.p 
+              className="text-lg text-[var(--color-slate)] italic mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              — {initialQuote.author}
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+            >
+              <Link
+                href={initialQuote.linkUrl}
+                className="inline-flex items-center gap-2 text-[var(--color-deep-brown)] font-semibold border-b-2 border-[var(--color-gold)] pb-1 hover:text-[var(--color-gold)] transition-colors"
+              >
+                {initialQuote.linkText}
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              </Link>
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>

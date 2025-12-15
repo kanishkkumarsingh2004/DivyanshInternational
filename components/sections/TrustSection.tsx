@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import AnimatedTitle from "@/components/AnimatedTitle";
 
 import type { SanityImageSource } from "@sanity/image-url";
 import { urlForImage } from "@/lib/sanity/image";
@@ -47,23 +48,35 @@ export default function TrustSection({
     <section id={routing?.trustSectionId} className="py-20 bg-[var(--color-ivory)]">
       <div className="container mx-auto px-4 md:px-6 lg:px-10">
         <div className="section-shell p-8 md:p-12 border border-[#efe3d2]">
-          <motion.div
-            className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 mb-10"
-            initial={{ opacity: 0, y: -10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 mb-10">
             <div>
-              <p className="uppercase tracking-[0.4em] text-xs text-[var(--color-muted)] mb-4">
+              <motion.p 
+                className="uppercase tracking-[0.4em] text-xs text-[var(--color-muted)] mb-4"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+              >
                 {sectionSettings?.eyebrow}
-              </p>
-              <h2 className="text-3xl font-semibold text-[var(--color-graphite)]">
+              </motion.p>
+              <AnimatedTitle 
+                direction="right" 
+                delay={0.2}
+                className="text-3xl font-semibold text-[var(--color-graphite)]"
+              >
                 {sectionSettings?.title}
-              </h2>
+              </AnimatedTitle>
             </div>
-            <p className="text-[var(--color-slate)] max-w-xl">{sectionSettings?.description}</p>
-          </motion.div>
+            <motion.p 
+              className="text-[var(--color-slate)] max-w-xl"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              {sectionSettings?.description}
+            </motion.p>
+          </div>
 
           <motion.div
             className="grid md:grid-cols-3 gap-6 mb-10"

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import ProductCard from "@/components/ProductCard";
 import ProductModal from "@/components/ProductModal";
+import AnimatedTitle from "@/components/AnimatedTitle";
 
 import type { SanityImageSource } from "@sanity/image-url";
 import { motion } from "framer-motion";
@@ -305,13 +306,31 @@ export default function ProductShowcase({
       <div className="container mx-auto px-4 md:px-6 lg:px-10">
         {headerData && (
           <div className="text-center mb-12 max-w-3xl mx-auto">
-            <p className="uppercase tracking-[0.4em] text-xs text-[var(--color-muted)] mb-4">
+            <motion.p 
+              className="uppercase tracking-[0.4em] text-xs text-[var(--color-muted)] mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
               {headerData.eyebrow}
-            </p>
-            <h2 className="text-3xl md:text-4xl font-semibold text-[var(--color-graphite)] mb-4">
+            </motion.p>
+            <AnimatedTitle 
+              direction="left" 
+              delay={0.2}
+              className="text-3xl md:text-4xl font-semibold text-[var(--color-graphite)] mb-4"
+            >
               {headerData.title}
-            </h2>
-            <p className="text-lg text-[var(--color-slate)]">{headerData.description}</p>
+            </AnimatedTitle>
+            <motion.p 
+              className="text-lg text-[var(--color-slate)]"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              {headerData.description}
+            </motion.p>
           </div>
         )}
 
