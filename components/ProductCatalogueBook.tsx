@@ -191,7 +191,7 @@ export default function ProductCatalogueBook({ products, backCoverImage, backCov
         
         return (
           <div className="h-full w-full relative bg-gradient-to-br from-[var(--color-ivory)] via-[var(--color-cashew-cream)] to-[var(--color-beige)] will-change-transform overflow-hidden">
-            {hasImage ? (
+            {hasImage && product.heroImage ? (
               <Image
                 src={urlForImage(product.heroImage).width(1400).height(1200).url()}
                 alt={backCoverImageAlt || "Catalog Back Cover"}

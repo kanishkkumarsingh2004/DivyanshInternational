@@ -97,56 +97,52 @@ export default function ProductCard({
           </h4>
           
           {/* Extract variety info from listSections */}
-          {product.listSections?.find(section => 
-            getLocalized(section.title, language).toLowerCase().includes('varieties') ||
-            getLocalized(section.title, language).toLowerCase().includes('variety')
-          ) && (
-            <div className="flex items-start gap-2">
-              <span className="text-[var(--color-almond-gold)] font-semibold text-xs uppercase tracking-wider min-w-[50px]">
-                Variety:
-              </span>
-              <span className="text-[var(--color-slate)] text-xs font-medium">
-                {product.listSections
-                  .find(section => 
-                    getLocalized(section.title, language).toLowerCase().includes('varieties') ||
-                    getLocalized(section.title, language).toLowerCase().includes('variety')
-                  )?.items.slice(0, 2)
-                  .map(item => getLocalized(item, language).split('(')[0].trim())
-                  .join(", ")}
-                {product.listSections
-                  .find(section => 
-                    getLocalized(section.title, language).toLowerCase().includes('varieties') ||
-                    getLocalized(section.title, language).toLowerCase().includes('variety')
-                  )?.items.length > 2 ? "..." : ""}
-              </span>
-            </div>
-          )}
+          {(() => {
+            const varietySection = product.listSections?.find(section => 
+              getLocalized(section.title, language).toLowerCase().includes('varieties') ||
+              getLocalized(section.title, language).toLowerCase().includes('variety')
+            );
+            
+            if (!varietySection) return null;
+            
+            return (
+              <div className="flex items-start gap-2">
+                <span className="text-[var(--color-almond-gold)] font-semibold text-xs uppercase tracking-wider min-w-[50px]">
+                  Variety:
+                </span>
+                <span className="text-[var(--color-slate)] text-xs font-medium">
+                  {varietySection.items.slice(0, 2)
+                    .map(item => getLocalized(item, language).split('(')[0].trim())
+                    .join(", ")}
+                  {varietySection.items.length > 2 ? "..." : ""}
+                </span>
+              </div>
+            );
+          })()}
           
           {/* Extract packaging info from listSections */}
-          {product.listSections?.find(section => 
-            getLocalized(section.title, language).toLowerCase().includes('packaging') ||
-            getLocalized(section.title, language).toLowerCase().includes('format')
-          ) && (
-            <div className="flex items-start gap-2">
-              <span className="text-[var(--color-almond-gold)] font-semibold text-xs uppercase tracking-wider min-w-[50px]">
-                Pack:
-              </span>
-              <span className="text-[var(--color-slate)] text-xs font-medium">
-                {product.listSections
-                  .find(section => 
-                    getLocalized(section.title, language).toLowerCase().includes('packaging') ||
-                    getLocalized(section.title, language).toLowerCase().includes('format')
-                  )?.items.slice(0, 2)
-                  .map(item => getLocalized(item, language))
-                  .join(", ")}
-                {product.listSections
-                  .find(section => 
-                    getLocalized(section.title, language).toLowerCase().includes('packaging') ||
-                    getLocalized(section.title, language).toLowerCase().includes('format')
-                  )?.items.length > 2 ? "..." : ""}
-              </span>
-            </div>
-          )}
+          {(() => {
+            const packagingSection = product.listSections?.find(section => 
+              getLocalized(section.title, language).toLowerCase().includes('packaging') ||
+              getLocalized(section.title, language).toLowerCase().includes('format')
+            );
+            
+            if (!packagingSection) return null;
+            
+            return (
+              <div className="flex items-start gap-2">
+                <span className="text-[var(--color-almond-gold)] font-semibold text-xs uppercase tracking-wider min-w-[50px]">
+                  Pack:
+                </span>
+                <span className="text-[var(--color-slate)] text-xs font-medium">
+                  {packagingSection.items.slice(0, 2)
+                    .map(item => getLocalized(item, language))
+                    .join(", ")}
+                  {packagingSection.items.length > 2 ? "..." : ""}
+                </span>
+              </div>
+            );
+          })()}
 
           {product.MOQ && (
             <div className="flex items-start gap-2">
