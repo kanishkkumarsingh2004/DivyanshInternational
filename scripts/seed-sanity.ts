@@ -669,7 +669,7 @@ const testimonialsSectionData = {
     highlights: [
       "ISO 22000 certified processing unit",
       "10,000+ sq ft temperature-controlled storage",
-      "Daily processing capacity: 5 MT",
+      "Daily processing capacity: 20 MT",
       "Serving 1000+ B2B clients across India",
     ],
     note: "Virtual tour coming soon",
@@ -1745,6 +1745,24 @@ async function seed() {
   console.log("Seeding Privacy Policy...");
   await client.createOrReplace(privacyPolicyData);
   console.log("  Seeded Privacy Policy");
+
+  // 24. FlipHTML5 Settings.
+  console.log("Seeding FlipHTML5 Settings...");
+  const fliphtml5SettingsData = {
+    _id: "fliphtml5Settings",
+    _type: "fliphtml5Settings",
+    catalogueUrl: "https://online.fliphtml5.com/your-flipbook-id/your-catalogue/",
+    mobileOptimizedUrl: "", // Optional mobile URL
+    pdfFile: null, // Upload PDF file directly in Sanity Studio
+    pdfDownloadUrl: "", // Optional external PDF URL (alternative to file upload)
+    title: "Product Catalogue",
+    description: "Explore our premium collection of dry fruits, nuts, and specialty products with our interactive digital catalogue.",
+    version: "2024.1",
+    lastUpdated: new Date().toISOString(),
+    isActive: true
+  };
+  await client.createOrReplace(fliphtml5SettingsData);
+  console.log("  Seeded FlipHTML5 Settings");
 
   const endTime = Date.now();
   const duration = ((endTime - startTime) / 1000).toFixed(2);

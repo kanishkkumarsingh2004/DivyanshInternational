@@ -26,7 +26,7 @@ import homePage from "./homePage";
 
 import productsPage from "./productsPage";
 import privacyPolicy from "./privacyPolicy";
-import catalogSettings from "./catalogSettings";
+import fliphtml5Settings from "./fliphtml5Settings";
 
 import localeString from "./localeString";
 import localeText from "./localeText";
@@ -56,7 +56,7 @@ export const schemaTypes = [
   testimonialsSection,
   homePage,
   privacyPolicy,
-  catalogSettings,
+  fliphtml5Settings,
   localeString,
   localeText,
 ];

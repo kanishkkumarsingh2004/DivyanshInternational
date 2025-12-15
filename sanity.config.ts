@@ -29,15 +29,15 @@ export default defineConfig({
                       .schemaType("siteSettings")
                       .child(S.document().schemaType("siteSettings")),
                     S.listItem()
-                      .title("Catalog Settings")
-                      .schemaType("catalogSettings")
-                      .child(S.document().schemaType("catalogSettings")),
+                      .title("FlipHTML5 Catalogue")
+                      .schemaType("fliphtml5Settings")
+                      .child(S.document().schemaType("fliphtml5Settings")),
                   ])
               ),
             // All other documents
             ...S.documentTypeListItems().filter(
               (listItem) =>
-                !["siteSettings", "catalogSettings"].includes(
+                !["siteSettings", "fliphtml5Settings"].includes(
                   listItem.getId() || ""
                 )
             ),

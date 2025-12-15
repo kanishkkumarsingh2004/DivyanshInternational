@@ -340,6 +340,28 @@ export const productsPageQuery = groq`
   }
 `;
 
+export const fliphtml5SettingsQuery = groq`
+  *[_type == "fliphtml5Settings"][0] {
+    _id,
+    catalogueUrl,
+    mobileOptimizedUrl,
+    pdfFile {
+      asset-> {
+        _id,
+        url,
+        originalFilename,
+        size
+      }
+    },
+    pdfDownloadUrl,
+    title,
+    description,
+    version,
+    lastUpdated,
+    isActive
+  }
+`;
+
 export const privacyPolicyQuery = groq`
   *[_type == "privacyPolicy"][0] {
     _id,
@@ -352,10 +374,4 @@ export const privacyPolicyQuery = groq`
   }
 `;
 
-export const catalogSettingsQuery = groq`
-  *[_type == "catalogSettings"][0] {
-    _id,
-    backCoverImage,
-    backCoverImageAlt
-  }
-`;
+

@@ -271,3 +271,78 @@ body::before {
     scroll-behavior: auto !important;
   }
 }
+/* Mobile Orientation Lock - Prevent Rotation */
+@media screen and (max-width: 768px) {
+  html {
+    /* Lock orientation to portrait */
+    -webkit-transform-origin: left top;
+    -webkit-transform: rotate(0deg);
+    -webkit-transform-style: preserve-3d;
+    transform-origin: left top;
+    transform: rotate(0deg);
+    transform-style: preserve-3d;
+  }
+  
+  body {
+    /* Prevent orientation change effects */
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    
+    /* Lock viewport */
+    width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  /* Disable landscape mode prompts */
+  @media screen and (orientation: landscape) {
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+  }
+}
+
+/* FlipHTML5 Catalog Specific Styles */
+.fliphtml5-container {
+  /* Prevent rotation effects on the catalog */
+  -webkit-transform: none !important;
+  transform: none !important;
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* Mobile-specific iframe optimizations with 90-degree rotation */
+@media screen and (max-width: 768px) {
+  .fliphtml5-container {
+    /* Container for -90 degree rotated iframe */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    height: 100vw; /* Use viewport width as height for -90 degree rotation */
+    width: 100%;
+  }
+  
+  .fliphtml5-container iframe {
+    /* Rotate the iframe -90 degrees (counter-clockwise) */
+    transform: rotate(-90deg);
+    transform-origin: center center;
+    
+    /* Swap width and height due to -90 degree rotation */
+    width: 100vh !important; /* Use viewport height as width */
+    height: 100vw !important; /* Use viewport width as height */
+    max-width: 100vh !important;
+    max-height: 100vw !important;
+    
+    /* Ensure proper positioning */
+    position: relative;
+  }
+  
+  /* Adjust container height for -90 degree rotation */
+  .mobile-catalog-container {
+    height: calc(100vw - 2rem) !important;
+    min-height: calc(100vw - 2rem) !important;
+  }
+}

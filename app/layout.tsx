@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Manrope, Playfair_Display, Lato } from "next/font/google";
 import "./globals.css";
 import SmoothScrolling from "@/components/SmoothScrolling";
@@ -33,10 +33,22 @@ const lato = Lato({
 export const metadata: Metadata = {
   title: "Divyansh International",
   description: "Premium Quality Dry Fruits & Spices",
+  other: {
+    "screen-orientation": "portrait",
+    "orientation": "portrait"
+  },
   icons: {
     icon: "/divyansh-logo.jpg",
     apple: "/divyansh-logo.jpg",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  viewportFit: "cover"
 };
 
 export default function RootLayout({
