@@ -83,7 +83,7 @@ export default function CTASection({ initialCTA, routing }: CTASectionProps) {
           </motion.p>
           <AnimatedTitle 
             direction="left" 
-            delay={0.2}
+            delay={0.05}
             as="h3"
             className="text-2xl font-semibold text-[var(--color-graphite)] mb-4"
           >
@@ -120,7 +120,7 @@ export default function CTASection({ initialCTA, routing }: CTASectionProps) {
           </motion.p>
           <AnimatedTitle 
             direction="right" 
-            delay={0.2}
+            delay={0.05}
             as="h3"
             className="text-2xl font-semibold text-[var(--color-graphite)] mb-4"
           >

@@ -61,7 +61,7 @@ export default function TrustSection({
               </motion.p>
               <AnimatedTitle 
                 direction="right" 
-                delay={0.2}
+                delay={0.05}
                 className="text-3xl font-semibold text-[var(--color-graphite)]"
               >
                 {sectionSettings?.title}

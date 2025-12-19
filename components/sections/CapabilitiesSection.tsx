@@ -105,7 +105,7 @@ export default function CapabilitiesSection({
               </motion.p>
               <AnimatedTitle 
                 direction="right" 
-                delay={0.2}
+                delay={0.05}
                 className="text-3xl md:text-4xl font-semibold text-[var(--color-graphite)] mb-4"
               >
                 {sectionSettings.title}
@@ -169,7 +169,7 @@ export default function CapabilitiesSection({
             <div className="text-center mb-10">
               <AnimatedTitle 
                 direction="left" 
-                delay={0.1}
+                delay={0.02}
                 as="h3"
                 className="text-2xl font-bold text-[var(--color-deep-brown)] mb-4 font-heading"
               >

@@ -73,7 +73,7 @@ export default function SpiralQuote({ initialQuote, labels }: SpiralQuoteProps) 
             </motion.span>
             <AnimatedTitle 
               direction="right" 
-              delay={0.2}
+              delay={0.05}
               className="text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--color-deep-brown)] font-heading leading-tight mb-6 -mt-4"
             >
               {initialQuote.quote}

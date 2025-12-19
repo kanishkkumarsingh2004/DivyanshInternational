@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   LeafIcon,
@@ -135,7 +135,7 @@ export default function HeroSlider({
   return (
     <section
       id={routing?.heroSectionId}
-      className="relative overflow-hidden min-h-screen flex items-center"
+      className="hero-slider relative overflow-hidden min-h-screen flex items-center"
       aria-label={accessibility?.heroSectionAria}
     >
       {/* Video Background with Light Overlay */}
@@ -146,11 +146,11 @@ export default function HeroSlider({
               index === activeSlide && (
                 <motion.div
                   key={slide._id}
-                  className="absolute inset-0"
+                  className="motion-div absolute inset-0"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 1 }}
+                  transition={{ duration: 0.6, ease: "linear" }}
                 >
                   {!videoErrors.has(slide._id) && slide.videoUrl && isValidVideoUrl(slide.videoUrl) ? (
                     <video
@@ -408,14 +408,18 @@ export default function HeroSlider({
 
           {/* Stats Panel */}
           <div className="space-y-6 hidden lg:block">
-            <AnimatePresence mode="wait">
+            <AnimatePresence>
               {(slides[activeSlide].stats || displayStats).map((stat, index) => (
                 <motion.div
                   key={`${slides[activeSlide]._id}-${stat.label}`}
-                  initial={{ opacity: 0, x: 50 }}
+                  initial={{ opacity: 0, x: 30 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 50 }}
-                  transition={{ delay: index * 0.1 + 0.3 }}
+                  exit={{ opacity: 0, x: 30 }}
+                  transition={{ 
+                    duration: 0.4, 
+                    delay: index * 0.05 + 0.2,
+                    ease: "easeOut"
+                  }}
                   className="backdrop-blur-md bg-white/90 border-2 border-[var(--color-gold-light)] rounded-2xl p-6 shadow-xl hover:shadow-2xl hover:border-[var(--color-almond-gold)] transition-all duration-300 group"
                 >
                   <div className="flex justify-between items-start mb-2">

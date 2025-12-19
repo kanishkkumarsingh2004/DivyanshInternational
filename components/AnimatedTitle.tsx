@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ReactNode } from "react";
+import { ReactNode, useState, useEffect } from "react";
 
 /**
  * AnimatedTitle - A reusable component for animating section titles with smooth reveal animations
@@ -35,20 +35,27 @@ export default function AnimatedTitle({
   as: Component = "h2",
   staggerChildren = false,
 }: AnimatedTitleProps) {
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    // Delay animations until page is more settled
+    const timer = setTimeout(() => setIsReady(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
   const slideVariants = {
     hidden: {
       opacity: 0,
-      x: direction === "left" ? -60 : 60,
+      x: direction === "left" ? -20 : 20,
     },
     visible: {
       opacity: 1,
       x: 0,
       transition: {
-        duration: 0.8,
-        delay,
-        ease: [0.25, 0.46, 0.45, 0.94] as const, // Custom cubic-bezier for smooth reveal
+        duration: 0.3,
+        delay: delay * 0.5, // Reduce delay impact
+        ease: [0.4, 0, 0.2, 1] as const,
         ...(staggerChildren && {
-          staggerChildren: 0.1,
+          staggerChildren: 0.03,
         }),
       },
     },
@@ -57,23 +64,29 @@ export default function AnimatedTitle({
   const childVariants = {
     hidden: {
       opacity: 0,
-      x: direction === "left" ? -30 : 30,
+      x: direction === "left" ? -10 : 10,
     },
     visible: {
       opacity: 1,
       x: 0,
       transition: {
-        duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94] as const,
+        duration: 0.2,
+        ease: [0.4, 0, 0.2, 1] as const,
       },
     },
   };
 
+  // If not ready, render without animation
+  if (!isReady) {
+    return <Component className={className}>{children}</Component>;
+  }
+
   return (
     <motion.div
+      className="animated-title"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-50px" }}
+      viewport={{ once: true, margin: "-100px" }}
       variants={slideVariants}
     >
       <Component className={className}>

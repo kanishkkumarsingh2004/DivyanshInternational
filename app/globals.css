@@ -398,3 +398,50 @@ body::before {
     height: 20px !important;
   }
 }
+/* Animation Performance Optimizations */
+.hero-slider video,
+.hero-slider .motion-div {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Optimize Framer Motion animations */
+[data-framer-motion] {
+  will-change: transform, opacity;
+}
+
+/* Smooth transitions for better performance */
+.transition-all {
+  transition-timing-function: ease-out;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  [data-framer-motion] {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+/* Targeted animation performance optimizations */
+.animated-title,
+.hero-slider .motion-div,
+[data-framer-motion] {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+}
+
+/* Fast transitions for title animations */
+.animated-title * {
+  transition-timing-function: ease-out !important;
+}

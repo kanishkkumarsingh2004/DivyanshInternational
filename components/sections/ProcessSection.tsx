@@ -80,7 +80,7 @@ export default function ProcessSection({
           </motion.p>
           <AnimatedTitle 
             direction="left" 
-            delay={0.2}
+            delay={0.05}
             className="text-3xl md:text-4xl font-semibold text-[var(--color-graphite)] mb-4"
           >
             {sectionSettings?.title}

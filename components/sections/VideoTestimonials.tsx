@@ -62,7 +62,7 @@ export default function VideoTestimonialsSection({
             </motion.p>
             <AnimatedTitle 
               direction="left" 
-              delay={0.2}
+              delay={0.05}
               className="text-3xl md:text-4xl font-semibold text-[var(--color-graphite)] mb-6"
             >
               {sectionSettings?.title}
@@ -121,7 +121,7 @@ export default function VideoTestimonialsSection({
             </motion.p>
             <AnimatedTitle 
               direction="right" 
-              delay={0.4}
+              delay={0.1}
               as="h3"
               className="text-2xl font-semibold text-[var(--color-graphite)] mb-4"
             >

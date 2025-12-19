@@ -311,13 +311,13 @@ export default function ProductShowcase({
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+              transition={{ duration: 0.3, delay: 0.02 }}
             >
               {headerData.eyebrow}
             </motion.p>
             <AnimatedTitle 
               direction="left" 
-              delay={0.2}
+              delay={0.05}
               className="text-3xl md:text-4xl font-semibold text-[var(--color-graphite)] mb-4"
             >
               {headerData.title}
@@ -327,7 +327,7 @@ export default function ProductShowcase({
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+              transition={{ duration: 0.3, delay: 0.08 }}
             >
               {headerData.description}
             </motion.p>
