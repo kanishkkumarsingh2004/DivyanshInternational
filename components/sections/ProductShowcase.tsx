@@ -344,7 +344,7 @@ export default function ProductShowcase({
             show: {
               opacity: 1,
               transition: {
-                staggerChildren: 0.1,
+                staggerChildren: 0.2,
               },
             },
           }}
@@ -354,7 +354,14 @@ export default function ProductShowcase({
               key={product._id}
               variants={{
                 hidden: { opacity: 0, y: 20 },
-                show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+                show: { 
+                  opacity: 1, 
+                  y: 0, 
+                  transition: { 
+                    duration: 0.7,
+                    ease: "easeOut" 
+                  } 
+                },
               }}
             >
               <ProductCard

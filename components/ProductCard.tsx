@@ -55,11 +55,8 @@ export default function ProductCard({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
       whileHover={{ y: -8, scale: 1.02 }}
-      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
       className="group relative flex flex-col h-full bg-gradient-to-br from-white via-[var(--color-ivory)] to-[var(--color-cashew-cream)] rounded-3xl border-2 border-[var(--color-gold-light)] shadow-lg hover:shadow-2xl hover:border-[var(--color-almond-gold)] transition-all duration-300 overflow-hidden"
     >
       {/* Premium shine effect */}
@@ -89,22 +86,22 @@ export default function ProductCard({
         <p className="text-[var(--color-muted)] text-sm mb-4 leading-relaxed line-clamp-3">
           {intro}
         </p>
-        
+
         {/* Product Details: Variety, Packaging, Quantity */}
         <div className="space-y-3 bg-gradient-to-br from-[var(--color-ivory)] to-white p-4 rounded-2xl border border-[var(--color-sand)] mb-4">
           <h4 className="text-xs font-bold text-[var(--color-deep-brown)] uppercase tracking-wider mb-2">
             Product Specifications
           </h4>
-          
+
           {/* Extract variety info from listSections */}
           {(() => {
-            const varietySection = product.listSections?.find(section => 
+            const varietySection = product.listSections?.find(section =>
               getLocalized(section.title, language).toLowerCase().includes('varieties') ||
               getLocalized(section.title, language).toLowerCase().includes('variety')
             );
-            
+
             if (!varietySection) return null;
-            
+
             return (
               <div className="flex items-start gap-2">
                 <span className="text-[var(--color-almond-gold)] font-semibold text-xs uppercase tracking-wider min-w-[50px]">
@@ -119,16 +116,16 @@ export default function ProductCard({
               </div>
             );
           })()}
-          
+
           {/* Extract packaging info from listSections */}
           {(() => {
-            const packagingSection = product.listSections?.find(section => 
+            const packagingSection = product.listSections?.find(section =>
               getLocalized(section.title, language).toLowerCase().includes('packaging') ||
               getLocalized(section.title, language).toLowerCase().includes('format')
             );
-            
+
             if (!packagingSection) return null;
-            
+
             return (
               <div className="flex items-start gap-2">
                 <span className="text-[var(--color-almond-gold)] font-semibold text-xs uppercase tracking-wider min-w-[50px]">
@@ -155,7 +152,7 @@ export default function ProductCard({
             </div>
           )}
         </div>
-        
+
         {quickItems.length > 0 && (
           <ul className="space-y-2 text-sm text-[var(--color-slate)]">
             {quickItems.map((item) => (
