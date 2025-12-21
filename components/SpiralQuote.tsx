@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { NutIcon } from "@/components/assets/Decorations";
-import AnimatedTitle from "@/components/AnimatedTitle";
 
 interface QuoteData {
   quote: string;
@@ -71,13 +70,9 @@ export default function SpiralQuote({ initialQuote, labels }: SpiralQuoteProps) 
             >
               &quot;
             </motion.span>
-            <AnimatedTitle 
-              direction="right" 
-              delay={0.05}
-              className="text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--color-deep-brown)] font-heading leading-tight mb-6 -mt-4"
-            >
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--color-deep-brown)] font-heading leading-tight mb-6 -mt-4">
               {initialQuote.quote}
-            </AnimatedTitle>
+            </h2>
             <motion.p 
               className="text-lg text-[var(--color-slate)] italic mb-8"
               initial={{ opacity: 0, y: 20 }}

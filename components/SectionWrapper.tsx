@@ -18,8 +18,8 @@ export default function SectionWrapper({
   staggerChildren = 0.1
 }: SectionWrapperProps) {
   const { elementRef, shouldAnimate } = useViewportAnimation({
-    threshold: 0.05,
-    rootMargin: "0px 0px 20% 0px", // Start animation before element is visible
+    threshold: 0.01,
+    rootMargin: "0px 0px 50% 0px", // Start animation much earlier
     triggerOnce: true
   });
 
@@ -28,22 +28,10 @@ export default function SectionWrapper({
     visible: {
       opacity: 1,
       transition: {
-        duration: 0.7,
-        delay: delay,
-        staggerChildren: staggerChildren,
-        ease: "easeOut" as const,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.7,
-        ease: "easeOut" as const,
+        duration: 0.3,
+        delay: 0,
+        staggerChildren: 0.01,
+        ease: [0, 0, 1, 1] as const, // Pure linear
       },
     },
   };
@@ -72,13 +60,13 @@ export default function SectionWrapper({
 
 // Export the item variants for external use
 export const itemVariants = {
-  hidden: { opacity: 0, y: 8 },
+  hidden: { opacity: 0, y: 5 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.7,
-      ease: "easeOut" as const,
+      duration: 0.4,
+      ease: [0, 0, 1, 1] as const, // Pure linear
     },
   },
 };

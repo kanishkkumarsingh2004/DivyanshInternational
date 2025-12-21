@@ -56,7 +56,7 @@ export default function ProductCard({
   return (
     <motion.div
       whileHover={{ y: -8, scale: 1.02 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
+      transition={{ duration: 0.3, ease: "linear" }}
       className="group relative flex flex-col h-full bg-gradient-to-br from-white via-[var(--color-ivory)] to-[var(--color-cashew-cream)] rounded-3xl border-2 border-[var(--color-gold-light)] shadow-lg hover:shadow-2xl hover:border-[var(--color-almond-gold)] transition-all duration-300 overflow-hidden"
     >
       {/* Premium shine effect */}

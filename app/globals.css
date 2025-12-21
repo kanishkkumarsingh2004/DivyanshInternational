@@ -82,11 +82,11 @@
   --font-heading-dynamic: var(--font-manrope);  /* Clean, modern headings */
   --font-body-dynamic: var(--font-inter);       /* Readable, professional body */
   
-  /* Transitions - Natural Motion */
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-bounce: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* Transitions - Linear Motion Only */
+  --transition-fast: 150ms linear;
+  --transition-base: 250ms linear;
+  --transition-slow: 350ms linear;
+  --transition-bounce: 500ms linear;
 }
 
 @theme inline {
@@ -139,11 +139,27 @@ body {
   position: relative;
 }
 
-/* Natural, organic transitions */
+/* Force ALL transitions to be linear */
 * {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-timing-function: linear !important;
   transition-duration: 250ms;
+}
+
+/* Override any CSS classes that might use ease-in-out */
+.transition-all,
+.transition,
+.duration-300,
+.duration-200,
+.duration-500 {
+  transition-timing-function: linear !important;
+}
+
+/* Force all hover and focus transitions to be linear */
+*:hover,
+*:focus,
+*:active {
+  transition-timing-function: linear !important;
 }
 
 /* Typography - Premium & Professional */
@@ -398,7 +414,7 @@ body::before {
     height: 20px !important;
   }
 }
-/* Animation Performance Optimizations */
+/* Animation Performance Optimizations - All Linear */
 .hero-slider video,
 .hero-slider .motion-div {
   will-change: transform, opacity;
@@ -407,14 +423,21 @@ body::before {
   transform: translateZ(0);
 }
 
-/* Optimize Framer Motion animations */
+/* Optimize Framer Motion animations - Force Linear */
 [data-framer-motion] {
   will-change: transform, opacity;
 }
 
-/* Smooth transitions for better performance */
-.transition-all {
-  transition-timing-function: ease-out;
+/* Force all transitions to be linear */
+.transition-all,
+.transition,
+.duration-300,
+.duration-200,
+.duration-500,
+.ease-in-out,
+.ease-out,
+.ease-in {
+  transition-timing-function: linear !important;
 }
 
 /* Reduce motion for users who prefer it */
@@ -431,7 +454,6 @@ body::before {
   }
 }
 /* Targeted animation performance optimizations */
-.animated-title,
 .hero-slider .motion-div,
 [data-framer-motion] {
   will-change: transform, opacity;
@@ -439,9 +461,4 @@ body::before {
   -webkit-backface-visibility: hidden;
   transform: translate3d(0, 0, 0);
   -webkit-transform: translate3d(0, 0, 0);
-}
-
-/* Fast transitions for title animations */
-.animated-title * {
-  transition-timing-function: ease-out !important;
 }

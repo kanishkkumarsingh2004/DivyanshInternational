@@ -3,7 +3,7 @@
 import { useState } from "react";
 import ProductCard from "@/components/ProductCard";
 import ProductModal from "@/components/ProductModal";
-import AnimatedTitle from "@/components/AnimatedTitle";
+import SectionWrapper, { AnimatedItem } from "@/components/SectionWrapper";
 
 import type { SanityImageSource } from "@sanity/image-url";
 import { motion } from "framer-motion";
@@ -73,14 +73,14 @@ export default function ProductShowcase({
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <motion.div
           animate={{ y: [0, -20, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
           className="absolute top-10 left-0 text-[var(--color-gold)]/5"
         >
           <LeafIcon className="w-80 h-80" />
         </motion.div>
         <motion.div
           animate={{ y: [0, -20, 0] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          transition={{ duration: 8, repeat: Infinity, ease: "linear", delay: 1 }}
           className="absolute bottom-10 right-0 text-[var(--color-gold)]/5"
         >
           <NutIcon className="w-96 h-96" />
@@ -89,28 +89,28 @@ export default function ProductShowcase({
         {/* Almonds */}
         <motion.div
           animate={{ rotate: [0, 10, -10, 0], y: [0, -12, 0] }}
-          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 9, repeat: Infinity, ease: "linear" }}
           className="absolute top-1/4 right-16 opacity-15"
         >
           <AlmondIcon className="w-28 h-28" />
         </motion.div>
         <motion.div
           animate={{ rotate: [0, -14, 14, 0], x: [0, -10, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          transition={{ duration: 10, repeat: Infinity, ease: "linear", delay: 2 }}
           className="absolute bottom-1/3 left-20 opacity-15"
         >
           <AlmondIcon className="w-32 h-32" />
         </motion.div>
         <motion.div
           animate={{ rotate: [0, 12, -12, 0], y: [0, 10, 0] }}
-          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 4 }}
+          transition={{ duration: 11, repeat: Infinity, ease: "linear", delay: 4 }}
           className="absolute top-10 left-10 opacity-12"
         >
           <AlmondIcon className="w-30 h-30" />
         </motion.div>
         <motion.div
           animate={{ rotate: [0, -13, 13, 0], x: [0, 12, 0] }}
-          transition={{ duration: 13, repeat: Infinity, ease: "easeInOut", delay: 6 }}
+          transition={{ duration: 13, repeat: Infinity, ease: "linear", delay: 6 }}
           className="absolute bottom-10 right-10 opacity-15"
         >
           <AlmondIcon className="w-26 h-26" />
@@ -119,21 +119,21 @@ export default function ProductShowcase({
         {/* Cashews */}
         <motion.div
           animate={{ rotate: [0, 12, -12, 0], y: [0, 10, 0] }}
-          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+          transition={{ duration: 11, repeat: Infinity, ease: "linear", delay: 1.5 }}
           className="absolute top-1/2 left-10 opacity-15"
         >
           <CashewIcon className="w-24 h-24" />
         </motion.div>
         <motion.div
           animate={{ rotate: [0, -10, 10, 0], x: [0, 12, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+          transition={{ duration: 12, repeat: Infinity, ease: "linear", delay: 3 }}
           className="absolute bottom-1/4 right-24 opacity-15"
         >
           <CashewIcon className="w-26 h-26" />
         </motion.div>
         <motion.div
           animate={{ rotate: [0, 13, -13, 0], y: [0, -12, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 5 }}
+          transition={{ duration: 10, repeat: Infinity, ease: "linear", delay: 5 }}
           className="absolute top-20 left-1/3 opacity-12"
         >
           <CashewIcon className="w-28 h-28" />
@@ -142,7 +142,7 @@ export default function ProductShowcase({
         {/* Walnuts */}
         <motion.div
           animate={{ rotate: [0, -9, 9, 0], y: [0, -8, 0] }}
-          transition={{ duration: 13, repeat: Infinity, ease: "easeInOut", delay: 2.5 }}
+          transition={{ duration: 13, repeat: Infinity, ease: "linear", delay: 2.5 }}
           className="absolute top-1/3 left-1/4 opacity-15"
         >
           <WalnutIcon className="w-26 h-26" />
@@ -156,7 +156,7 @@ export default function ProductShowcase({
         </motion.div>
         <motion.div
           animate={{ rotate: [0, -10, 10, 0], x: [0, 10, 0] }}
-          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 6 }}
+          transition={{ duration: 14, repeat: Infinity, ease: "linear", delay: 6 }}
           className="absolute top-1/4 right-1/4 opacity-15"
         >
           <WalnutIcon className="w-24 h-24" />
@@ -165,21 +165,21 @@ export default function ProductShowcase({
         {/* Peanuts */}
         <motion.div
           animate={{ rotate: [0, 11, -11, 0], x: [0, 8, 0] }}
-          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 4 }}
+          transition={{ duration: 14, repeat: Infinity, ease: "linear", delay: 4 }}
           className="absolute bottom-1/3 left-1/3 opacity-15"
         >
           <PeanutIcon className="w-22 h-22" />
         </motion.div>
         <motion.div
           animate={{ rotate: [0, -14, 14, 0], y: [0, 10, 0] }}
-          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          transition={{ duration: 11, repeat: Infinity, ease: "linear", delay: 2 }}
           className="absolute top-2/3 right-20 opacity-12"
         >
           <PeanutIcon className="w-24 h-24" />
         </motion.div>
         <motion.div
           animate={{ rotate: [0, 12, -12, 0], x: [0, -10, 0] }}
-          transition={{ duration: 13, repeat: Infinity, ease: "easeInOut", delay: 7 }}
+          transition={{ duration: 13, repeat: Infinity, ease: "linear", delay: 7 }}
           className="absolute bottom-20 left-20 opacity-15"
         >
           <PeanutIcon className="w-20 h-20" />
@@ -188,28 +188,28 @@ export default function ProductShowcase({
         {/* Additional Almonds */}
         <motion.div
           animate={{ rotate: [0, -11, 11, 0], y: [0, 12, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 3.5 }}
+          transition={{ duration: 12, repeat: Infinity, ease: "linear", delay: 3.5 }}
           className="absolute top-1/2 right-1/3 opacity-12"
         >
           <AlmondIcon className="w-26 h-26" />
         </motion.div>
         <motion.div
           animate={{ rotate: [0, 15, -15, 0], x: [0, 8, 0] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 8 }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear", delay: 8 }}
           className="absolute bottom-1/2 left-1/4 opacity-15"
         >
           <AlmondIcon className="w-24 h-24" />
         </motion.div>
         <motion.div
           animate={{ rotate: [0, -14, 14, 0], y: [0, -12, 0] }}
-          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 10 }}
+          transition={{ duration: 14, repeat: Infinity, ease: "linear", delay: 10 }}
           className="absolute top-3/4 left-10 opacity-12"
         >
           <AlmondIcon className="w-28 h-28" />
         </motion.div>
         <motion.div
           animate={{ rotate: [0, 12, -12, 0], x: [0, 10, 0] }}
-          transition={{ duration: 13, repeat: Infinity, ease: "easeInOut", delay: 11 }}
+          transition={{ duration: 13, repeat: Infinity, ease: "linear", delay: 11 }}
           className="absolute bottom-10 right-1/3 opacity-15"
         >
           <AlmondIcon className="w-30 h-30" />
@@ -218,14 +218,14 @@ export default function ProductShowcase({
         {/* More Cashews */}
         <motion.div
           animate={{ rotate: [0, 16, -16, 0], y: [0, 10, 0] }}
-          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 9 }}
+          transition={{ duration: 11, repeat: Infinity, ease: "linear", delay: 9 }}
           className="absolute top-10 right-1/4 opacity-12"
         >
           <CashewIcon className="w-26 h-26" />
         </motion.div>
         <motion.div
           animate={{ rotate: [0, -15, 15, 0], x: [0, -12, 0] }}
-          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 12 }}
+          transition={{ duration: 14, repeat: Infinity, ease: "linear", delay: 12 }}
           className="absolute bottom-1/4 left-1/3 opacity-15"
         >
           <CashewIcon className="w-28 h-28" />
@@ -250,42 +250,42 @@ export default function ProductShowcase({
         {/* Extra Peanuts */}
         <motion.div
           animate={{ rotate: [0, 13, -13, 0], y: [0, -10, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 13 }}
+          transition={{ duration: 12, repeat: Infinity, ease: "linear", delay: 13 }}
           className="absolute top-1/3 right-10 opacity-12"
         >
           <PeanutIcon className="w-24 h-24" />
         </motion.div>
         <motion.div
           animate={{ rotate: [0, -16, 16, 0], x: [0, 10, 0] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 14 }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear", delay: 14 }}
           className="absolute bottom-1/3 left-10 opacity-15"
         >
           <PeanutIcon className="w-22 h-22" />
         </motion.div>
 
         {/* Ultra Dense Layer */}
-        <motion.div animate={{ rotate: [0, 10, -10, 0], y: [0, 8, 0] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 15 }} className="absolute top-5 left-1/4 opacity-10">
+        <motion.div animate={{ rotate: [0, 10, -10, 0], y: [0, 8, 0] }} transition={{ duration: 10, repeat: Infinity, ease: "linear", delay: 15 }} className="absolute top-5 left-1/4 opacity-10">
           <AlmondIcon className="w-20 h-20" />
         </motion.div>
-        <motion.div animate={{ rotate: [0, -11, 11, 0], x: [0, -8, 0] }} transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 16 }} className="absolute top-5 right-1/4 opacity-10">
+        <motion.div animate={{ rotate: [0, -11, 11, 0], x: [0, -8, 0] }} transition={{ duration: 11, repeat: Infinity, ease: "linear", delay: 16 }} className="absolute top-5 right-1/4 opacity-10">
           <CashewIcon className="w-22 h-22" />
         </motion.div>
-        <motion.div animate={{ rotate: [0, 12, -12, 0], y: [0, -10, 0] }} transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 17 }} className="absolute bottom-5 left-1/4 opacity-10">
+        <motion.div animate={{ rotate: [0, 12, -12, 0], y: [0, -10, 0] }} transition={{ duration: 12, repeat: Infinity, ease: "linear", delay: 17 }} className="absolute bottom-5 left-1/4 opacity-10">
           <WalnutIcon className="w-20 h-20" />
         </motion.div>
-        <motion.div animate={{ rotate: [0, -13, 13, 0], x: [0, 10, 0] }} transition={{ duration: 13, repeat: Infinity, ease: "easeInOut", delay: 18 }} className="absolute bottom-5 right-1/4 opacity-10">
+        <motion.div animate={{ rotate: [0, -13, 13, 0], x: [0, 10, 0] }} transition={{ duration: 13, repeat: Infinity, ease: "linear", delay: 18 }} className="absolute bottom-5 right-1/4 opacity-10">
           <PeanutIcon className="w-22 h-22" />
         </motion.div>
-        <motion.div animate={{ rotate: [0, 14, -14, 0], y: [0, 12, 0] }} transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 19 }} className="absolute top-1/4 left-5 opacity-12">
+        <motion.div animate={{ rotate: [0, 14, -14, 0], y: [0, 12, 0] }} transition={{ duration: 14, repeat: Infinity, ease: "linear", delay: 19 }} className="absolute top-1/4 left-5 opacity-12">
           <AlmondIcon className="w-24 h-24" />
         </motion.div>
-        <motion.div animate={{ rotate: [0, -15, 15, 0], x: [0, -10, 0] }} transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 20 }} className="absolute top-1/4 right-5 opacity-12">
+        <motion.div animate={{ rotate: [0, -15, 15, 0], x: [0, -10, 0] }} transition={{ duration: 15, repeat: Infinity, ease: "linear", delay: 20 }} className="absolute top-1/4 right-5 opacity-12">
           <CashewIcon className="w-20 h-20" />
         </motion.div>
-        <motion.div animate={{ rotate: [0, 16, -16, 0], y: [0, -8, 0] }} transition={{ duration: 16, repeat: Infinity, ease: "easeInOut", delay: 21 }} className="absolute bottom-1/4 left-5 opacity-10">
+        <motion.div animate={{ rotate: [0, 16, -16, 0], y: [0, -8, 0] }} transition={{ duration: 16, repeat: Infinity, ease: "linear", delay: 21 }} className="absolute bottom-1/4 left-5 opacity-10">
           <WalnutIcon className="w-22 h-22" />
         </motion.div>
-        <motion.div animate={{ rotate: [0, -17, 17, 0], x: [0, 8, 0] }} transition={{ duration: 17, repeat: Infinity, ease: "easeInOut", delay: 22 }} className="absolute bottom-1/4 right-5 opacity-12">
+        <motion.div animate={{ rotate: [0, -17, 17, 0], x: [0, 8, 0] }} transition={{ duration: 17, repeat: Infinity, ease: "linear", delay: 22 }} className="absolute bottom-1/4 right-5 opacity-12">
           <PeanutIcon className="w-24 h-24" />
         </motion.div>
 
@@ -315,13 +315,9 @@ export default function ProductShowcase({
             >
               {headerData.eyebrow}
             </motion.p>
-            <AnimatedTitle 
-              direction="left" 
-              delay={0.05}
-              className="text-3xl md:text-4xl font-semibold text-[var(--color-graphite)] mb-4"
-            >
+            <h2 className="text-3xl md:text-4xl font-semibold text-[var(--color-graphite)] mb-4">
               {headerData.title}
-            </AnimatedTitle>
+            </h2>
             <motion.p 
               className="text-lg text-[var(--color-slate)]"
               initial={{ opacity: 0, y: 20 }}
@@ -338,13 +334,14 @@ export default function ProductShowcase({
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: "-50px" }}
+          viewport={{ once: true, margin: "100px" }}
           variants={{
             hidden: { opacity: 0 },
             show: {
               opacity: 1,
               transition: {
-                staggerChildren: 0.2,
+                staggerChildren: 0.01,
+                ease: [0, 0, 1, 1],
               },
             },
           }}
@@ -353,13 +350,13 @@ export default function ProductShowcase({
             <motion.div
               key={product._id}
               variants={{
-                hidden: { opacity: 0, y: 20 },
+                hidden: { opacity: 0, y: 5 },
                 show: { 
                   opacity: 1, 
                   y: 0, 
                   transition: { 
-                    duration: 0.7,
-                    ease: "easeOut" 
+                    duration: 0.4,
+                    ease: [0, 0, 1, 1]
                   } 
                 },
               }}

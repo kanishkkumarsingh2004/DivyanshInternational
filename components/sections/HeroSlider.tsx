@@ -270,21 +270,21 @@ export default function HeroSlider({
         {/* Almonds */}
         <motion.div
           animate={{ rotate: [0, 10, -10, 0], y: [0, -15, 0], x: [0, 10, 0] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
           className="absolute top-20 right-[15%] opacity-20"
         >
           <AlmondIcon className="w-32 h-32 text-[var(--color-almond-gold)]" />
         </motion.div>
         <motion.div
           animate={{ rotate: [0, -12, 12, 0], y: [0, 12, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          transition={{ duration: 10, repeat: Infinity, ease: "linear", delay: 1 }}
           className="absolute bottom-32 left-[10%] opacity-20"
         >
           <AlmondIcon className="w-40 h-40" />
         </motion.div>
         <motion.div
           animate={{ rotate: [0, 15, -15, 0], x: [0, -12, 0] }}
-          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          transition={{ duration: 11, repeat: Infinity, ease: "linear", delay: 2 }}
           className="absolute top-1/3 left-[5%] opacity-15"
         >
           <AlmondIcon className="w-28 h-28" />
@@ -293,14 +293,14 @@ export default function HeroSlider({
         {/* Cashews */}
         <motion.div
           animate={{ rotate: [0, 14, -14, 0], y: [0, -10, 0] }}
-          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+          transition={{ duration: 9, repeat: Infinity, ease: "linear", delay: 1.5 }}
           className="absolute top-1/4 right-[8%] opacity-20"
         >
           <CashewIcon className="w-36 h-36" />
         </motion.div>
         <motion.div
           animate={{ rotate: [0, -11, 11, 0], x: [0, 8, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+          transition={{ duration: 12, repeat: Infinity, ease: "linear", delay: 3 }}
           className="absolute bottom-1/4 right-[20%] opacity-15"
         >
           <CashewIcon className="w-30 h-30" />
@@ -316,7 +316,7 @@ export default function HeroSlider({
         </motion.div>
         <motion.div
           animate={{ rotate: [0, -8, 8, 0], y: [0, 10, 0] }}
-          transition={{ duration: 13, repeat: Infinity, ease: "easeInOut", delay: 2.5 }}
+          transition={{ duration: 13, repeat: Infinity, ease: "linear", delay: 2.5 }}
           className="absolute bottom-1/3 left-[15%] opacity-20"
         >
           <WalnutIcon className="w-32 h-32" />
@@ -325,14 +325,14 @@ export default function HeroSlider({
         {/* Peanuts */}
         <motion.div
           animate={{ rotate: [0, 12, -12, 0], x: [0, -10, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 3.5 }}
+          transition={{ duration: 10, repeat: Infinity, ease: "linear", delay: 3.5 }}
           className="absolute top-2/3 right-[12%] opacity-15"
         >
           <PeanutIcon className="w-26 h-26" />
         </motion.div>
         <motion.div
           animate={{ rotate: [0, -15, 15, 0], y: [0, -8, 0] }}
-          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 4.5 }}
+          transition={{ duration: 14, repeat: Infinity, ease: "linear", delay: 4.5 }}
           className="absolute top-1/4 left-[20%] opacity-15"
         >
           <PeanutIcon className="w-22 h-22" />
@@ -341,14 +341,14 @@ export default function HeroSlider({
         {/* Large Background Elements */}
         <motion.div
           animate={{ y: [0, -20, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
           className="absolute -top-20 -right-20 opacity-5"
         >
           <LeafIcon className="w-96 h-96 text-[var(--color-pistachio-green)]" />
         </motion.div>
         <motion.div
           animate={{ y: [0, -20, 0] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          transition={{ duration: 8, repeat: Infinity, ease: "linear", delay: 1 }}
           className="absolute -bottom-32 -left-20 opacity-5"
         >
           <NutIcon className="w-[30rem] h-[30rem] text-[var(--color-deep-brown)]" />

@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { urlForImage } from "@/lib/sanity/image";
-import AnimatedTitle from "@/components/AnimatedTitle";
 import type { SanityImageSource } from "@sanity/image-url";
 
 type Testimonial = {
@@ -60,13 +59,9 @@ export default function VideoTestimonialsSection({
             >
               {sectionSettings?.eyebrow}
             </motion.p>
-            <AnimatedTitle 
-              direction="left" 
-              delay={0.05}
-              className="text-3xl md:text-4xl font-semibold text-[var(--color-graphite)] mb-6"
-            >
+            <h2 className="text-3xl md:text-4xl font-semibold text-[var(--color-graphite)] mb-6">
               {sectionSettings?.title}
-            </AnimatedTitle>
+            </h2>
             <motion.div
               className="space-y-6"
               initial="hidden"
@@ -119,14 +114,9 @@ export default function VideoTestimonialsSection({
             >
               {sectionSettings?.droneSection?.eyebrow}
             </motion.p>
-            <AnimatedTitle 
-              direction="right" 
-              delay={0.1}
-              as="h3"
-              className="text-2xl font-semibold text-[var(--color-graphite)] mb-4"
-            >
+            <h3 className="text-2xl font-semibold text-[var(--color-graphite)] mb-4">
               {sectionSettings?.droneSection?.title}
-            </AnimatedTitle>
+            </h3>
             <div className="rounded-2xl overflow-hidden border-2 border-[var(--color-gold-light)] bg-[var(--color-beige)] min-h-[220px] relative">
               {sectionSettings?.droneSection?.videoUrl ? (
                 <video

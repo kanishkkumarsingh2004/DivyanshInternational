@@ -15,7 +15,7 @@
 /* Page curl effect on hover - subtle lift */
 .catalogue-page:hover {
   transform: translateZ(3px) rotateY(1deg);
-  transition: transform 0.3s ease-out;
+  transition: transform 0.3s linear;
 }
 
 /* Realistic paper texture with multiple layers */

@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import AnimatedTitle from "@/components/AnimatedTitle";
 
 import type { SanityImageSource } from "@sanity/image-url";
 import { urlForImage } from "@/lib/sanity/image";
@@ -59,13 +58,9 @@ export default function TrustSection({
               >
                 {sectionSettings?.eyebrow}
               </motion.p>
-              <AnimatedTitle 
-                direction="right" 
-                delay={0.05}
-                className="text-3xl font-semibold text-[var(--color-graphite)]"
-              >
+              <h2 className="text-3xl font-semibold text-[var(--color-graphite)]">
                 {sectionSettings?.title}
-              </AnimatedTitle>
+              </h2>
             </div>
             <motion.p 
               className="text-[var(--color-slate)] max-w-xl"

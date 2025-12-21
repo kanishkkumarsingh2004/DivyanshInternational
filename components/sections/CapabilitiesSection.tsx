@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { AlmondIcon, CashewIcon, WalnutIcon, PeanutIcon, NutIcon } from "@/components/assets/Decorations";
-import AnimatedTitle from "@/components/AnimatedTitle";
+import SectionWrapper, { AnimatedItem } from "@/components/SectionWrapper";
 import { urlForImage } from "@/lib/sanity/image";
 import type { SanityImageSource } from "@sanity/image-url";
 
@@ -53,34 +53,34 @@ export default function CapabilitiesSection({
     <section id={sectionId} className="py-20 bg-gradient-to-b from-[var(--color-ivory)] to-[var(--color-cashew-cream)] relative overflow-hidden">
       {/* Floating Decorations */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <motion.div animate={{ rotate: [0, 10, -10, 0], y: [0, -12, 0] }} transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }} className="absolute top-20 right-10 opacity-15">
+        <motion.div animate={{ rotate: [0, 10, -10, 0], y: [0, -12, 0] }} transition={{ duration: 9, repeat: Infinity, ease: "linear" }} className="absolute top-20 right-10 opacity-15">
           <AlmondIcon className="w-32 h-32" />
         </motion.div>
-        <motion.div animate={{ rotate: [0, -12, 12, 0], x: [0, 10, 0] }} transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 2 }} className="absolute bottom-20 left-10 opacity-15">
+        <motion.div animate={{ rotate: [0, -12, 12, 0], x: [0, 10, 0] }} transition={{ duration: 11, repeat: Infinity, ease: "linear", delay: 2 }} className="absolute bottom-20 left-10 opacity-15">
           <CashewIcon className="w-28 h-28" />
         </motion.div>
         <motion.div animate={{ rotate: [0, 360], scale: [1, 1.1, 1] }} transition={{ duration: 16, repeat: Infinity, ease: "linear" }} className="absolute top-1/2 right-1/4 opacity-12">
           <WalnutIcon className="w-26 h-26" />
         </motion.div>
-        <motion.div animate={{ rotate: [0, 14, -14, 0], y: [0, 10, 0] }} transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 4 }} className="absolute bottom-1/3 right-20 opacity-15">
+        <motion.div animate={{ rotate: [0, 14, -14, 0], y: [0, 10, 0] }} transition={{ duration: 12, repeat: Infinity, ease: "linear", delay: 4 }} className="absolute bottom-1/3 right-20 opacity-15">
           <PeanutIcon className="w-24 h-24" />
         </motion.div>
-        <motion.div animate={{ rotate: [0, -11, 11, 0], x: [0, -10, 0] }} transition={{ duration: 13, repeat: Infinity, ease: "easeInOut", delay: 6 }} className="absolute top-1/4 left-20 opacity-12">
+        <motion.div animate={{ rotate: [0, -11, 11, 0], x: [0, -10, 0] }} transition={{ duration: 13, repeat: Infinity, ease: "linear", delay: 6 }} className="absolute top-1/4 left-20 opacity-12">
           <NutIcon className="w-22 h-22" />
         </motion.div>
-        <motion.div animate={{ rotate: [0, 13, -13, 0], y: [0, 10, 0] }} transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 8 }} className="absolute bottom-1/4 left-1/3 opacity-15">
+        <motion.div animate={{ rotate: [0, 13, -13, 0], y: [0, 10, 0] }} transition={{ duration: 12, repeat: Infinity, ease: "linear", delay: 8 }} className="absolute bottom-1/4 left-1/3 opacity-15">
           <AlmondIcon className="w-26 h-26" />
         </motion.div>
-        <motion.div animate={{ rotate: [0, -14, 14, 0], x: [0, 12, 0] }} transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 9 }} className="absolute top-1/3 right-1/3 opacity-12">
+        <motion.div animate={{ rotate: [0, -14, 14, 0], x: [0, 12, 0] }} transition={{ duration: 14, repeat: Infinity, ease: "linear", delay: 9 }} className="absolute top-1/3 right-1/3 opacity-12">
           <CashewIcon className="w-24 h-24" />
         </motion.div>
-        <motion.div animate={{ rotate: [0, 12, -12, 0], y: [0, -10, 0] }} transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 10 }} className="absolute bottom-1/3 left-1/4 opacity-15">
+        <motion.div animate={{ rotate: [0, 12, -12, 0], y: [0, -10, 0] }} transition={{ duration: 11, repeat: Infinity, ease: "linear", delay: 10 }} className="absolute bottom-1/3 left-1/4 opacity-15">
           <PeanutIcon className="w-22 h-22" />
         </motion.div>
-        <motion.div animate={{ rotate: [0, -11, 11, 0], x: [0, 10, 0] }} transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 11 }} className="absolute top-5 left-1/4 opacity-10">
+        <motion.div animate={{ rotate: [0, -11, 11, 0], x: [0, 10, 0] }} transition={{ duration: 12, repeat: Infinity, ease: "linear", delay: 11 }} className="absolute top-5 left-1/4 opacity-10">
           <AlmondIcon className="w-20 h-20" />
         </motion.div>
-        <motion.div animate={{ rotate: [0, 13, -13, 0], y: [0, 8, 0] }} transition={{ duration: 13, repeat: Infinity, ease: "easeInOut", delay: 12 }} className="absolute bottom-5 right-1/4 opacity-12">
+        <motion.div animate={{ rotate: [0, 13, -13, 0], y: [0, 8, 0] }} transition={{ duration: 13, repeat: Infinity, ease: "linear", delay: 12 }} className="absolute bottom-5 right-1/4 opacity-12">
           <CashewIcon className="w-22 h-22" />
         </motion.div>
         <motion.div animate={{ rotate: [0, 360], scale: [1, 1.1, 1] }} transition={{ duration: 19, repeat: Infinity, ease: "linear", delay: 4 }} className="absolute top-1/2 left-5 opacity-8">
@@ -103,13 +103,9 @@ export default function CapabilitiesSection({
               >
                 {sectionSettings.eyebrow}
               </motion.p>
-              <AnimatedTitle 
-                direction="right" 
-                delay={0.05}
-                className="text-3xl md:text-4xl font-semibold text-[var(--color-graphite)] mb-4"
-              >
+              <h2 className="text-3xl md:text-4xl font-semibold text-[var(--color-graphite)] mb-4">
                 {sectionSettings.title}
-              </AnimatedTitle>
+              </h2>
               <motion.p 
                 className="text-lg text-[var(--color-slate)]"
                 initial={{ opacity: 0, y: 20 }}
@@ -126,13 +122,13 @@ export default function CapabilitiesSection({
           className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: "-50px" }}
+          viewport={{ once: true, margin: "100px" }}
           variants={{
             hidden: { opacity: 0 },
             show: {
               opacity: 1,
               transition: {
-                staggerChildren: 0.1,
+                staggerChildren: 0.01,
               },
             },
           }}
@@ -142,8 +138,8 @@ export default function CapabilitiesSection({
               key={capability._id}
               className="bg-gradient-to-br from-white to-[var(--color-ivory)] p-6 h-full rounded-3xl border-2 border-[var(--color-gold-light)] shadow-lg hover:shadow-xl hover:border-[var(--color-almond-gold)] transition-all duration-300"
               variants={{
-                hidden: { opacity: 0, y: 20 },
-                show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+                hidden: { opacity: 0, y: 5 },
+                show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0, 0, 1, 1] } },
               }}
             >
               <div className="text-sm uppercase tracking-[0.3em] text-[var(--color-muted)] mb-4">
@@ -167,14 +163,9 @@ export default function CapabilitiesSection({
             transition={{ duration: 0.8 }}
           >
             <div className="text-center mb-10">
-              <AnimatedTitle 
-                direction="left" 
-                delay={0.02}
-                as="h3"
-                className="text-2xl font-bold text-[var(--color-deep-brown)] mb-4 font-heading"
-              >
+              <h3 className="text-2xl font-bold text-[var(--color-deep-brown)] mb-4 font-heading">
                 {sectionSettings?.certificationsTitle}
-              </AnimatedTitle>
+              </h3>
               <motion.p 
                 className="text-[var(--color-slate)] max-w-2xl mx-auto"
                 initial={{ opacity: 0, y: 20 }}
@@ -196,8 +187,8 @@ export default function CapabilitiesSection({
                 show: {
                   opacity: 1,
                   transition: {
-                    staggerChildren: 0.1,
-                    delayChildren: 0.2,
+                    staggerChildren: 0.01,
+                    delayChildren: 0,
                   },
                 },
               }}
@@ -207,8 +198,8 @@ export default function CapabilitiesSection({
                   key={cert._id}
                   className="flex flex-col items-center gap-3 group"
                   variants={{
-                    hidden: { opacity: 0, scale: 0.9 },
-                    show: { opacity: 1, scale: 1, transition: { duration: 0.4 } },
+                    hidden: { opacity: 0, scale: 0.95 },
+                    show: { opacity: 1, scale: 1, transition: { duration: 0.3, ease: [0, 0, 1, 1] } },
                   }}
                 >
                   <div className="w-24 h-24 relative bg-white rounded-full shadow-sm border border-[var(--color-sand)] p-4 flex items-center justify-center overflow-hidden">
