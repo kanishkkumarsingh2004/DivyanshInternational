@@ -311,13 +311,13 @@ export default function AboutContent({
             transition={{ duration: 0.6 }}
           >
             <p className="uppercase tracking-[0.4em] text-xs text-[var(--color-muted)] mb-4">
-              {about.ourStory?.eyebrow}
+              Premium Dry Fruits and Nuts Importer & Supplier in India | Since 1999
             </p>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--color-deep-brown)] mb-6 font-heading">
-              {about.ourStory?.title}
+              About Us
             </h1>
             <p className="text-lg text-[var(--color-slate)] max-w-3xl mx-auto leading-relaxed">
-              {about.ourStory?.description}
+              A Trusted Dry Fruits and Nuts Importer in India Since 1999
             </p>
           </motion.div>
           <div className="absolute top-0 right-0 -z-10 opacity-10 rotate-12">
@@ -325,7 +325,125 @@ export default function AboutContent({
           </div>
         </div>
 
-        {/* Client Success Philosophy */}
+        {/* Opening Story */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16 bg-gradient-to-br from-[var(--color-almond-gold)]/10 to-[var(--color-gold-light)]/5 p-12 rounded-3xl border-2 border-[var(--color-almond-gold)]/20 relative overflow-hidden"
+        >
+          <div className="relative z-10">
+            <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-deep-brown)] mb-6 font-heading">
+              Every bag of dry fruits has a beginning.
+            </h2>
+            <div className="max-w-4xl mx-auto space-y-6 text-lg text-[var(--color-slate)] leading-relaxed">
+              <p className="text-xl font-semibold text-[var(--color-almond-gold)]">
+                Ours began long before it had a name.
+              </p>
+              <p>
+                The story of Divyansh International is rooted in a family legacy built on trust, quality, and relationships. Long before Divyansh International was formally established in 1999, the foundations were laid by Mr. Som Nath Sethi, whose approach to the dry fruits and nuts business was guided by service rather than scale.
+              </p>
+              <p>
+                After moving from Gujranwala to Ludhiana, he began working with dry fruits and nuts, slowly building a reputation for honesty and consistency. Customers didn't just come for quality almonds, cashews, anjeer, and other dry fruits. They returned because they felt valued.
+              </p>
+            </div>
+          </div>
+          <motion.div
+            animate={{ rotate: [0, 360] }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            className="absolute top-4 right-4 opacity-20"
+          >
+            <NutIcon className="w-24 h-24 text-[var(--color-almond-gold)]" />
+          </motion.div>
+          <motion.div
+            animate={{ rotate: [0, -360] }}
+            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+            className="absolute bottom-4 left-4 opacity-20"
+          >
+            <AlmondIcon className="w-20 h-20 text-[var(--color-gold-dark)]" />
+          </motion.div>
+        </motion.div>
+
+        {/* The Anjeer Story */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-16 bg-gradient-to-br from-white to-[var(--color-cashew-cream)] p-10 rounded-3xl border-2 border-[var(--color-gold-light)] shadow-xl"
+        >
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-bold text-[var(--color-deep-brown)] mb-8 font-heading">
+              A Memory That Defines Us
+            </h2>
+            <div className="space-y-6 text-lg text-[var(--color-slate)] leading-relaxed">
+              <p>
+                There's a memory that still defines the brand today. Children who accompanied their parents to the factory were always offered a piece of anjeer. A small, thoughtful gesture that quietly reflected what the business stood for: care beyond the transaction.
+              </p>
+              <p className="text-xl font-semibold text-[var(--color-almond-gold)] italic">
+                That spirit continues to shape how Divyansh International works with customers, partners, and suppliers.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* The Birth of Divyansh International */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-16"
+        >
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-deep-brown)] mb-6 font-heading">
+              The Birth of Divyansh International in 1999
+            </h2>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6 text-lg text-[var(--color-slate)] leading-relaxed">
+              <p>
+                As the business grew, so did the vision. Under the leadership of the second generation, with Sanjeev Sethi stepping in, the legacy evolved into a structured enterprise. In 1999, this journey took a definitive turn with the birth of Divyansh International.
+              </p>
+              <p>
+                The focus expanded to sourcing and importing premium dry fruits and tree nuts, building strong relationships with growers and partners, and supplying consistent quality to customers across India.
+              </p>
+              <p className="font-semibold text-[var(--color-deep-brown)]">
+                What changed was scale. What didn't change was the commitment to trust and long-term relationships.
+              </p>
+            </div>
+            
+            <div className="bg-gradient-to-br from-[var(--color-ivory)] to-white p-8 rounded-3xl border-2 border-[var(--color-sand)] shadow-lg">
+              <h3 className="text-2xl font-bold text-[var(--color-almond-gold)] mb-4 text-center">Like a Bag of Assorted Nuts</h3>
+              <p className="text-[var(--color-slate)] text-center leading-relaxed">
+                Think of Divyansh International like a bag of assorted nuts. Each variety different, each carefully selected. Almonds, cashews, pistachios, figs, and more coming together with one common promise: quality you can rely on.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Growing While Staying Rooted */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-16 bg-gradient-to-br from-[var(--color-almond-gold)]/5 to-[var(--color-gold-light)]/10 p-12 rounded-3xl border border-[var(--color-almond-gold)]/20"
+        >
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-[var(--color-deep-brown)] mb-8 text-center font-heading">
+              Growing as a Dry Fruits Supplier, Staying Rooted in Values
+            </h2>
+            <div className="space-y-6 text-lg text-[var(--color-slate)] leading-relaxed">
+              <p>
+                From 1999 to today, Divyansh International has grown into a reliable dry fruits and nuts importer and supplier in India, serving businesses and partners who value quality and consistency. The company continues to adapt to changing markets while staying deeply rooted in the values that shaped it decades ago.
+              </p>
+              <p className="text-center font-semibold text-[var(--color-deep-brown)]">
+                Growth here has never been rushed. It has been built steadily, through trust, transparency, and a people-first approach to business.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Our Philosophy */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -364,6 +482,34 @@ export default function AboutContent({
           >
             <AlmondIcon className="w-20 h-20 text-[var(--color-gold-dark)]" />
           </motion.div>
+        </motion.div>
+
+        {/* Timeline Summary */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-16 text-center"
+        >
+          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <div className="bg-gradient-to-br from-white to-[var(--color-ivory)] p-8 rounded-3xl border-2 border-[var(--color-sand)] shadow-lg">
+              <h3 className="text-2xl font-bold text-[var(--color-almond-gold)] mb-3">The Story Began</h3>
+              <p className="text-[var(--color-slate)]">Years ago with Mr. Som Nath Sethi's vision and values</p>
+            </div>
+            <div className="bg-gradient-to-br from-white to-[var(--color-ivory)] p-8 rounded-3xl border-2 border-[var(--color-sand)] shadow-lg">
+              <h3 className="text-2xl font-bold text-[var(--color-almond-gold)] mb-3">The Brand Was Born</h3>
+              <p className="text-[var(--color-slate)]">In 1999 under Sanjeev Sethi's leadership</p>
+            </div>
+            <div className="bg-gradient-to-br from-white to-[var(--color-ivory)] p-8 rounded-3xl border-2 border-[var(--color-sand)] shadow-lg">
+              <h3 className="text-2xl font-bold text-[var(--color-almond-gold)] mb-3">The Journey Continues</h3>
+              <p className="text-[var(--color-slate)]">To grow with the same values and commitment</p>
+            </div>
+          </div>
+          <div className="mt-12">
+            <p className="text-2xl font-bold text-[var(--color-deep-brown)] font-heading">
+              Divyansh International.
+            </p>
+          </div>
         </motion.div>
 
         {/* Our Brands */}

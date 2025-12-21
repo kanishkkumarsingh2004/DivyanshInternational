@@ -79,11 +79,15 @@ export default function HeroSlider({
   const [videoErrors, setVideoErrors] = useState<Set<string>>(() => new Set());
   const [retryAttempts, setRetryAttempts] = useState<Map<string, number>>(() => new Map());
   const [loadingTimeouts, setLoadingTimeouts] = useState<Map<string, NodeJS.Timeout>>(() => new Map());
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+  
   const autoPlayInterval = heroConfig?.autoPlayInterval ?? 8000;
 
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-
   useEffect(() => {
+    // Set client flag first
+    setIsClient(true);
+    
     // Check for reduced motion preference after hydration
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     setPrefersReducedMotion(mediaQuery.matches);
@@ -117,6 +121,8 @@ export default function HeroSlider({
   };
 
   const handleNavigation = (target: string) => {
+    if (!isClient) return;
+    
     if (target === "contact") {
       window.location.href = "/contact?type=trade";
       return;

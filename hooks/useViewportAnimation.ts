@@ -11,6 +11,7 @@ interface UseViewportAnimationOptions {
 export function useViewportAnimation(options: UseViewportAnimationOptions = {}) {
   const [isInView, setIsInView] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
+  const [isClient, setIsClient] = useState(false);
   const elementRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -19,7 +20,14 @@ export function useViewportAnimation(options: UseViewportAnimationOptions = {}) 
     triggerOnce = true
   } = options;
 
+  // Set client flag after hydration
   useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return;
+    
     const element = elementRef.current;
     if (!element) return;
 
@@ -43,15 +51,16 @@ export function useViewportAnimation(options: UseViewportAnimationOptions = {}) 
     return () => {
       observer.unobserve(element);
     };
-  }, [threshold, rootMargin, hasAnimated]);
+  }, [isClient, threshold, rootMargin, hasAnimated]);
 
   // Return whether to show animation based on settings
-  const shouldAnimate = triggerOnce ? hasAnimated : isInView;
+  // On server/before hydration, don't animate to prevent hydration mismatch
+  const shouldAnimate = isClient && (triggerOnce ? hasAnimated : isInView);
 
   return {
     elementRef,
-    isInView,
+    isInView: isClient ? isInView : false,
     shouldAnimate,
-    hasAnimated
+    hasAnimated: isClient ? hasAnimated : false
   };
 }
