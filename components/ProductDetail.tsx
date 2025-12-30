@@ -280,39 +280,59 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
   const productImages = [
     product.heroImage,
     ...(product.gallery || [])
-  ].filter(Boolean);
+  ].filter((image): image is SanityImageSource => Boolean(image));
 
   useEffect(() => {
     // Related products based on current product type
-    const getRelatedProducts = () => {
+    const getRelatedProducts = (): Product[] => {
       const titleLower = productTitle.toLowerCase();
       
       if (titleLower.includes('coconut')) {
         return [
           {
             _id: "1",
-            title: { en: "Premium Makhana (Lotus Seeds)", ar: "بذور اللوتس الممتازة" },
+            title: { 
+              en: "Premium Makhana (Lotus Seeds)", 
+              ar: "بذور اللوتس الممتازة",
+              hi: "प्रीमियम मखाना (कमल के बीज)",
+              fr: "Graines de Lotus Premium"
+            },
             category: "Premium Nuts & Seeds",
             slug: { current: "premium-makhana" },
             heroImage: product.heroImage
           },
           {
             _id: "2", 
-            title: { en: "California Pistachios", ar: "الفستق الكاليفورني" },
+            title: { 
+              en: "California Pistachios", 
+              ar: "الفستق الكاليفورني",
+              hi: "कैलिफोर्निया पिस्ता",
+              fr: "Pistaches de Californie"
+            },
             category: "Premium Nuts",
             slug: { current: "california-pistachios" },
             heroImage: product.heroImage
           },
           {
             _id: "3",
-            title: { en: "Organic Almonds", ar: "اللوز العضوي" },
+            title: { 
+              en: "Organic Almonds", 
+              ar: "اللوز العضوي",
+              hi: "जैविक बादाम",
+              fr: "Amandes Biologiques"
+            },
             category: "Premium Nuts", 
             slug: { current: "organic-almonds" },
             heroImage: product.heroImage
           },
           {
             _id: "4",
-            title: { en: "Cashew Nuts", ar: "الكاجو" },
+            title: { 
+              en: "Cashew Nuts", 
+              ar: "الكاجو",
+              hi: "काजू",
+              fr: "Noix de Cajou"
+            },
             category: "Premium Nuts",
             slug: { current: "cashew-nuts" },
             heroImage: product.heroImage
@@ -322,28 +342,48 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
         return [
           {
             _id: "1",
-            title: { en: "Desiccated Coconut Powder", ar: "مسحوق جوز الهند المجفف" },
+            title: { 
+              en: "Desiccated Coconut Powder", 
+              ar: "مسحوق جوز الهند المجفف",
+              hi: "सूखा नारियल पाउडर",
+              fr: "Poudre de Coco Déshydratée"
+            },
             category: "Premium Coconut Products",
             slug: { current: "desiccated-coconut" },
             heroImage: product.heroImage
           },
           {
             _id: "2", 
-            title: { en: "California Pistachios", ar: "الفستق الكاليفورني" },
+            title: { 
+              en: "California Pistachios", 
+              ar: "الفستق الكاليفورني",
+              hi: "कैलिफोर्निया पिस्ता",
+              fr: "Pistaches de Californie"
+            },
             category: "Premium Nuts",
             slug: { current: "california-pistachios" },
             heroImage: product.heroImage
           },
           {
             _id: "3",
-            title: { en: "Premium Walnuts", ar: "الجوز الممتاز" },
+            title: { 
+              en: "Premium Walnuts", 
+              ar: "الجوز الممتاز",
+              hi: "प्रीमियम अखरोट",
+              fr: "Noix Premium"
+            },
             category: "Premium Nuts", 
             slug: { current: "premium-walnuts" },
             heroImage: product.heroImage
           },
           {
             _id: "4",
-            title: { en: "Dried Dates", ar: "التمر المجفف" },
+            title: { 
+              en: "Dried Dates", 
+              ar: "التمر المجفف",
+              hi: "सूखे खजूर",
+              fr: "Dattes Séchées"
+            },
             category: "Premium Dried Fruits",
             slug: { current: "dried-dates" },
             heroImage: product.heroImage
@@ -353,28 +393,48 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
         return [
           {
             _id: "1",
-            title: { en: "Desiccated Coconut Powder", ar: "مسحوق جوز الهند المجفف" },
+            title: { 
+              en: "Desiccated Coconut Powder", 
+              ar: "مسحوق جوز الهند المجفف",
+              hi: "सूखा नारियल पाउडर",
+              fr: "Poudre de Coco Déshydratée"
+            },
             category: "Premium Coconut Products",
             slug: { current: "desiccated-coconut" },
             heroImage: product.heroImage
           },
           {
             _id: "2", 
-            title: { en: "Premium Makhana (Lotus Seeds)", ar: "بذور اللوتس الممتازة" },
+            title: { 
+              en: "Premium Makhana (Lotus Seeds)", 
+              ar: "بذور اللوتس الممتازة",
+              hi: "प्रीमियम मखाना (कमल के बीज)",
+              fr: "Graines de Lotus Premium"
+            },
             category: "Premium Nuts & Seeds",
             slug: { current: "premium-makhana" },
             heroImage: product.heroImage
           },
           {
             _id: "3",
-            title: { en: "Organic Almonds", ar: "اللوز العضوي" },
+            title: { 
+              en: "Organic Almonds", 
+              ar: "اللوز العضوي",
+              hi: "जैविक बादाम",
+              fr: "Amandes Biologiques"
+            },
             category: "Premium Nuts", 
             slug: { current: "organic-almonds" },
             heroImage: product.heroImage
           },
           {
             _id: "4",
-            title: { en: "Cashew Nuts", ar: "الكاجو" },
+            title: { 
+              en: "Cashew Nuts", 
+              ar: "الكاجو",
+              hi: "काजू",
+              fr: "Noix de Cajou"
+            },
             category: "Premium Nuts",
             slug: { current: "cashew-nuts" },
             heroImage: product.heroImage
