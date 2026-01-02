@@ -37,9 +37,22 @@ export default function FloatingEnquiryBar({ labels }: FloatingEnquiryBarProps) 
     const items = getEnquiryItems();
     if (items.length === 0) return;
 
-    sessionStorage.setItem("pendingEnquiryPopulation", JSON.stringify(items));
-
-    window.location.href = "/contact?type=trade";
+    // Create WhatsApp message with enquiry items
+    const whatsappNumber = "+919876543210"; // Replace with actual number
+    let message = "Hi! I would like to enquire about the following products:\n\n";
+    
+    items.forEach((item, index) => {
+      message += `${index + 1}. ${item.productTitle}`;
+      if (item.MOQ) {
+        message += ` (MOQ: ${item.MOQ})`;
+      }
+      message += "\n";
+    });
+    
+    message += "\nPlease provide pricing and availability details. Thank you!";
+    
+    const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
   };
 
   if (!isVisible) return null;

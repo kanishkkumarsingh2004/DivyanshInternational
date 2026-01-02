@@ -94,12 +94,16 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
   const { language } = useLanguage();
   const [selectedImage, setSelectedImage] = useState(0);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
+  const [activeTab, setActiveTab] = useState<'description' | 'packaging' | 'forms'>('description');
 
   const productTitle = getLocalized(product.title, language);
   const heroHeading = getLocalized(product.heroHeading, language);
   const ctaLine = getLocalized(product.ctaLine, language);
   const description = getLocalized(product.description, language);
 
+  // WhatsApp and contact info
+  const whatsappNumber = "+919876543210"; // Replace with actual number
+  const contactEmail = "info@divyanshinternational.com"; // Replace with actual email
   // Function to get product-specific content based on product title or slug
   const getProductContent = (title: string) => {
     const titleLower = title.toLowerCase();
@@ -124,14 +128,6 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
         ],
         packaging: "25 kg bulk packs suitable for wholesalers, FMCG manufacturers, bakeries, and export buyers",
         pricing: { currentPrice: 2499, originalPrice: 2999, discount: 17 },
-        nutritional: {
-          calories: "660 kcal",
-          protein: "6.9g", 
-          carbs: "23.7g",
-          fat: "64.5g",
-          fiber: "16.3g",
-          sugar: "6.2g"
-        },
         specs: {
           origin: "India",
           variety: "Premium Grade Desiccated",
@@ -159,14 +155,6 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
         ],
         packaging: "10 kg bulk packs designed for wholesalers, retailers, temple suppliers, and health food brands",
         pricing: { currentPrice: 3299, originalPrice: 3899, discount: 15 },
-        nutritional: {
-          calories: "347 kcal",
-          protein: "9.7g",
-          carbs: "76.9g", 
-          fat: "0.1g",
-          fiber: "14.5g",
-          sugar: "0g"
-        },
         specs: {
           origin: "India (Bihar/Jharkhand)",
           variety: "Premium Fox Nuts",
@@ -195,14 +183,6 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
         ],
         packaging: "12 kg bulk packs suitable for wholesalers, dry fruit traders, FMCG brands, and export buyers",
         pricing: { currentPrice: 8999, originalPrice: 10499, discount: 14 },
-        nutritional: {
-          calories: "560 kcal",
-          protein: "20.2g",
-          carbs: "27.2g",
-          fat: "45.3g", 
-          fiber: "10.6g",
-          sugar: "7.7g"
-        },
         specs: {
           origin: "California, USA",
           variety: "Premium Grade",
@@ -230,14 +210,6 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
       ],
       packaging: "Bulk packs suitable for wholesalers and commercial buyers",
       pricing: { currentPrice: 899, originalPrice: 1199, discount: 25 },
-      nutritional: {
-        calories: "274 kcal",
-        protein: "3.3g",
-        carbs: "65g",
-        fat: "0.9g",
-        fiber: "9.8g", 
-        sugar: "63g"
-      },
       specs: {
         origin: "India",
         variety: "Premium Grade",
@@ -249,16 +221,6 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
   };
 
   const productContent = getProductContent(productTitle);
-
-  // Use product-specific nutritional info or fallback to content
-  const nutritionalInfo = [
-    { label: "Calories", value: product.nutritionalInfo?.calories || productContent.nutritional.calories },
-    { label: "Protein", value: product.nutritionalInfo?.protein || productContent.nutritional.protein },
-    { label: "Carbs", value: product.nutritionalInfo?.carbs || productContent.nutritional.carbs },
-    { label: "Fat", value: product.nutritionalInfo?.fat || productContent.nutritional.fat },
-    { label: "Fiber", value: product.nutritionalInfo?.fiber || productContent.nutritional.fiber },
-    { label: "Sugar", value: product.nutritionalInfo?.sugar || productContent.nutritional.sugar }
-  ];
 
   const specifications = [
     { label: "Origin", value: product.specifications?.origin || productContent.specs.origin },
@@ -447,6 +409,12 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
   }, [product, productTitle]);
 
   const handleAddToEnquiry = () => {
+    // Open WhatsApp with pre-filled message
+    const message = `Hi! I'm interested in ${productTitle}. Could you please provide more details about bulk pricing and availability?`;
+    const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+    
+    // Track analytics
     if (typeof window !== "undefined") {
       const event = new CustomEvent(labels.analytics.eventAddToEnquiry, { detail: product });
       window.dispatchEvent(event);
@@ -454,24 +422,16 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
         product: productTitle,
         location: labels.analytics.locationProductPage,
       });
-
-      const element = document.getElementById(labels.routing.scrollTargetContact);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
     }
   };
 
-  const handleRequestSample = () => {
-    trackEvent(labels.analytics.eventSampleRequest, {
-      product: productTitle,
-      location: labels.analytics.locationProductPage,
-    });
-    router.push(
-      `/contact?${labels.routing.queryParamType}=${labels.apiConfig.enquiryTypeTrade}&${labels.routing.queryParamProduct}=${encodeURIComponent(productTitle)}&${labels.routing.queryParamAction}=${labels.routing.actionSample}`
-    );
+  const handleRequestForms = () => {
+    // Open contact form or email for product forms
+    const subject = `Product Forms Request - ${productTitle}`;
+    const body = `Hello,\n\nI would like to request product forms and documentation for ${productTitle}.\n\nPlease send me:\n- Product specification sheets\n- Quality certificates\n- Packaging details\n- Sample request forms\n\nThank you!`;
+    const emailUrl = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.open(emailUrl, '_blank');
   };
-
   return (
     <div className="min-h-screen bg-white pt-24">
       {/* Breadcrumb */}
@@ -610,24 +570,6 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
                 ))}
               </div>
 
-              {/* Nutritional Information */}
-              <div className="bg-gray-50 rounded-xl p-4">
-                <h3 className="font-semibold text-[var(--color-deep-brown)] mb-3">
-                  Nutritional Value (per 100g)
-                </h3>
-                <div className="grid grid-cols-2 gap-3">
-                  {nutritionalInfo.map((item, index) => (
-                    <div key={index} className="flex justify-between text-sm">
-                      <span className="text-gray-600">{item.label}:</span>
-                      <span className="font-medium">{item.value}</span>
-                    </div>
-                  ))}
-                </div>
-                <p className="text-xs text-gray-400 mt-2 italic">
-                  *Nutritional values may vary slightly based on natural variations
-                </p>
-              </div>
-
               {/* Specifications */}
               <div className="bg-gray-50 rounded-xl p-4">
                 <h3 className="font-semibold text-[var(--color-deep-brown)] mb-3">Product Specifications</h3>
@@ -648,114 +590,317 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <button
                   onClick={handleAddToEnquiry}
-                  className="flex-1 bg-[var(--color-gold)] hover:bg-[var(--color-gold-dark)] text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+                  className="flex-1 bg-[var(--color-gold)] hover:bg-[var(--color-gold-dark)] text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
                 >
-                  {labels?.common?.addToEnquiry || "Add to Enquiry"}
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.595z"/>
+                  </svg>
+                  WhatsApp Enquiry
                 </button>
                 <button
-                  onClick={handleRequestSample}
-                  className="flex-1 border-2 border-[var(--color-deep-brown)] text-[var(--color-deep-brown)] hover:bg-[var(--color-deep-brown)] hover:text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+                  onClick={handleRequestForms}
+                  className="flex-1 border-2 border-[var(--color-deep-brown)] text-[var(--color-deep-brown)] hover:bg-[var(--color-deep-brown)] hover:text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
                 >
-                  {labels?.productDetail?.requestSample || "Request Sample"}
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  Product Forms
                 </button>
               </div>
             </div>
           </div>
+          {/* Tabbed Content Section */}
+          <div className="border-t border-gray-200">
+            {/* Tab Navigation */}
+            <div className="flex border-b border-gray-200">
+              <button
+                onClick={() => setActiveTab('description')}
+                className={`px-6 py-4 font-medium text-sm transition-colors ${
+                  activeTab === 'description'
+                    ? 'border-b-2 border-[var(--color-gold)] text-[var(--color-gold)]'
+                    : 'text-gray-600 hover:text-[var(--color-deep-brown)]'
+                }`}
+              >
+                Product Details
+              </button>
+              <button
+                onClick={() => setActiveTab('packaging')}
+                className={`px-6 py-4 font-medium text-sm transition-colors ${
+                  activeTab === 'packaging'
+                    ? 'border-b-2 border-[var(--color-gold)] text-[var(--color-gold)]'
+                    : 'text-gray-600 hover:text-[var(--color-deep-brown)]'
+                }`}
+              >
+                Packaging Info
+              </button>
+              <button
+                onClick={() => setActiveTab('forms')}
+                className={`px-6 py-4 font-medium text-sm transition-colors ${
+                  activeTab === 'forms'
+                    ? 'border-b-2 border-[var(--color-gold)] text-[var(--color-gold)]'
+                    : 'text-gray-600 hover:text-[var(--color-deep-brown)]'
+                }`}
+              >
+                Documentation
+              </button>
+            </div>
 
-          {/* Description Section */}
-          <div className="border-t border-gray-200 p-8">
-            <h2 className="text-2xl font-bold text-[var(--color-deep-brown)] mb-6">
-              Product Description
-            </h2>
-            <div className="prose max-w-none">
-              {product.listSections?.length ? (
-                product.listSections.map((section, index) => (
-                  <div key={index} className="mb-6">
-                    <h3 className="text-xl font-semibold text-[var(--color-deep-brown)] mb-3">
-                      {getLocalized(section.title, language)}
-                    </h3>
-                    <ul className="space-y-2">
-                      {section.items.map((item, itemIndex) => (
-                        <li key={itemIndex} className="flex items-start gap-2">
-                          <span className="w-2 h-2 bg-[var(--color-gold)] rounded-full mt-2 flex-shrink-0"></span>
-                          <span className="text-gray-700">{getLocalized(item, language)}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))
-              ) : (
+            {/* Tab Content */}
+            <div className="p-8">
+              {activeTab === 'description' && (
                 <div className="space-y-6">
-                  <div>
-                    <h3 className="text-xl font-semibold text-[var(--color-deep-brown)] mb-3">
-                      Key Highlights
-                    </h3>
-                    <ul className="space-y-2">
-                      {productContent.features.map((feature, index) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <span className="w-2 h-2 bg-[var(--color-gold)] rounded-full mt-2 flex-shrink-0"></span>
-                          <span className="text-gray-700">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
+                  <h2 className="text-2xl font-bold text-[var(--color-deep-brown)]">
+                    Product Description
+                  </h2>
+                  {product.listSections?.length ? (
+                    product.listSections.map((section, index) => (
+                      <div key={index} className="mb-6">
+                        <h3 className="text-xl font-semibold text-[var(--color-deep-brown)] mb-3">
+                          {getLocalized(section.title, language)}
+                        </h3>
+                        <ul className="space-y-2">
+                          {section.items.map((item, itemIndex) => (
+                            <li key={itemIndex} className="flex items-start gap-2">
+                              <span className="w-2 h-2 bg-[var(--color-gold)] rounded-full mt-2 flex-shrink-0"></span>
+                              <span className="text-gray-700">{getLocalized(item, language)}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="text-xl font-semibold text-[var(--color-deep-brown)] mb-3">
+                          Key Highlights
+                        </h3>
+                        <ul className="space-y-2">
+                          {productContent.features.map((feature, index) => (
+                            <li key={index} className="flex items-start gap-2">
+                              <span className="w-2 h-2 bg-[var(--color-gold)] rounded-full mt-2 flex-shrink-0"></span>
+                              <span className="text-gray-700">{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      
+                      {productContent.grades && (
+                        <div>
+                          <h3 className="text-xl font-semibold text-[var(--color-deep-brown)] mb-3">
+                            Available Grades
+                          </h3>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            {productContent.grades.map((grade, index) => (
+                              <div key={index} className="bg-gray-50 rounded-lg p-4 text-center">
+                                <div className="w-16 h-16 mx-auto mb-3 bg-[var(--color-gold)] rounded-full flex items-center justify-center">
+                                  <span className="text-white font-bold text-lg">{grade.split(' ')[0]}</span>
+                                </div>
+                                <p className="text-sm font-medium text-gray-700">{grade}</p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      
+                      {productContent.applications && (
+                        <div>
+                          <h3 className="text-xl font-semibold text-[var(--color-deep-brown)] mb-3">
+                            Ideal For
+                          </h3>
+                          <ul className="space-y-2">
+                            {productContent.applications.map((application, index) => (
+                              <li key={index} className="flex items-start gap-2">
+                                <span className="w-2 h-2 bg-[var(--color-gold)] rounded-full mt-2 flex-shrink-0"></span>
+                                <span className="text-gray-700">{application}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {activeTab === 'packaging' && (
+                <div className="space-y-6">
+                  <h2 className="text-2xl font-bold text-[var(--color-deep-brown)]">
+                    Packaging Information
+                  </h2>
+                  
+                  {/* Visual Packaging Display */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="bg-gradient-to-br from-[var(--color-sand)] to-[var(--color-beige)] rounded-xl p-6 text-center">
+                      <div className="w-20 h-20 mx-auto mb-4 bg-white rounded-lg flex items-center justify-center shadow-md">
+                        <svg className="w-10 h-10 text-[var(--color-deep-brown)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                        </svg>
+                      </div>
+                      <h3 className="font-semibold text-[var(--color-deep-brown)] mb-2">Bulk Packaging</h3>
+                      <p className="text-sm text-gray-600">{productContent.specs.packaging}</p>
+                    </div>
+                    
+                    <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 text-center">
+                      <div className="w-20 h-20 mx-auto mb-4 bg-white rounded-lg flex items-center justify-center shadow-md">
+                        <svg className="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                      </div>
+                      <h3 className="font-semibold text-blue-800 mb-2">Quality Sealed</h3>
+                      <p className="text-sm text-blue-600">Vacuum sealed for freshness</p>
+                    </div>
+                    
+                    <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 text-center">
+                      <div className="w-20 h-20 mx-auto mb-4 bg-white rounded-lg flex items-center justify-center shadow-md">
+                        <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                      <h3 className="font-semibold text-green-800 mb-2">Long Shelf Life</h3>
+                      <p className="text-sm text-green-600">{productContent.specs.shelfLife}</p>
+                    </div>
                   </div>
                   
-                  {productContent.grades && (
-                    <div>
-                      <h3 className="text-xl font-semibold text-[var(--color-deep-brown)] mb-3">
-                        Available Grades
-                      </h3>
-                      <ul className="space-y-2">
-                        {productContent.grades.map((grade, index) => (
-                          <li key={index} className="flex items-start gap-2">
-                            <span className="w-2 h-2 bg-[var(--color-gold)] rounded-full mt-2 flex-shrink-0"></span>
-                            <span className="text-gray-700">{grade}</span>
-                          </li>
-                        ))}
-                      </ul>
+                  <div className="bg-gray-50 rounded-xl p-6">
+                    <h3 className="text-lg font-semibold text-[var(--color-deep-brown)] mb-4">Packaging Details</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <h4 className="font-medium text-gray-800 mb-2">Standard Packaging</h4>
+                        <p className="text-gray-600 text-sm">{productContent.packaging}</p>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-gray-800 mb-2">Storage Requirements</h4>
+                        <p className="text-gray-600 text-sm">{productContent.specs.storage}</p>
+                      </div>
                     </div>
-                  )}
-                  
-                  {productContent.applications && (
-                    <div>
-                      <h3 className="text-xl font-semibold text-[var(--color-deep-brown)] mb-3">
-                        Ideal For
-                      </h3>
-                      <ul className="space-y-2">
-                        {productContent.applications.map((application, index) => (
-                          <li key={index} className="flex items-start gap-2">
-                            <span className="w-2 h-2 bg-[var(--color-gold)] rounded-full mt-2 flex-shrink-0"></span>
-                            <span className="text-gray-700">{application}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  
-                  <div>
-                    <h3 className="text-xl font-semibold text-[var(--color-deep-brown)] mb-3">
-                      Packaging
-                    </h3>
-                    <p className="text-gray-700">{productContent.packaging}</p>
                   </div>
                 </div>
               )}
-              
-              {ctaLine ? (
-                <div className="bg-[var(--color-sand)] rounded-xl p-6 mt-6">
-                  <p className="text-lg font-medium text-[var(--color-deep-brown)]">{ctaLine}</p>
+
+              {activeTab === 'forms' && (
+                <div className="space-y-6">
+                  <h2 className="text-2xl font-bold text-[var(--color-deep-brown)]">
+                    Product Documentation
+                  </h2>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="border border-gray-200 rounded-xl p-6 hover:shadow-md transition-shadow">
+                      <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 bg-[var(--color-gold)] rounded-lg flex items-center justify-center">
+                          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-[var(--color-deep-brown)] mb-2">Product Specification Sheet</h3>
+                          <p className="text-gray-600 text-sm mb-3">Detailed technical specifications and quality parameters</p>
+                          <button 
+                            onClick={handleRequestForms}
+                            className="text-[var(--color-gold)] hover:text-[var(--color-gold-dark)] text-sm font-medium"
+                          >
+                            Request Document →
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="border border-gray-200 rounded-xl p-6 hover:shadow-md transition-shadow">
+                      <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
+                          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-[var(--color-deep-brown)] mb-2">Quality Certificates</h3>
+                          <p className="text-gray-600 text-sm mb-3">ISO, HACCP, and other quality certifications</p>
+                          <button 
+                            onClick={handleRequestForms}
+                            className="text-blue-500 hover:text-blue-600 text-sm font-medium"
+                          >
+                            Request Certificates →
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="border border-gray-200 rounded-xl p-6 hover:shadow-md transition-shadow">
+                      <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
+                          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                          </svg>
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-[var(--color-deep-brown)] mb-2">Sample Request Form</h3>
+                          <p className="text-gray-600 text-sm mb-3">Request product samples for quality evaluation</p>
+                          <button 
+                            onClick={handleRequestForms}
+                            className="text-green-500 hover:text-green-600 text-sm font-medium"
+                          >
+                            Request Sample →
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="border border-gray-200 rounded-xl p-6 hover:shadow-md transition-shadow">
+                      <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center">
+                          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                          </svg>
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-[var(--color-deep-brown)] mb-2">Bulk Pricing Sheet</h3>
+                          <p className="text-gray-600 text-sm mb-3">Volume-based pricing and MOQ information</p>
+                          <button 
+                            onClick={handleRequestForms}
+                            className="text-purple-500 hover:text-purple-600 text-sm font-medium"
+                          >
+                            Request Pricing →
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              ) : (
-                <div className="bg-[var(--color-sand)] rounded-xl p-6 mt-6">
-                  <p className="text-lg font-medium text-[var(--color-deep-brown)]">
+              )}
+
+              {/* CTA Section */}
+              <div className="bg-gradient-to-r from-[var(--color-sand)] to-[var(--color-beige)] rounded-xl p-8 mt-8">
+                <div className="text-center">
+                  <h3 className="text-2xl font-bold text-[var(--color-deep-brown)] mb-4">
+                    Ready to Place Your Order?
+                  </h3>
+                  <p className="text-gray-700 mb-6 max-w-2xl mx-auto">
                     Contact us for bulk pricing, custom packaging options, and detailed product specifications. 
                     We ensure quality consistency and reliable supply for all your commercial needs.
                   </p>
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button
+                      onClick={handleAddToEnquiry}
+                      className="bg-[var(--color-gold)] hover:bg-[var(--color-gold-dark)] text-white px-8 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+                    >
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.595z"/>
+                      </svg>
+                      WhatsApp Us
+                    </button>
+                    <a
+                      href={`mailto:${contactEmail}?subject=Bulk Enquiry - ${productTitle}`}
+                      className="border-2 border-[var(--color-deep-brown)] text-[var(--color-deep-brown)] hover:bg-[var(--color-deep-brown)] hover:text-white px-8 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                      Email Us
+                    </a>
+                  </div>
                 </div>
-              )}
+              </div>
             </div>
           </div>
-
           {/* Related Products Section */}
           {relatedProducts.length > 0 && (
             <div className="border-t border-gray-200 p-8">
