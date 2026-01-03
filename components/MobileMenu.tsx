@@ -78,6 +78,21 @@ export default function MobileMenu({
               </div>
 
               <ul className="mt-8 space-y-2">
+                {/* Home Link */}
+                <motion.li
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.05, duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+                >
+                  <Link
+                    href="/"
+                    className="block w-full text-left px-4 py-2 text-[var(--color-deep-brown)] hover:bg-[var(--color-beige)] rounded-lg transition-colors focus:outline-2 focus:outline-[var(--color-gold)] focus:rounded"
+                    onClick={onClose}
+                  >
+                    Home
+                  </Link>
+                </motion.li>
+
                 {/* Catalogue Link */}
                 <motion.li
                   initial={{ opacity: 0, x: -20 }}

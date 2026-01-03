@@ -1,4 +1,5 @@
 import AboutContent from "@/components/pages/AboutContent";
+import { SectionVisualElements } from "@/components/VisualElements";
 import { client } from "@/lib/sanity/client";
 import {
   teamMembersQuery,
@@ -28,11 +29,19 @@ export default async function AboutPage() {
   const { teamMembers, timeline, about, siteSettings } = await getData();
 
   return (
-    <AboutContent
-      initialTeamMembers={teamMembers}
-      initialTimeline={timeline}
-      initialAbout={about}
-      siteSettings={siteSettings}
-    />
+    <div className="relative overflow-hidden">
+      {/* Background Visual Elements */}
+      <SectionVisualElements />
+      
+      {/* Content */}
+      <div className="relative z-10">
+        <AboutContent
+          initialTeamMembers={teamMembers}
+          initialTimeline={timeline}
+          initialAbout={about}
+          siteSettings={siteSettings}
+        />
+      </div>
+    </div>
   );
 }

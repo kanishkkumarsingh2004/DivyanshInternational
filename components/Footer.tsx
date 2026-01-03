@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { SanityImageSource } from "@sanity/image-url";
 import { useLanguage } from "@/context/LanguageContext";
 import { getLocalized, LocaleString } from "@/lib/i18n";
+import { FooterVisualElements } from "@/components/VisualElements";
 
 interface FooterData {
   quickLinks: { label: string; url: string }[];
@@ -45,9 +46,18 @@ interface FooterProps {
   labels?: FooterLabels;
   accessibility?: AccessibilityLabels;
   products?: { title: LocaleString; slug: { current: string } }[];
+  siteSettings?: {
+    whatsapp?: {
+      phoneNumber: string;
+      messageTemplate: string;
+    };
+    contact?: {
+      email: string;
+    };
+  };
 }
 
-export default function Footer({ initialFooter, labels, accessibility, products }: FooterProps) {
+export default function Footer({ initialFooter, labels, accessibility, products, siteSettings }: FooterProps) {
   const { language } = useLanguage();
   const footer = initialFooter || {
     quickLinks: [],
@@ -68,8 +78,29 @@ export default function Footer({ initialFooter, labels, accessibility, products 
       href: `/products/${p.slug.current}`,
     })) || [];
 
+  // WhatsApp and Email functionality
+  const whatsappNumber = siteSettings?.whatsapp?.phoneNumber;
+  const contactEmail = siteSettings?.contact?.email || "info@divyanshinternational.com";
+  
+  const handleMakeEnquiry = () => {
+    if (whatsappNumber) {
+      const message = "Hi! I would like to make an enquiry about your products. Could you please provide more information?";
+      const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+    } else {
+      // Fallback to email
+      const subject = "Product Enquiry - Divyansh International";
+      const body = "Hello,\n\nI would like to make an enquiry about your products. Please provide more information about:\n\n- Product availability\n- Pricing details\n- Minimum order quantities\n- Delivery options\n\nThank you!";
+      const emailUrl = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.open(emailUrl, '_blank');
+    }
+  };
+
   return (
     <footer className="bg-gradient-to-br from-[var(--color-deep-brown)] via-[var(--color-raisin-purple)] to-[var(--color-deep-brown)] py-16 relative overflow-hidden" style={{ color: '#ffffff' }}>
+      {/* Visual Elements */}
+      <FooterVisualElements />
+      
       {/* Decorative overlay */}
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDE0YzAtMy4zMTQgMi42ODYtNiA2LTZzNiAyLjY4NiA2IDYtMi42ODYgNi02IDYtNi0yLjY4Ni02LTZ6TTEyIDM4YzAtMy4zMTQgMi42ODYtNiA2LTZzNiAyLjY4NiA2IDYtMi42ODYgNi02IDYtNi0yLjY4Ni02LTZ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-50"></div>
       <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
@@ -122,6 +153,16 @@ export default function Footer({ initialFooter, labels, accessibility, products 
           <div>
             <h4 className="text-lg font-semibold mb-4" style={{ color: '#ffffff' }}>{labels?.quickLinksTitle}</h4>
             <ul className="space-y-2">
+              {/* Make an Enquiry Button */}
+              <li>
+                <button
+                  onClick={handleMakeEnquiry}
+                  className="hover:text-[var(--color-almond-gold)] transition-colors text-sm block text-left w-full bg-gradient-to-r from-[var(--color-almond-gold)] to-[var(--color-gold-dark)] text-white px-4 py-2 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105"
+                >
+                  Make an Enquiry
+                </button>
+              </li>
+              
               {footer.quickLinks.map((link, index) => (
                 <li key={index}>
                   <Link

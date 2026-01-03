@@ -1,6 +1,7 @@
 import { client } from "@/lib/sanity/client";
 import { contactPageQuery, siteSettingsQuery, productListQuery } from "@/lib/sanity/queries";
 import ContactContent from "@/components/pages/ContactContent";
+import { SectionVisualElements } from "@/components/VisualElements";
 
 export const revalidate = 3600;
 
@@ -22,10 +23,18 @@ export default async function ContactPage() {
   const { contactPage, siteSettings, productList } = await getData();
 
   return (
-    <ContactContent
-      initialContact={contactPage}
-      siteSettings={siteSettings}
-      productList={productList}
-    />
+    <div className="relative overflow-hidden">
+      {/* Background Visual Elements */}
+      <SectionVisualElements />
+      
+      {/* Content */}
+      <div className="relative z-10">
+        <ContactContent
+          initialContact={contactPage}
+          siteSettings={siteSettings}
+          productList={productList}
+        />
+      </div>
+    </div>
   );
 }

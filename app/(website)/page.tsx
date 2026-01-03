@@ -9,6 +9,7 @@ import CTASection from "@/components/sections/CTASection";
 
 import SpiralQuote from "@/components/SpiralQuote";
 import AnimationWrapper from "@/components/AnimationWrapper";
+import { HeroVisualElements } from "@/components/VisualElements";
 import Script from "next/script";
 import { generateOrganizationSchema, generateWebSiteSchema } from "@/lib/seo/schema";
 
@@ -115,90 +116,96 @@ export default async function Home() {
   } = await getData();
 
   return (
-    <>
-      <Script
-        id="organization-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(generateOrganizationSchema(siteSettings.organization)),
-        }}
-      />
-      <Script
-        id="website-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            generateWebSiteSchema({
-              name: siteSettings.organization.name,
-              url: siteSettings.seo.siteUrl,
-            })
-          ),
-        }}
-      />
-      <AnimationWrapper>
-        <HeroSlider
-          initialSlides={heroSlides}
-          stats={homePage?.heroStats}
-          accessibility={siteSettings?.accessibility}
-          heroConfig={siteSettings?.heroConfig}
-          routing={siteSettings?.routing}
-        />
-      </AnimationWrapper>
-      <AnimationWrapper delay={0.1}>
-        <SpiralQuote
-          initialQuote={quote}
-          labels={{
-            spiralQuoteSection: homePage.spiralQuoteSection,
-            navigation: siteSettings.navigation,
+    <div className="relative overflow-hidden">
+      {/* Background Visual Elements */}
+      <HeroVisualElements />
+      
+      {/* Content */}
+      <div className="relative z-10">
+        <Script
+          id="organization-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(generateOrganizationSchema(siteSettings.organization)),
           }}
         />
-      </AnimationWrapper>
-      <AnimationWrapper delay={0.2}>
-        <CapabilitiesSection
-          initialCapabilities={capabilities}
-          initialCertificates={certificates}
-          sectionSettings={homePage?.capabilitiesSection}
+        <Script
+          id="website-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(
+              generateWebSiteSchema({
+                name: siteSettings.organization.name,
+                url: siteSettings.seo.siteUrl,
+              })
+            ),
+          }}
         />
-      </AnimationWrapper>
-      
-      <AnimationWrapper delay={0.4}>
-        <ProcessSection
-          initialProcessSteps={processSteps}
-          sectionSettings={homePage?.processSection}
-          routing={siteSettings?.routing}
-        />
-      </AnimationWrapper>
-      <AnimationWrapper delay={0.3}>
-        <ProductShowcase
-          initialProducts={products}
-          siteSettings={siteSettings}
-          headerData={homePage?.productShowcaseSection}
-        />
-      </AnimationWrapper>
-      <AnimationWrapper delay={0.5}>
-        <VideoTestimonialsSection
-          initialTestimonials={testimonials}
-          sectionSettings={testimonialsSection}
-          routing={siteSettings?.routing}
-        />
-      </AnimationWrapper>
-      <AnimationWrapper delay={0.6}>
-        <SustainabilitySection
-          initialPillars={sustainabilityPillars}
-          sectionSettings={homePage?.sustainabilitySection}
-          routing={siteSettings?.routing}
-        />
-      </AnimationWrapper>
-      <AnimationWrapper delay={0.7}>
-        <TrustSection
-          initialCertificates={certificates}
-          sectionSettings={homePage?.trustSection}
-          routing={siteSettings?.routing}
-        />
-      </AnimationWrapper>
-      <AnimationWrapper delay={0.8}>
-        <CTASection initialCTA={cta} />
-      </AnimationWrapper>
-    </>
+        <AnimationWrapper>
+          <HeroSlider
+            initialSlides={heroSlides}
+            stats={homePage?.heroStats}
+            accessibility={siteSettings?.accessibility}
+            heroConfig={siteSettings?.heroConfig}
+            routing={siteSettings?.routing}
+          />
+        </AnimationWrapper>
+        <AnimationWrapper delay={0.1}>
+          <SpiralQuote
+            initialQuote={quote}
+            labels={{
+              spiralQuoteSection: homePage.spiralQuoteSection,
+              navigation: siteSettings.navigation,
+            }}
+          />
+        </AnimationWrapper>
+        <AnimationWrapper delay={0.2}>
+          <CapabilitiesSection
+            initialCapabilities={capabilities}
+            initialCertificates={certificates}
+            sectionSettings={homePage?.capabilitiesSection}
+          />
+        </AnimationWrapper>
+        
+        <AnimationWrapper delay={0.4}>
+          <ProcessSection
+            initialProcessSteps={processSteps}
+            sectionSettings={homePage?.processSection}
+            routing={siteSettings?.routing}
+          />
+        </AnimationWrapper>
+        <AnimationWrapper delay={0.3}>
+          <ProductShowcase
+            initialProducts={products}
+            siteSettings={siteSettings}
+            headerData={homePage?.productShowcaseSection}
+          />
+        </AnimationWrapper>
+        <AnimationWrapper delay={0.5}>
+          <VideoTestimonialsSection
+            initialTestimonials={testimonials}
+            sectionSettings={testimonialsSection}
+            routing={siteSettings?.routing}
+          />
+        </AnimationWrapper>
+        <AnimationWrapper delay={0.6}>
+          <SustainabilitySection
+            initialPillars={sustainabilityPillars}
+            sectionSettings={homePage?.sustainabilitySection}
+            routing={siteSettings?.routing}
+          />
+        </AnimationWrapper>
+        <AnimationWrapper delay={0.7}>
+          <TrustSection
+            initialCertificates={certificates}
+            sectionSettings={homePage?.trustSection}
+            routing={siteSettings?.routing}
+          />
+        </AnimationWrapper>
+        <AnimationWrapper delay={0.8}>
+          <CTASection initialCTA={cta} />
+        </AnimationWrapper>
+      </div>
+    </div>
   );
 }

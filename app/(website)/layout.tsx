@@ -83,6 +83,7 @@ export default async function WebsiteLayout({
         labels={siteSettings?.footer}
         accessibility={siteSettings?.accessibility}
         products={productsData}
+        siteSettings={siteSettings}
       />
       <EnquiryBuilder labels={siteSettings?.enquiry} />
       <FloatingActionButton

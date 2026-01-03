@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { trackEvent } from "@/components/analytics/GA4";
 import { useLanguage } from "@/context/LanguageContext";
 import { getLocalized, LocaleString, LocaleText } from "@/lib/i18n";
@@ -10,6 +9,7 @@ import Image from "next/image";
 import { urlFor } from "@/lib/sanity/client";
 import type { SanityImageSource } from "@sanity/image-url";
 import { useState, useEffect } from "react";
+import { HeroVisualElements, SectionVisualElements, ProductVisual } from "@/components/VisualElements";
 
 interface Product {
   _id: string;
@@ -30,14 +30,6 @@ interface Product {
     originalPrice: number;
     discount: number;
   };
-  nutritionalInfo?: {
-    calories: string;
-    protein: string;
-    carbs: string;
-    fat: string;
-    fiber: string;
-    sugar: string;
-  };
   specifications?: {
     origin: string;
     variety: string;
@@ -51,7 +43,6 @@ interface Labels {
   productDetail: {
     heroPlaceholder: string;
     addToEnquiry: string;
-    requestSample: string;
     backToProducts: string;
     programSuffix: string;
   };
@@ -72,14 +63,12 @@ interface Labels {
     queryParamType: string;
     queryParamProduct: string;
     queryParamAction: string;
-    actionSample: string;
     scrollTargetContact: string;
     productsHash: string;
   };
   analytics: {
     eventAddToEnquiry: string;
     eventAddToEnquiryGA: string;
-    eventSampleRequest: string;
     locationProductPage: string;
   };
 }
@@ -90,7 +79,6 @@ interface ProductDetailProps {
 }
 
 export default function ProductDetail({ product, labels }: ProductDetailProps) {
-  const router = useRouter();
   const { language } = useLanguage();
   const [selectedImage, setSelectedImage] = useState(0);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
@@ -98,7 +86,6 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
 
   const productTitle = getLocalized(product.title, language);
   const heroHeading = getLocalized(product.heroHeading, language);
-  const ctaLine = getLocalized(product.ctaLine, language);
   const description = getLocalized(product.description, language);
 
   // WhatsApp and contact info
@@ -433,7 +420,12 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
     window.open(emailUrl, '_blank');
   };
   return (
-    <div className="min-h-screen bg-white pt-24">
+    <div className="min-h-screen bg-white pt-24 relative overflow-hidden">
+      {/* Floating Visual Elements */}
+      <HeroVisualElements />
+
+      {/* Content with relative positioning to appear above floating elements */}
+      <div className="relative z-10">
       {/* Breadcrumb */}
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-4">
         <nav className="flex items-center gap-2 text-sm text-[var(--color-muted)]">
@@ -456,11 +448,14 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
       </div>
 
       {/* Product Content */}
-      <section className="container mx-auto px-4 md:px-6 lg:px-8 py-12">
+      <section className="container mx-auto px-4 md:px-6 lg:px-8 py-12 relative">
+        {/* Section decorative elements */}
+        <SectionVisualElements />
+        
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-2xl shadow-lg overflow-hidden"
+          className="bg-white rounded-2xl shadow-lg overflow-hidden relative"
         >
           {/* Main Product Section */}
           <div className="grid lg:grid-cols-2 gap-8 p-8">
@@ -641,7 +636,7 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
                     : 'text-gray-600 hover:text-[var(--color-deep-brown)]'
                 }`}
               >
-                Documentation
+                Product Forms
               </button>
             </div>
 
@@ -687,17 +682,30 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
                       {productContent.grades && (
                         <div>
                           <h3 className="text-xl font-semibold text-[var(--color-deep-brown)] mb-3">
-                            Available Grades
+                            Available Varieties
                           </h3>
-                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            {productContent.grades.map((grade, index) => (
-                              <div key={index} className="bg-gray-50 rounded-lg p-4 text-center">
-                                <div className="w-16 h-16 mx-auto mb-3 bg-[var(--color-gold)] rounded-full flex items-center justify-center">
-                                  <span className="text-white font-bold text-lg">{grade.split(' ')[0]}</span>
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            {productContent.grades.map((grade, index) => {
+                              const productType = productTitle.toLowerCase().includes('makhana') ? 'makhana' :
+                                                productTitle.toLowerCase().includes('coconut') ? 'coconut' : 'nuts';
+                              
+                              return (
+                                <div key={index} className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl p-4 text-center hover:shadow-md transition-shadow">
+                                  {/* Visual representation of the product */}
+                                  <div className="w-20 h-20 mx-auto mb-3 relative">
+                                    <div className="absolute inset-0 bg-gradient-to-br from-amber-200 to-amber-300 rounded-full"></div>
+                                    <div className="absolute inset-2 bg-gradient-to-br from-amber-100 to-amber-200 rounded-full flex items-center justify-center">
+                                      <ProductVisual productType={productType} size="md" />
+                                    </div>
+                                    <div className="absolute -top-1 -right-1 w-6 h-6 bg-[var(--color-gold)] rounded-full flex items-center justify-center">
+                                      <span className="text-white font-bold text-xs">{grade.split(' ')[0]}</span>
+                                    </div>
+                                  </div>
+                                  <p className="text-sm font-medium text-gray-700">{grade}</p>
+                                  <div className="mt-2 text-xs text-gray-500">Premium Quality</div>
                                 </div>
-                                <p className="text-sm font-medium text-gray-700">{grade}</p>
-                              </div>
-                            ))}
+                              );
+                            })}
                           </div>
                         </div>
                       )}
@@ -723,13 +731,13 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
               )}
 
               {activeTab === 'packaging' && (
-                <div className="space-y-6">
+                <div className="space-y-8">
                   <h2 className="text-2xl font-bold text-[var(--color-deep-brown)]">
                     Packaging Information
                   </h2>
                   
                   {/* Visual Packaging Display */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div className="bg-gradient-to-br from-[var(--color-sand)] to-[var(--color-beige)] rounded-xl p-6 text-center">
                       <div className="w-20 h-20 mx-auto mb-4 bg-white rounded-lg flex items-center justify-center shadow-md">
                         <svg className="w-10 h-10 text-[var(--color-deep-brown)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -738,6 +746,9 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
                       </div>
                       <h3 className="font-semibold text-[var(--color-deep-brown)] mb-2">Bulk Packaging</h3>
                       <p className="text-sm text-gray-600">{productContent.specs.packaging}</p>
+                      <div className="mt-3 text-xs text-gray-500">
+                        Commercial Grade
+                      </div>
                     </div>
                     
                     <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 text-center">
@@ -748,6 +759,9 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
                       </div>
                       <h3 className="font-semibold text-blue-800 mb-2">Quality Sealed</h3>
                       <p className="text-sm text-blue-600">Vacuum sealed for freshness</p>
+                      <div className="mt-3 text-xs text-blue-500">
+                        Food Grade Material
+                      </div>
                     </div>
                     
                     <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 text-center">
@@ -758,20 +772,175 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
                       </div>
                       <h3 className="font-semibold text-green-800 mb-2">Long Shelf Life</h3>
                       <p className="text-sm text-green-600">{productContent.specs.shelfLife}</p>
+                      <div className="mt-3 text-xs text-green-500">
+                        Extended Freshness
+                      </div>
+                    </div>
+
+                    <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-6 text-center">
+                      <div className="w-20 h-20 mx-auto mb-4 bg-white rounded-lg flex items-center justify-center shadow-md">
+                        <svg className="w-10 h-10 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                        </svg>
+                      </div>
+                      <h3 className="font-semibold text-orange-800 mb-2">Easy Transport</h3>
+                      <p className="text-sm text-orange-600">Optimized for logistics</p>
+                      <div className="mt-3 text-xs text-orange-500">
+                        Stackable Design
+                      </div>
                     </div>
                   </div>
-                  
-                  <div className="bg-gray-50 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-[var(--color-deep-brown)] mb-4">Packaging Details</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <h4 className="font-medium text-gray-800 mb-2">Standard Packaging</h4>
-                        <p className="text-gray-600 text-sm">{productContent.packaging}</p>
+
+                  {/* Packaging Specifications */}
+                  <div className="bg-white border border-gray-200 rounded-xl p-6">
+                    <h3 className="text-xl font-semibold text-[var(--color-deep-brown)] mb-6">Packaging Specifications</h3>
+                    
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                      {/* Package Dimensions Visual */}
+                      <div className="space-y-4">
+                        <h4 className="font-medium text-gray-800 mb-4">Package Dimensions</h4>
+                        <div className="bg-gray-50 rounded-lg p-6 text-center">
+                          <div className="relative">
+                            {/* 3D Box Visualization */}
+                            <div className="w-32 h-24 mx-auto mb-4 relative">
+                              <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-sand)] to-[var(--color-beige)] rounded-lg transform rotate-3 shadow-lg"></div>
+                              <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-beige)] to-[var(--color-sand)] rounded-lg transform -rotate-1 shadow-md"></div>
+                              <div className="absolute inset-0 bg-white rounded-lg shadow-sm flex items-center justify-center">
+                                <div className="text-center">
+                                  <div className="text-xs font-medium text-gray-600">
+                                    {productContent.specs.packaging.includes('25 kg') ? '25 KG' : 
+                                     productContent.specs.packaging.includes('12 kg') ? '12 KG' : 
+                                     productContent.specs.packaging.includes('10 kg') ? '10 KG' : 'BULK'}
+                                  </div>
+                                  <div className="text-xs text-gray-500">PACK</div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            {/* Dimension Labels */}
+                            <div className="grid grid-cols-3 gap-2 text-xs text-gray-600">
+                              <div className="text-center">
+                                <div className="font-medium">Length</div>
+                                <div>60 cm</div>
+                              </div>
+                              <div className="text-center">
+                                <div className="font-medium">Width</div>
+                                <div>40 cm</div>
+                              </div>
+                              <div className="text-center">
+                                <div className="font-medium">Height</div>
+                                <div>25 cm</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <div>
-                        <h4 className="font-medium text-gray-800 mb-2">Storage Requirements</h4>
-                        <p className="text-gray-600 text-sm">{productContent.specs.storage}</p>
+
+                      {/* Packaging Details */}
+                      <div className="space-y-4">
+                        <h4 className="font-medium text-gray-800 mb-4">Packaging Details</h4>
+                        <div className="space-y-3">
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-gray-600">Package Type:</span>
+                            <span className="font-medium">{productContent.specs.packaging}</span>
+                          </div>
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-gray-600">Material:</span>
+                            <span className="font-medium">Food Grade PP/HDPE</span>
+                          </div>
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-gray-600">Sealing:</span>
+                            <span className="font-medium">Heat Sealed + Vacuum</span>
+                          </div>
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-gray-600">Storage:</span>
+                            <span className="font-medium">{productContent.specs.storage}</span>
+                          </div>
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-gray-600">Shelf Life:</span>
+                            <span className="font-medium">{productContent.specs.shelfLife}</span>
+                          </div>
+                          <div className="flex justify-between items-center py-2">
+                            <span className="text-gray-600">Origin:</span>
+                            <span className="font-medium">{productContent.specs.origin}</span>
+                          </div>
+                        </div>
                       </div>
+                    </div>
+                  </div>
+
+                  {/* Logistics Information */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+                          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                          </svg>
+                        </div>
+                        <h4 className="font-semibold text-blue-800">Shipping Information</h4>
+                      </div>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-blue-600">Pallets per 20ft:</span>
+                          <span className="font-medium text-blue-800">10-12 pallets</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-blue-600">Packages per pallet:</span>
+                          <span className="font-medium text-blue-800">40-50 packs</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-blue-600">Total capacity:</span>
+                          <span className="font-medium text-blue-800">20-25 MT</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
+                          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        </div>
+                        <h4 className="font-semibold text-green-800">Quality Assurance</h4>
+                      </div>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-green-600">Moisture content:</span>
+                          <span className="font-medium text-green-800">≤ 5%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-green-600">Purity level:</span>
+                          <span className="font-medium text-green-800">≥ 99%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-green-600">Certification:</span>
+                          <span className="font-medium text-green-800">ISO, HACCP</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Custom Packaging Options */}
+                  <div className="bg-gradient-to-r from-[var(--color-sand)] to-[var(--color-beige)] rounded-xl p-6">
+                    <div className="text-center">
+                      <h4 className="text-lg font-semibold text-[var(--color-deep-brown)] mb-3">
+                        Custom Packaging Available
+                      </h4>
+                      <p className="text-gray-700 mb-4 max-w-2xl mx-auto">
+                        We offer flexible packaging solutions to meet your specific requirements. 
+                        Contact us for custom sizes, private labeling, and specialized packaging options.
+                      </p>
+                      <button
+                        onClick={handleAddToEnquiry}
+                        className="bg-[var(--color-gold)] hover:bg-[var(--color-gold-dark)] text-white px-6 py-3 rounded-lg font-semibold transition-colors inline-flex items-center gap-2"
+                      >
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.595z"/>
+                        </svg>
+                        Discuss Custom Packaging
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -780,7 +949,7 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
               {activeTab === 'forms' && (
                 <div className="space-y-6">
                   <h2 className="text-2xl font-bold text-[var(--color-deep-brown)]">
-                    Product Documentation
+                    Product Forms & Documentation
                   </h2>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -871,12 +1040,46 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
               <div className="bg-gradient-to-r from-[var(--color-sand)] to-[var(--color-beige)] rounded-xl p-8 mt-8">
                 <div className="text-center">
                   <h3 className="text-2xl font-bold text-[var(--color-deep-brown)] mb-4">
-                    Ready to Place Your Order?
+                    Ready for Bulk Orders?
                   </h3>
                   <p className="text-gray-700 mb-6 max-w-2xl mx-auto">
-                    Contact us for bulk pricing, custom packaging options, and detailed product specifications. 
+                    Get competitive bulk pricing, learn about minimum order quantities (MOQ), and explore custom packaging options. 
                     We ensure quality consistency and reliable supply for all your commercial needs.
                   </p>
+                  
+                  {/* Key Benefits */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                    <div className="bg-white/50 rounded-lg p-4">
+                      <div className="w-12 h-12 bg-[var(--color-gold)] rounded-lg flex items-center justify-center mx-auto mb-3">
+                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                        </svg>
+                      </div>
+                      <h4 className="font-semibold text-[var(--color-deep-brown)] mb-1">Volume Discounts</h4>
+                      <p className="text-sm text-gray-600">Better prices for larger quantities</p>
+                    </div>
+                    
+                    <div className="bg-white/50 rounded-lg p-4">
+                      <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-3">
+                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                        </svg>
+                      </div>
+                      <h4 className="font-semibold text-[var(--color-deep-brown)] mb-1">Custom Packaging</h4>
+                      <p className="text-sm text-gray-600">Tailored to your requirements</p>
+                    </div>
+                    
+                    <div className="bg-white/50 rounded-lg p-4">
+                      <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mx-auto mb-3">
+                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                        </svg>
+                      </div>
+                      <h4 className="font-semibold text-[var(--color-deep-brown)] mb-1">Fast Delivery</h4>
+                      <p className="text-sm text-gray-600">Reliable logistics network</p>
+                    </div>
+                  </div>
+                  
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <button
                       onClick={handleAddToEnquiry}
@@ -885,16 +1088,16 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.595z"/>
                       </svg>
-                      WhatsApp Us
+                      Get Bulk Pricing on WhatsApp
                     </button>
                     <a
-                      href={`mailto:${contactEmail}?subject=Bulk Enquiry - ${productTitle}`}
+                      href={`mailto:${contactEmail}?subject=Bulk Pricing & MOQ Enquiry - ${productTitle}&body=Hello,%0D%0A%0D%0AI am interested in bulk purchasing ${productTitle}.%0D%0A%0D%0APlease provide:%0D%0A- Volume-based pricing tiers%0D%0A- Minimum Order Quantity (MOQ)%0D%0A- Custom packaging options%0D%0A- Delivery timelines%0D%0A%0D%0AThank you!`}
                       className="border-2 border-[var(--color-deep-brown)] text-[var(--color-deep-brown)] hover:bg-[var(--color-deep-brown)] hover:text-white px-8 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
-                      Email Us
+                      Email for MOQ Details
                     </a>
                   </div>
                 </div>
@@ -903,7 +1106,10 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
           </div>
           {/* Related Products Section */}
           {relatedProducts.length > 0 && (
-            <div className="border-t border-gray-200 p-8">
+            <div className="border-t border-gray-200 p-8 relative">
+              {/* Decorative elements for related products */}
+              <SectionVisualElements className="opacity-50" />
+              
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-[var(--color-deep-brown)]">Popular dry fruit Discount</h2>
                 <div className="flex gap-2">
@@ -921,14 +1127,20 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
               </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {relatedProducts.map((relatedProduct) => (
+                {relatedProducts.map((relatedProduct, index) => (
                   <Link
                     key={relatedProduct._id}
                     href={`/products/${relatedProduct.slug?.current}`}
-                    className="group"
+                    className="group relative"
                   >
-                    <div className="bg-white border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-shadow">
-                      <div className="aspect-square rounded-lg overflow-hidden bg-gray-50 mb-4">
+                    {/* Product card decorative element */}
+                    <div className="absolute -top-2 -right-2 w-4 h-3 bg-gradient-to-br from-amber-300 to-amber-500 rounded-full transform rotate-12 opacity-30 group-hover:opacity-50 transition-opacity"></div>
+                    
+                    <div className="bg-white border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-shadow relative overflow-hidden">
+                      {/* Card background decoration */}
+                      <div className="absolute bottom-2 right-2 w-6 h-4 bg-gradient-to-br from-orange-100 to-orange-200 rounded-full opacity-20"></div>
+                      
+                      <div className="aspect-square rounded-lg overflow-hidden bg-gray-50 mb-4 relative">
                         {relatedProduct.heroImage ? (
                           <Image
                             src={urlFor(relatedProduct.heroImage).width(300).height(300).url()}
@@ -938,14 +1150,19 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center text-gray-400">
+                          <div className="w-full h-full flex items-center justify-center text-gray-400 relative">
+                            {/* Visual placeholder based on product type */}
                             <div className="text-center">
-                              <div className="w-12 h-12 mx-auto mb-2 bg-gray-200 rounded-lg flex items-center justify-center">
-                                <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                </svg>
+                              <div className="w-16 h-16 mx-auto mb-2 bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center">
+                                <ProductVisual 
+                                  productType={
+                                    getLocalized(relatedProduct.title, language).toLowerCase().includes('makhana') ? 'makhana' :
+                                    getLocalized(relatedProduct.title, language).toLowerCase().includes('coconut') ? 'coconut' : 'nuts'
+                                  } 
+                                  size="lg" 
+                                />
                               </div>
-                              <p className="text-xs">Image</p>
+                              <p className="text-xs">Product Image</p>
                             </div>
                           </div>
                         )}
@@ -987,6 +1204,7 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
           </svg>
           {labels.productDetail.backToProducts}
         </Link>
+      </div>
       </div>
     </div>
   );
