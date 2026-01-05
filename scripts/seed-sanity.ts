@@ -780,8 +780,6 @@ const footerData = {
     { _key: "ql-1", label: "Home", url: "/" },
     { _key: "ql-2", label: "About Us", url: "/about" },
     { _key: "ql-3", label: "Products", url: "/products" },
-    { _key: "ql-4", label: "Contact", url: "/contact" },
-    { _key: "ql-5", label: "Make an Enquiry", url: "/contact?type=general" },
   ],
   certificationBadges: [],
   socialLinks: {

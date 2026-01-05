@@ -93,7 +93,7 @@ export function FooterVisualElements({ className }: { className?: string }) {
 
 // Product-specific visual elements
 interface ProductVisualProps {
-  productType: 'makhana' | 'coconut' | 'nuts' | 'general';
+  productType: 'makhana' | 'coconut' | 'nuts' | 'almonds' | 'general';
   size?: 'sm' | 'md' | 'lg';
   className?: string;
 }
@@ -117,6 +117,12 @@ export function ProductVisual({ productType, size = 'md', className = '' }: Prod
         return (
           <div className={`${sizeClasses[size]} bg-white rounded-lg flex items-center justify-center ${className}`}>
             <div className="w-3/4 h-3/4 bg-gradient-to-br from-amber-200 to-amber-400 rounded-sm"></div>
+          </div>
+        );
+      case 'almonds':
+        return (
+          <div className={`${sizeClasses[size]} bg-gradient-to-br from-amber-300 to-amber-500 rounded-full transform rotate-12 flex items-center justify-center ${className}`}>
+            <div className="w-3/4 h-1/2 bg-gradient-to-br from-amber-100 to-amber-200 rounded-full"></div>
           </div>
         );
       case 'nuts':

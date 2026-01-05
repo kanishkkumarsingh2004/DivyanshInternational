@@ -95,6 +95,46 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
   const getProductContent = (title: string) => {
     const titleLower = title.toLowerCase();
     
+    if (titleLower.includes('almond')) {
+      return {
+        subtitle: "Premium quality almonds in various grades for wholesale and retail",
+        description: "High-quality almonds sourced from trusted suppliers and carefully processed to ensure uniformity and purity. Available in multiple varieties to meet different commercial and retail requirements.",
+        features: [
+          "Premium quality sourced from the finest suppliers",
+          "Naturally processed without artificial preservatives", 
+          "Rich in essential vitamins and minerals",
+          "Perfect for commercial and retail applications"
+        ],
+        varieties: [
+          { name: "Non-Pareil Almonds", description: "High demand for bulk and retail packaging", grade: "Premium", color: "from-amber-100 to-amber-200" },
+          { name: "Independence Almonds", description: "Cost-effective, versatile quality", grade: "Standard", color: "from-orange-100 to-orange-200" },
+          { name: "Mamra Almonds", description: "Premium, oil-rich, ideal for gifting & high-end retailers", grade: "Premium+", color: "from-yellow-100 to-yellow-200" },
+          { name: "Gurbandi Almonds", description: "Small-sized, nutrient dense", grade: "Premium", color: "from-amber-100 to-amber-200" },
+          { name: "Sonora Almonds", description: "Mid-grade quality", grade: "Standard", color: "from-orange-100 to-orange-200" },
+          { name: "Carmel / Sonora Almonds", description: "Mid-grade, suitable for value packs and food processing needs", grade: "Standard", color: "from-orange-100 to-orange-200" },
+          { name: "Peerless Almonds", description: "Mid-grade, balanced taste, preferred for snacking and processing", grade: "Standard", color: "from-orange-100 to-orange-200" },
+          { name: "Monterey Almonds", description: "Larger size, smooth surface, popular for roasting and snacking", grade: "Premium", color: "from-amber-100 to-amber-200" },
+          { name: "Shasta Almonds", description: "Uniform size, light colour, good for confectionery and processed foods", grade: "Standard", color: "from-orange-100 to-orange-200" },
+          { name: "Supareil Almonds", description: "Long and narrow shape, premium look, often used for luxury confectionery and exports", grade: "Premium+", color: "from-yellow-100 to-yellow-200" }
+        ],
+        applications: [
+          "Food processing and manufacturing",
+          "Retail and wholesale distribution",
+          "Export and international trade",
+          "Confectionery and bakery applications"
+        ],
+        packaging: "Bulk packs suitable for wholesalers and commercial buyers",
+        pricing: { currentPrice: 1299, originalPrice: 1599, discount: 19 },
+        specs: {
+          origin: "California, USA / India",
+          variety: "Multiple Premium Grades",
+          packaging: "Bulk Packs (10-25 kg)",
+          shelfLife: "12 Months",
+          storage: "Cool & Dry Place"
+        }
+      };
+    }
+    
     if (titleLower.includes('coconut') || titleLower.includes('desiccated')) {
       return {
         subtitle: "25 kg bulk packing for wholesale and institutional buyers",
@@ -706,6 +746,71 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
                                 </div>
                               );
                             })}
+                          </div>
+                        </div>
+                      )}
+                      
+                      {productContent.varieties && (
+                        <div>
+                          <h3 className="text-xl font-semibold text-[var(--color-deep-brown)] mb-3">
+                            Almond Varieties We Offer
+                          </h3>
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {productContent.varieties.map((variety, index) => (
+                              <div key={index} className={`bg-gradient-to-br ${variety.color} rounded-xl p-4 hover:shadow-md transition-all duration-300 hover:scale-105 border border-white/50`}>
+                                {/* Visual representation of the almond variety */}
+                                <div className="flex items-center gap-3 mb-3">
+                                  <div className="w-16 h-16 relative">
+                                    <div className={`absolute inset-0 bg-gradient-to-br ${variety.color} rounded-full shadow-sm`}></div>
+                                    <div className="absolute inset-1 bg-white rounded-full flex items-center justify-center">
+                                      <ProductVisual productType="almonds" size="md" />
+                                    </div>
+                                    <div className="absolute -top-1 -right-1 w-5 h-5 bg-[var(--color-gold)] rounded-full flex items-center justify-center">
+                                      <span className="text-white font-bold text-xs">{variety.grade === 'Premium+' ? 'P+' : variety.grade === 'Premium' ? 'P' : 'S'}</span>
+                                    </div>
+                                  </div>
+                                  <div className="flex-1">
+                                    <h4 className="font-semibold text-[var(--color-deep-brown)] text-sm mb-1">{variety.name}</h4>
+                                    <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
+                                      variety.grade === 'Premium+' ? 'bg-yellow-200 text-yellow-800' :
+                                      variety.grade === 'Premium' ? 'bg-amber-200 text-amber-800' :
+                                      'bg-orange-200 text-orange-800'
+                                    }`}>
+                                      {variety.grade}
+                                    </span>
+                                  </div>
+                                </div>
+                                <p className="text-xs text-gray-600 leading-relaxed">{variety.description}</p>
+                                
+                                {/* Quality indicators */}
+                                <div className="mt-3 flex items-center justify-between">
+                                  <div className="flex items-center gap-1">
+                                    {[...Array(variety.grade === 'Premium+' ? 5 : variety.grade === 'Premium' ? 4 : 3)].map((_, i) => (
+                                      <div key={i} className="w-2 h-2 bg-[var(--color-gold)] rounded-full"></div>
+                                    ))}
+                                  </div>
+                                  <div className="text-xs text-gray-500 font-medium">
+                                    {variety.grade === 'Premium+' ? 'Luxury Grade' : 
+                                     variety.grade === 'Premium' ? 'Premium Grade' : 'Commercial Grade'}
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                          
+                          {/* Additional varieties note */}
+                          <div className="mt-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-100">
+                            <div className="flex items-center gap-3">
+                              <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+                                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                              </div>
+                              <div>
+                                <h4 className="font-semibold text-blue-800 mb-1">Additional Varieties Available</h4>
+                                <p className="text-sm text-blue-600">Price Almonds (versatile, mild flavour) • Inshell & Kernel varieties • Custom grades on request</p>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       )}

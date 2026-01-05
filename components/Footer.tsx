@@ -163,7 +163,9 @@ export default function Footer({ initialFooter, labels, accessibility, products,
                 </button>
               </li>
               
-              {footer.quickLinks.map((link, index) => (
+              {footer.quickLinks
+                .filter(link => link.label !== "Contact" && link.label !== "Make an Enquiry")
+                .map((link, index) => (
                 <li key={index}>
                   <Link
                     href={link.url}
