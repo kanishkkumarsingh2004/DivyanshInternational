@@ -15,7 +15,6 @@ interface HeaderData {
   logo?: SanityImageSource;
   navLinks?: { label: string; url: string }[];
   tradeButtonText?: string;
-  whatsappText?: string;
   logoAlt?: string;
   homeAriaLabel?: string;
   navAriaLabel?: string;
@@ -44,14 +43,6 @@ export default function Header({ initialHeader, products, siteSettings }: Header
   }, []);
 
   const header = initialHeader || {};
-
-  const whatsappNumber = siteSettings?.whatsapp?.phoneNumber;
-  const messageTemplate = siteSettings?.whatsapp?.messageTemplate;
-
-  const whatsappUrl =
-    whatsappNumber && messageTemplate
-      ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(messageTemplate)}`
-      : null;
 
   return (
     <>
@@ -119,16 +110,6 @@ export default function Header({ initialHeader, products, siteSettings }: Header
                   {link.label}
                 </Link>
               ))}
-              {whatsappUrl && (
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[var(--color-text)] hover:text-[var(--color-gold)] transition-colors focus:outline-2 focus:outline-[var(--color-gold)] focus:rounded px-2 py-1"
-                >
-                  {header.whatsappText}
-                </a>
-              )}
               <Link
                 href="/contact?type=trade"
                 className="bg-gradient-to-r from-[var(--color-almond-gold)] to-[var(--color-gold-dark)] hover:shadow-lg text-white px-6 py-2.5 rounded-full font-semibold transition-all duration-300 hover:scale-105 focus:outline-2 focus:outline-[var(--color-gold-dark)] focus:outline-offset-2"

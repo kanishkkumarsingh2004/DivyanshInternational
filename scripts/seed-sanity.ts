@@ -327,38 +327,73 @@ const heroSlides = [
 const timeline = [
   {
     _id: "1",
-    year: 1999,
-    title: "Foundation",
+    year: 1900,
+    title: "The Beginning – Gujranwala",
     description:
-      "Divyansh International was founded in Ludhiana, Punjab, with a vision to bring premium quality dry fruits to the Indian market.",
+      "A well-established wholesale spices business thrived in Gujranwala, Punjab (then part of undivided India, now Pakistan).",
   },
   {
     _id: "2",
-    year: 2005,
-    title: "Expansion",
+    year: 1947,
+    title: "Partition & New Beginnings",
     description:
-      "Expanded operations to include multiple product categories and established a robust distribution network across North India.",
+      "Following Partition, the family migrated to Ludhiana, Punjab—empty-handed but rich in experience and determination. At just 11 years of age, Mr. Som Nath Sethi marked a new beginning in India by starting a wholesale and retail grocery store.",
   },
   {
     _id: "3",
-    year: 2015,
-    title: "Modernization",
+    year: 1969,
+    title: "HoReCa Expansion",
     description:
-      "Upgraded processing facilities with state-of-the-art technology and achieved ISO certification for quality management.",
+      "Mr. Raman Sethi expanded operations into the HoReCa (Hotel, Restaurant & Catering) segment, strengthening the business's professional footprint.",
   },
   {
     _id: "4",
-    year: 2020,
-    title: "Digital Transformation",
+    year: 1984,
+    title: "Third Generation Joins",
     description:
-      "Launched online presence and streamlined operations for better customer service and pan-India reach.",
+      "During the turbulent years of riots and emergency in Punjab, Mr. Sanjeev Sethi joined the business in his teenage years, dedicating himself to serving the people of Punjab—an involvement that became lifelong.",
   },
   {
     _id: "5",
-    year: 2024,
-    title: "Global Reach",
+    year: 1999,
+    title: "Divyansh International – California Almonds",
     description:
-      "Strengthened international partnerships and expanded our sourcing network to over 15 countries.",
+      "The family branched out internationally with the launch of Divyansh International, beginning imports of California Almonds.",
+  },
+  {
+    _id: "6",
+    year: 2015,
+    title: "Portfolio Expansion – Walnuts",
+    description:
+      "Mr. Divyansh Sethi, with a next-generation approach, expanded the portfolio to include Walnuts, scaling operations with a strong foundation in finance and marketing.",
+  },
+  {
+    _id: "7",
+    year: 2021,
+    title: "Zonaar Global – International Trade",
+    description:
+      "Divyansh International further expanded its global footprint by initiating international trade facilitation and brokerage under the name Zonaar Global, connecting markets and partners across borders with trust, expertise, and efficiency.",
+  },
+  {
+    _id: "8",
+    year: 2022,
+    title: "State-of-the-Art Facility – Mullapur",
+    description:
+      "Operations expanded to a state-of-the-art facility in Mullapur, Ludhiana—ISO & FSSAI certified—marking a major infrastructural milestone and reinforcing the group's commitment to quality and compliance.",
+  },
+  {
+    _id: "9",
+    year: 2023,
+    title: "The Badam Factory – Heritage Retail",
+    description:
+      "Launched a heritage retail outlet, 'The Badam Factory', at the original workplace—reviving the name affectionately given by the people.",
+  },
+  {
+    _id: "10",
+    year: 2025,
+    title: "The Betternut Co. – Modern Conscious Living",
+    description:
+      "Launch of The Betternut Co., ushering the legacy into a modern, conscious-living brand—focused on mindfulness and well-being through food.",
   },
 ];
 
@@ -761,10 +796,10 @@ const headerData = {
   _type: "header",
   navLinks: [
     { _key: "nav-1", label: "About", url: "/about" },
-    { _key: "nav-2", label: "Contact", url: "/contact" },
+    { _key: "nav-2", label: "Community", url: "/community" },
+    { _key: "nav-3", label: "Contact", url: "/contact" },
   ],
   tradeButtonText: "Get Trade Quote",
-  whatsappText: "WhatsApp",
   logoAlt: "Divyansh International Logo",
   homeAriaLabel: "Go to homepage",
   navAriaLabel: "Main navigation",
@@ -780,6 +815,7 @@ const footerData = {
     { _key: "ql-1", label: "Home", url: "/" },
     { _key: "ql-2", label: "About Us", url: "/about" },
     { _key: "ql-3", label: "Products", url: "/products" },
+    { _key: "ql-4", label: "Community", url: "/community" },
   ],
   certificationBadges: [],
   socialLinks: {
@@ -879,6 +915,7 @@ const siteSettingsData = {
       staticPages: [
         { _key: "home", path: "/", changeFrequency: "yearly", priority: 1 },
         { _key: "about", path: "/about", changeFrequency: "monthly", priority: 0.8 },
+        { _key: "community", path: "/community", changeFrequency: "monthly", priority: 0.7 },
         { _key: "contact", path: "/contact", changeFrequency: "monthly", priority: 0.8 },
         { _key: "products", path: "/products", changeFrequency: "weekly", priority: 0.9 },
       ],
