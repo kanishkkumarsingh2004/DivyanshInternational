@@ -51,35 +51,35 @@ export default function Header({ initialHeader, products, siteSettings }: Header
         animate={{ y: 0 }}
         className={`fixed top-0 left-0 right-0 z-30 transition-all duration-300 ${
           isScrolled 
-            ? "bg-white shadow-lg py-3 border-b border-[var(--color-sand)]" 
-            : "bg-gradient-to-b from-white to-[var(--color-ivory)] backdrop-blur-md py-4 shadow-sm"
+            ? "bg-white shadow-lg py-2 md:py-3 border-b border-[var(--color-sand)]" 
+            : "bg-gradient-to-b from-white to-[var(--color-ivory)] backdrop-blur-md py-3 md:py-4 shadow-sm"
         }`}
       >
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-4">
             {/* Logo */}
-            <div className="flex items-center">
+            <div className="flex items-center flex-shrink-0">
               <Link
                 href="/"
-                className="flex items-center space-x-3 focus:outline-2 focus:outline-[var(--color-gold)] focus:rounded"
+                className="flex items-center space-x-2 md:space-x-3 focus:outline-2 focus:outline-[var(--color-gold)] focus:rounded"
                 aria-label={header.homeAriaLabel}
               >
                 <div className="relative">
                   <Image
                     src="/divyansh-logo.jpg"
                     alt={header.logoAlt || "Divyansh International Logo"}
-                    width={64}
-                    height={64}
-                    className="rounded-full border-2 border-[var(--color-almond-gold)] object-cover shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                    width={48}
+                    height={48}
+                    className="w-12 h-12 md:w-16 md:h-16 rounded-full border-2 border-[var(--color-almond-gold)] object-cover shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                     priority
                   />
                   <div className="absolute -inset-1 bg-gradient-to-r from-[var(--color-almond-gold)] to-[var(--color-gold-dark)] rounded-full opacity-20 blur-sm"></div>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[var(--color-deep-brown)] font-bold text-xl tracking-wide">
+                  <span className="text-[var(--color-deep-brown)] font-bold text-base md:text-xl tracking-wide">
                     Divyansh International
                   </span>
-                  <span className="text-[var(--color-almond-gold)] text-xs font-semibold uppercase tracking-wider">
+                  <span className="text-[var(--color-almond-gold)] text-[10px] md:text-xs font-semibold uppercase tracking-wider">
                     Premium Dry Fruits
                   </span>
                 </div>
@@ -124,15 +124,14 @@ export default function Header({ initialHeader, products, siteSettings }: Header
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className="md:hidden text-[var(--color-deep-brown)] focus:outline-2 focus:outline-[var(--color-gold)] focus:rounded p-2"
+              className="md:hidden text-[var(--color-deep-brown)] focus:outline-2 focus:outline-[var(--color-gold)] focus:rounded p-2 hover:bg-[var(--color-beige)] rounded-lg transition-colors"
               aria-label={header.menuAriaLabel}
               aria-expanded={isMobileMenuOpen}
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={2}
                   d="M4 6h16M4 12h16M4 18h16"
                 />
               </svg>

@@ -13,6 +13,8 @@
     "update:all": "pnpm update --latest --recursive",
     "type-check": "tsc --noEmit",
     "seed": "tsx scripts/seed-sanity.ts",
+    "sanity:seed": "dotenv -e .env.local -- tsx scripts/seed-sanity.ts",
+    "sanity:push": "dotenv -e .env.local -- tsx scripts/seed-sanity.ts",
     "db:push": "dotenv -e .env.local -- prisma db push",
     "db:pull": "dotenv -e .env.local -- prisma db pull",
     "db:generate": "dotenv -e .env.local -- prisma generate",

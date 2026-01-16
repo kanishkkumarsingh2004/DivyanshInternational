@@ -59,8 +59,23 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${manrope.variable} ${playfair.variable} ${lato.variable}`}
+      className={`hydrated ${inter.variable} ${manrope.variable} ${playfair.variable} ${lato.variable}`}
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Prevent FOUC
+              document.documentElement.classList.add('hydrated');
+              
+              // Add smooth scroll polyfill for older browsers
+              if (!('scrollBehavior' in document.documentElement.style)) {
+                document.documentElement.style.scrollBehavior = 'smooth';
+              }
+            `,
+          }}
+        />
+      </head>
       <body className="antialiased">
         <LanguageProvider>
           <SmoothScrolling>{children}</SmoothScrolling>
